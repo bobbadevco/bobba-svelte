@@ -1,4 +1,5 @@
-import { RoomWidgetUpdateEvent } from './RoomWidgetUpdateEvent';
+import { RoomWidgetUpdateEvent } from "./RoomWidgetUpdateEvent";
+
 
 export class RoomWidgetUpdateBackgroundColorPreviewEvent extends RoomWidgetUpdateEvent {
 	public static PREVIEW = 'RWUBCPE_PREVIEW';

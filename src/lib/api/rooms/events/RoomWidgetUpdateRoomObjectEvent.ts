@@ -1,4 +1,4 @@
-import { RoomWidgetUpdateEvent } from '$lib/api/rooms/events/RoomWidgetUpdateEvent';
+import { RoomWidgetUpdateEvent } from "./RoomWidgetUpdateEvent";
 
 export class RoomWidgetUpdateRoomObjectEvent extends RoomWidgetUpdateEvent {
 	public static OBJECT_SELECTED: string = 'RWUROE_OBJECT_SELECTED';

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { onMount, type Snippet } from 'svelte';
-	import { GetConfiguration } from '$lib/api/GetConfiguration';
-	import { getIsReady, initialize } from '$lib/initialize.svelte';
-	import RoomView from '$lib/components/rooms/RoomView.svelte';
+	import { GetConfiguration } from "$lib/api";
+	import RoomView from "$lib/components/rooms/RoomView.svelte";
+	import { initialize, getIsReady } from "$lib/initialize.svelte";
+	import { type Snippet, onMount } from "svelte";
 
 	let MainView = $state<Snippet>();
 	let LoadingView = $state<Snippet>();

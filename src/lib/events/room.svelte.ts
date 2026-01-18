@@ -1,3 +1,4 @@
+import { GetRoomEngine, RoomWidgetUpdateBackgroundColorPreviewEvent, GetRoomSession, SetActiveRoomId, StartRoomSession, GetSessionDataManager, RoomWidgetUpdateRoomObjectEvent, CanManipulateFurniture, ProcessRoomObjectOperation, GetNitroInstance } from '$lib/api';
 import {
 	AdjustmentFilter,
 	ColorConverter,
@@ -18,23 +19,8 @@ import {
 	Vector3d,
 	type IRoomSession
 } from '@nitrots/nitro-renderer';
-import {
-	DispatchUiEvent,
-	registerRoomEngineEvent,
-	registerRoomSessionManagerEvent,
-	registerUiEvent
-} from '$lib/events/registration';
-import { RoomWidgetUpdateBackgroundColorPreviewEvent } from '$lib/api/rooms/events/RoomWidgetUpdateBackgroundColorPreviewEvent';
-import { GetRoomEngine } from '$lib/api/rooms/GetRoomEngine';
-import { SetActiveRoomId } from '$lib/api/rooms/SetActiveRoomId';
-import { GetRoomSession } from '$lib/api/session/room/GetRoomSession';
-import { StartRoomSession } from '$lib/api/session/room/StartRoomSession';
-import { RoomWidgetUpdateRoomObjectEvent } from '$lib/api/rooms/events/RoomWidgetUpdateRoomObjectEvent';
-import { GetSessionDataManager } from '$lib/api/session/GetSessionDataManager';
-import { CanManipulateFurniture } from '$lib/api/session/room/furniture/CanManipulateFurniture';
-import { ProcessRoomObjectOperation } from '$lib/api/rooms/ProcessFurnitureOperation';
-import { GetNitroInstance } from '$lib/api/GetNitroInstance';
 import { untrack } from 'svelte';
+import { registerUiEvent, registerRoomEngineEvent, registerRoomSessionManagerEvent, DispatchUiEvent } from '.';
 
 let roomSession = $state<IRoomSession>();
 let roomBackground = $state<NitroSprite>();

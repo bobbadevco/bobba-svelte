@@ -1,4 +1,4 @@
-import { GetRoomEngine } from '$lib/api/rooms/GetRoomEngine';
+import { GetRoomEngine } from './GetRoomEngine';
 
 export function ProcessRoomObjectOperation(
 	objectId: number,

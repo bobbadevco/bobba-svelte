@@ -10,15 +10,8 @@ import {
 	NitroLocalizationEvent,
 	RoomEngineEvent
 } from '@nitrots/nitro-renderer';
-import { GetNitroInstance } from '$lib/api/GetNitroInstance';
-import { GetConfiguration } from '$lib/api/GetConfiguration';
-import {
-	registerConfigurationEvent,
-	registerLocalizationEvent,
-	registerMainEvent,
-	registerRoomEngineEvent
-} from '$lib/events/registration';
-import { GetCommunication } from '$lib/api/GetCommunication';
+import { GetNitroInstance, GetConfiguration, GetCommunication } from './api';
+import { registerMainEvent, registerRoomEngineEvent, registerLocalizationEvent, registerConfigurationEvent } from './events';
 
 let percent = $state(0);
 let message = $state('');

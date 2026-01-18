@@ -1,5 +1,5 @@
 import type { IMessageComposer } from '@nitrots/nitro-renderer';
-import { GetConnection } from './GetConnection';
+import { GetConnection } from '.';
 
 export const SendMessageComposer = (event: IMessageComposer<unknown[]>) =>
 	GetConnection().send(event);

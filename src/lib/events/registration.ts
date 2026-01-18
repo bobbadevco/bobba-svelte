@@ -1,6 +1,5 @@
-import { GetNitroInstance } from '$lib/api/GetNitroInstance';
-import { GetConfigurationManager } from '$lib/api/GetConfigurationManager';
-import { GetRoomEngine } from '$lib/api/rooms/GetRoomEngine';
+
+import { GetNitroInstance, GetConfigurationManager, GetRoomEngine, GetRoomSessionManager, GetCommunication } from '$lib/api';
 import {
 	EventDispatcher,
 	MessageEvent,
@@ -8,8 +7,6 @@ import {
 	type IMessageEvent,
 	type NitroEvent
 } from '@nitrots/nitro-renderer';
-import { GetRoomSessionManager } from '$lib/api/session/room/GetRoomSessionManager';
-import { GetCommunication } from '$lib/api/GetCommunication';
 
 const UI_EVENT_DISPATCHER: IEventDispatcher = new EventDispatcher();
 

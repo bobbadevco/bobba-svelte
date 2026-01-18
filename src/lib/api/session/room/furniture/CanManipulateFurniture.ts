@@ -1,7 +1,8 @@
-import { GetSessionDataManager } from '$lib/api/session/GetSessionDataManager';
-import { GetRoomEngine } from '$lib/api/rooms/GetRoomEngine';
-import { RoomControllerLevel, type IRoomSession } from '@nitrots/nitro-renderer';
-import { IsOwnerOfFurniture } from '$lib/api/session/room/furniture/IsOwnerOfFuniture';
+import { GetRoomEngine } from "$lib/api/rooms";
+import { type IRoomSession, RoomControllerLevel } from "@nitrots/nitro-renderer";
+import { GetSessionDataManager } from "../..";
+import { IsOwnerOfFurniture } from ".";
+
 
 export function CanManipulateFurniture(
 	roomSession: IRoomSession,
