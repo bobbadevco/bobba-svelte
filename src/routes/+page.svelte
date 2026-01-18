@@ -110,8 +110,9 @@
 		async () => {
 			Nitro.bootstrap();
 			GetNitroInstance().core.configuration.init();
-			const theme = GetConfiguration<string>('theme', './themes/default');
-			MainView = (await import(theme+"/MainView.svelte")).default;
+			const theme = GetConfiguration<string>('theme', 'default');
+			const componentPath = `/src/lib/themes/${theme}/MainView.svelte`;
+			MainView = (await import(componentPath)).default;
 
 			registerMainEvent(Nitro.WEBGL_UNAVAILABLE, handler);
 			registerMainEvent(Nitro.WEBGL_CONTEXT_LOST, handler);
