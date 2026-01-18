@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {type IEventDispatcher,  ConfigurationEvent, GetAssetManager, HabboWebTools, Nitro, NitroCommunicationDemoEvent, NitroConfiguration, NitroEvent, NitroLocalizationEvent, RoomEngineEvent } from '@nitrots/nitro-renderer';
-	import {onMount} from 'svelte';
+	import {type IEventDispatcher, LegacyExternalInterface, ConfigurationEvent, GetAssetManager, HabboWebTools, Nitro, NitroCommunicationDemoEvent, NitroConfiguration, NitroEvent, NitroLocalizationEvent, RoomEngineEvent } from '@nitrots/nitro-renderer';
+	import { onMount, type Snippet } from 'svelte';
 	import {GetNitroInstance} from "$lib/api/GetNitroInstance";
 	import { GetConfiguration } from '$lib/api/GetConfiguration';
 	import { GetCommunication } from '$lib/api/GetCommunication';
@@ -59,6 +59,10 @@
 				percent += 20;
 
 				GetNitroInstance().init();
+
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-expect-error
+				if(LegacyExternalInterface.available) LegacyExternalInterface.call('legacyTrack', 'authentication', 'authok', []);
 				return;
 			case NitroCommunicationDemoEvent.CONNECTION_ERROR:
 				isError = true;
@@ -100,10 +104,15 @@
 	};
 
 
+	let MainView = $state<Snippet>();
+
 	onMount(
-		() => {
+		async () => {
 			Nitro.bootstrap();
 			GetNitroInstance().core.configuration.init();
+			const theme = GetConfiguration<string>('theme', './themes/default');
+			MainView = (await import(theme+"/MainView.svelte")).default;
+
 			registerMainEvent(Nitro.WEBGL_UNAVAILABLE, handler);
 			registerMainEvent(Nitro.WEBGL_CONTEXT_LOST, handler);
 			registerMainEvent(NitroCommunicationDemoEvent.CONNECTION_HANDSHAKING, handler);
@@ -123,3 +132,9 @@
 {message}
 {isError}
 {isReady}
+
+{#if MainView}
+	{#if isReady}
+		{@render MainView()}
+	{/if}
+{/if}
