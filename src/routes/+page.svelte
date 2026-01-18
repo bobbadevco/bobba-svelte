@@ -2,6 +2,7 @@
 	import { onMount, type Snippet } from 'svelte';
 	import { GetConfiguration } from '$lib/api/GetConfiguration';
 	import { getIsReady, initialize } from '$lib/initialize.svelte';
+	import RoomView from '$lib/components/rooms/RoomView.svelte';
 
 	let MainView = $state<Snippet>();
 	let LoadingView = $state<Snippet>();
@@ -17,15 +18,18 @@
 		}
 	);
 </script>
-
-{#if LoadingView}
-	{#if !getIsReady()}
-		{@render LoadingView()}
+<div class="w-screen h-screen overflow-hidden" style:image-rendering="pixelated">
+	{#if LoadingView}
+		{#if !getIsReady()}
+			{@render LoadingView()}
+		{/if}
 	{/if}
-{/if}
-
-{#if MainView}
 	{#if getIsReady()}
-		{@render MainView()}
+		<RoomView	/>
 	{/if}
-{/if}
+	{#if MainView}
+		{#if getIsReady()}
+			{@render MainView()}
+		{/if}
+	{/if}
+</div>

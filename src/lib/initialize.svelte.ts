@@ -102,6 +102,7 @@ const handler = async (event: NitroEvent) => {
 		}
 	}
 };
+
 export const initialize = async () => {
 	Nitro.bootstrap();
 	GetNitroInstance().core.configuration.init();
