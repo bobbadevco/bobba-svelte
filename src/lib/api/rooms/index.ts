@@ -4,3 +4,4 @@ export * from './DispatchTouchEvent';
 export * from './GetRoomEngine';
 export * from './ProcessFurnitureOperation';
 export * from './SetActiveRoomId';
+export * from './TryVisitRoom';

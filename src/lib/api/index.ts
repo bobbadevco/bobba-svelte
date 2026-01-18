@@ -6,3 +6,5 @@ export * from './GetConfiguration';
 export * from './GetConfigurationManager';
 export * from './GetNitroCore';
 export * from './GetNitroInstance'
+export * from './AddLinkEventTracker';
+export * from './CreateLinkEvent';

@@ -11,7 +11,12 @@ import {
 	RoomEngineEvent
 } from '@nitrots/nitro-renderer';
 import { GetNitroInstance, GetConfiguration, GetCommunication } from './api';
-import { registerMainEvent, registerRoomEngineEvent, registerLocalizationEvent, registerConfigurationEvent } from './events';
+import {
+	registerMainEvent,
+	registerRoomEngineEvent,
+	registerLocalizationEvent,
+	registerConfigurationEvent,
+} from './events';
 
 let percent = $state(0);
 let message = $state('');
@@ -52,7 +57,6 @@ const handler = async (event: NitroEvent) => {
 			return;
 		case NitroCommunicationDemoEvent.CONNECTION_AUTHENTICATED:
 			percent += 20;
-
 			GetNitroInstance().init();
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -73,7 +77,9 @@ const handler = async (event: NitroEvent) => {
 		case RoomEngineEvent.ENGINE_INITIALIZED:
 			percent += 20;
 
-			setTimeout(() => (isReady = true), 300);
+			setTimeout(() => {
+				isReady = true;
+			}, 300);
 			return;
 		case NitroLocalizationEvent.LOADED: {
 			const assetUrls = GetConfiguration<string[]>('preload.assets.urls', []);
@@ -96,10 +102,7 @@ const handler = async (event: NitroEvent) => {
 	}
 };
 
-export const initialize = async () => {
-	Nitro.bootstrap();
-	GetNitroInstance().core.configuration.init();
-
+export const initialize = () => {
 	registerMainEvent(Nitro.WEBGL_UNAVAILABLE, handler);
 	registerMainEvent(Nitro.WEBGL_CONTEXT_LOST, handler);
 	registerMainEvent(NitroCommunicationDemoEvent.CONNECTION_HANDSHAKING, handler);
