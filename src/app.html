@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>nitro-svelte</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+
+		<script>
+			const NitroConfig = {
+				"config.urls": [ '/renderer-config.json', '/ui-config.json' ],
+				"sso.ticket": (new URLSearchParams(window.location.search).get('sso') || null),
+				"forward.type": (new URLSearchParams(window.location.search).get('room') ? 2 : -1),
+				"forward.id": (new URLSearchParams(window.location.search).get('room') || 0),
+				"friend.id": (new URLSearchParams(window.location.search).get('friend') || 0),
+			};
+		</script>
+	</body>
+</html>
