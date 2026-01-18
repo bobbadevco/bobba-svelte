@@ -25,7 +25,7 @@ import {
 	registerUiEvent
 } from '$lib/events/registration';
 import { RoomWidgetUpdateBackgroundColorPreviewEvent } from '$lib/api/rooms/events/RoomWidgetUpdateBackgroundColorPreviewEvent';
-import { GetRoomEngine } from '$lib/api/GetRoomEngine';
+import { GetRoomEngine } from '$lib/api/rooms/GetRoomEngine';
 import { SetActiveRoomId } from '$lib/api/rooms/SetActiveRoomId';
 import { GetRoomSession } from '$lib/api/session/room/GetRoomSession';
 import { StartRoomSession } from '$lib/api/session/room/StartRoomSession';

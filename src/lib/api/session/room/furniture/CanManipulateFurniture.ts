@@ -1,5 +1,5 @@
 import { GetSessionDataManager } from '$lib/api/session/GetSessionDataManager';
-import { GetRoomEngine } from '$lib/api/GetRoomEngine';
+import { GetRoomEngine } from '$lib/api/rooms/GetRoomEngine';
 import { RoomControllerLevel, type IRoomSession } from '@nitrots/nitro-renderer';
 import { IsOwnerOfFurniture } from '$lib/api/session/room/furniture/IsOwnerOfFuniture';
 

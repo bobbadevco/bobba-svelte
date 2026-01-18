@@ -1,8 +1,15 @@
 import { GetNitroInstance } from '$lib/api/GetNitroInstance';
 import { GetConfigurationManager } from '$lib/api/GetConfigurationManager';
-import { GetRoomEngine } from '$lib/api/GetRoomEngine';
-import { EventDispatcher, type IEventDispatcher, type NitroEvent } from '@nitrots/nitro-renderer';
+import { GetRoomEngine } from '$lib/api/rooms/GetRoomEngine';
+import {
+	EventDispatcher,
+	MessageEvent,
+	type IEventDispatcher,
+	type IMessageEvent,
+	type NitroEvent
+} from '@nitrots/nitro-renderer';
 import { GetRoomSessionManager } from '$lib/api/session/room/GetRoomSessionManager';
+import { GetCommunication } from '$lib/api/GetCommunication';
 
 const UI_EVENT_DISPATCHER: IEventDispatcher = new EventDispatcher();
 
@@ -52,3 +59,14 @@ export const registerRoomSessionManagerEvent = <T extends NitroEvent>(
 	type: string | string[],
 	handler: (evt: T) => void
 ) => registerNitroEvent(type, GetRoomSessionManager().events, handler);
+
+export const registerMessageEvent = <T extends IMessageEvent>(
+	eventType: typeof MessageEvent,
+	handler: (evt: T) => void
+) => {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-expect-error
+	const event = new eventType(handler);
+
+	GetCommunication().registerMessageEvent(event);
+}
