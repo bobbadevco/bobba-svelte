@@ -1,7 +1,10 @@
 import { GetNitroInstance } from '$lib/api/GetNitroInstance';
 import { GetConfigurationManager } from '$lib/api/GetConfigurationManager';
 import { GetRoomEngine } from '$lib/api/GetRoomEngine';
-import type { IEventDispatcher, NitroEvent } from '@nitrots/nitro-renderer';
+import { EventDispatcher, type IEventDispatcher, type NitroEvent } from '@nitrots/nitro-renderer';
+import { GetRoomSessionManager } from '$lib/api/session/room/GetRoomSessionManager';
+
+const UI_EVENT_DISPATCHER: IEventDispatcher = new EventDispatcher();
 
 export const registerNitroEvent = <T extends NitroEvent>(
 	type: string | string[],
@@ -14,6 +17,15 @@ export const registerNitroEvent = <T extends NitroEvent>(
 		eventDispatcher.addEventListener(type, handler);
 	}
 };
+export const DispatchEvent = (eventDispatcher: IEventDispatcher, event: NitroEvent) =>
+	eventDispatcher.dispatchEvent(event);
+
+export const registerUiEvent = <T extends NitroEvent>(
+	type: string | string[],
+	handler: (evt: T) => void
+) => registerNitroEvent(type, UI_EVENT_DISPATCHER, handler);
+
+export const DispatchUiEvent = (event: NitroEvent) => DispatchEvent(UI_EVENT_DISPATCHER, event);
 
 export const registerMainEvent = <T extends NitroEvent>(
 	type: string | string[],
@@ -34,3 +46,9 @@ export const registerLocalizationEvent = <T extends NitroEvent>(
 	type: string | string[],
 	handler: (evt: T) => void
 ) => registerNitroEvent(type, GetNitroInstance().localization.events, handler);
+
+
+export const registerRoomSessionManagerEvent = <T extends NitroEvent>(
+	type: string | string[],
+	handler: (evt: T) => void
+) => registerNitroEvent(type, GetRoomSessionManager().events, handler);
