@@ -42,6 +42,6 @@
 		initialize();
 	});
 </script>
-<div class="absolute bottom-0 left-0">
-	<button onclick={() => CreateLinkEvent("navigator/goto/home")}>Go To Home</button>
+<div class="cursor-pointer absolute bottom-0 left-0">
+	<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/goto/home")}>Go To Home</button>
 </div>

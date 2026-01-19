@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { GetNitroInstance } from '$lib/api/GetNitroInstance';
-	import { getRoomSession, handleRoomState, registerRoomEvents } from '$lib/events/room.svelte';
+	import { GetNitroInstance, DispatchTouchEvent, DispatchMouseEvent } from '$lib/api';
+	import { getRoomSession, handleRoomState, registerRoomEvents } from '$lib/events';
 	import { onMount } from 'svelte';
-	import { DispatchMouseEvent } from '$lib/api/rooms/DispatchMouseEvent';
-	import { DispatchTouchEvent } from '$lib/api/rooms/DispatchTouchEvent';
 
 	function attachView(node: HTMLElement) {
 		const canvas = GetNitroInstance().application.renderer.view;
