@@ -3,9 +3,9 @@
 	import { Nitro } from '@nitrots/nitro-renderer';
 	import { initialize, getIsReady } from "$lib";
 	import { type Snippet, onMount } from "svelte";
-	import RoomView from "$lib/components/RoomView.svelte";
+	import RoomView from "$lib/components/Room.svelte";
 	import LoadingView from "$lib/themes/default/views/loading/LoadingView.svelte";
-	import LandingView from '$lib/components/LandingView.svelte';
+	import LandingView from '$lib/components/Landing.svelte';
 
 	let MainView = $state<Snippet>();
 
