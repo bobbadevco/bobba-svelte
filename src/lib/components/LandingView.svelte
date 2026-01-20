@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { GetConfiguration } from "$lib/api";
-	import { getUserLook, initializeSession, registerRoomSessionManagerEvent } from "$lib/events";
+	import { getUserInfo, getUserLook, initializeSession, registerRoomSessionManagerEvent } from "$lib/events";
 	import { NitroConfiguration, RoomSessionEvent } from "@nitrots/nitro-renderer";
 	import { onMount } from "svelte";
 
     let isVisible = $state(true);
+    let avatarLook = $derived(getUserLook());
 
-    const avatarLook = getUserLook();
     const widgetSlotCount = 7;
 
     const hotelViewConf = GetConfiguration<{ images: { [key: string]: string } }>('hotelview', { images: {} });
@@ -39,5 +39,7 @@
 </script>
 
 {#if isVisible}
-    <div class="absolute top-0 left-0 w-full h-full bg-black/50">asd</div>
+    <div class="fixed d-block w-full h-full" style={ (backgroundColor && backgroundColor) && `background-color: ${backgroundColor};` }>
+        <div></div>
+    </div>
 {/if}

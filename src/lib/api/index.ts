@@ -2,10 +2,5 @@ export * from './communication';
 export * from './rooms';
 export * from './session';
 export * from './utils';
-export * from './GetCommunication';
-export * from './GetConfiguration';
-export * from './GetConfigurationManager';
-export * from './GetNitroCore';
-export * from './GetNitroInstance'
-export * from './AddLinkEventTracker';
-export * from './CreateLinkEvent';
+export * from './client';
+export * from './GetClientVersions';
