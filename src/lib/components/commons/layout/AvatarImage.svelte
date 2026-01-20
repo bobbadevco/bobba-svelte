@@ -14,7 +14,7 @@
 
     let {
 				class: classes,
-        figure = $bindable(''),
+        figure = '',
         gender = 'M',
         headOnly = false,
         direction = 2,
