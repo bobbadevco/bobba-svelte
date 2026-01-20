@@ -6,6 +6,7 @@
 	import RoomView from "$lib/components/Room.svelte";
 	import LoadingView from "$lib/themes/default/views/loading/LoadingView.svelte";
 	import LandingView from '$lib/components/Landing.svelte';
+	import MainLogic from '$lib/components/logic/MainLogic.svelte';
 
 	let MainView = $state<Snippet>();
 
@@ -28,6 +29,7 @@
 	{#if getIsReady() }
 		<LandingView />
 		<RoomView />
+		<MainLogic />
 	{/if}
 	{#if MainView && getIsReady()}
 		{@render MainView()}
