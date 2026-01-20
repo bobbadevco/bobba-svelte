@@ -19,8 +19,15 @@
 			y += e.movementY;
 		}
 	}
+
+	function onmouseout() {
+		moving = false;
+	}
+	function onblur() {
+		moving = false;
+	}
 </script>
 
-<div role="tab" tabindex="-1" aria-roledescription="draggable window" {onmousedown} {onmouseup} {onmousemove} class={[classes]}>
+<div role="tab" tabindex="-1" aria-roledescription="draggable window" {onmousedown} {onmouseup} {onmousemove} {onmouseout} {onblur} class={[classes]}>
 	{@render children?.()}
 </div>

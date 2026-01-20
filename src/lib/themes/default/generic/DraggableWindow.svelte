@@ -41,7 +41,7 @@
 
 		{@render children?.()}
 
-		<div tabindex="-1" role="button" class="absolute bottom-0 right-0 size-10 cursor-se-resize" {onblur} {onmousedown} {onmouseup} {onmousemove} {onmouseout}>
+		<div tabindex="-1" role="button" class="absolute -bottom-5 -right-5 size-10 cursor-se-resize" {onblur} {onmousedown} {onmouseup} {onmousemove} {onmouseout}>
 
 		</div>
 	</div>
