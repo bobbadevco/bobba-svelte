@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import NavigatorView from '$lib/themes/default/components/NavigatorView.svelte';
 	import { GetCommunication } from '$lib/api';
+	import NavigatorView from './views/navigator/NavigatorView.svelte';
 
 	onMount(
 		() => {

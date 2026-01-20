@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { GetConfiguration, GetNitroInstance } from '$lib/api';
-	import RoomView from "$lib/components/commons/RoomView.svelte";
+	import { Nitro } from '@nitrots/nitro-renderer';
 	import { initialize, getIsReady } from "$lib";
 	import { type Snippet, onMount } from "svelte";
-	import LoadingView from "$lib/themes/default/components/loading/LoadingView.svelte";
-	import { Nitro } from '@nitrots/nitro-renderer';
+	import RoomView from "$lib/components/RoomView.svelte";
+	import LoadingView from "$lib/themes/default/views/loading/LoadingView.svelte";
+	import LandingView from '$lib/components/LandingView.svelte';
 
 	let MainView = $state<Snippet>();
 
@@ -13,6 +14,7 @@
 			Nitro.bootstrap();
 			GetNitroInstance().core.configuration.init();
 			initialize();
+			
 			const theme = GetConfiguration<string>('theme', 'default');
 			const mainComponentPath = `/src/lib/themes/${theme}/MainView.svelte`;
 			MainView = (await import(mainComponentPath)).default;
@@ -24,6 +26,7 @@
 		<LoadingView />
 	{/if}
 	{#if getIsReady() }
+		<LandingView />
 		<RoomView />
 	{/if}
 	{#if MainView && getIsReady()}

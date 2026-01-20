@@ -1,6 +1,7 @@
 export * from './communication';
 export * from './rooms';
 export * from './session';
+export * from './utils';
 export * from './GetCommunication';
 export * from './GetConfiguration';
 export * from './GetConfigurationManager';

@@ -10,7 +10,7 @@ const requiredFiles = [
     'ui-config.json'
 ];
 
-const staticDir = path.resolve(__dirname, '../static');
+const staticDir = path.resolve(__dirname, './static');
 const missingFiles = [];
 
 requiredFiles.forEach(file => {
