@@ -3,9 +3,7 @@
 	import type { ClassValue } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
 
-	let {x = $bindable(0), y = $bindable(0), class: classes = "", children = undefined}: {x?: number, y?: number, class?: ClassValue, children?: Snippet} = $props();
-
-	let moving = $state(false);
+	let {x = $bindable(0), y = $bindable(0), moving = $bindable(false), class: classes = "", children = undefined}: {x?: number, y?: number, moving?: boolean, class?: ClassValue, children?: Snippet} = $props();
 
 	function onmousedown() {
 		moving = true;
