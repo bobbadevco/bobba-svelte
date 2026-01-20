@@ -5,7 +5,7 @@
 		import { untrack } from 'svelte';
 
     interface AvatarImageProps extends HTMLAttributes<HTMLDivElement> {
-				class: ClassValue;
+				class?: ClassValue;
         figure?: string;
         gender?: string;
         headOnly?: boolean;
