@@ -3,6 +3,7 @@
 	import { AddEventLinkTracker, CreateLinkEvent, TryVisitRoom, RemoveLinkEventTracker } from '$lib/api';
 	import { onMount } from 'svelte';
 	import { getHomeRoomId, registerNavigatorEvents } from '$lib/events/navigator.svelte';
+	import DraggableWindow from '$lib/themes/default/generic/DraggableWindow.svelte';
 
 	let isVisible = $state(false);
 
@@ -56,3 +57,10 @@
 		<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/goto/325")}>test</button>
 	{/if}
 </div>
+<DraggableWindow bind:visible={isVisible} >
+	<div class="h-40 flex flex-col bg-black">
+		<p class="text-white">
+			testinggg
+		</p>
+	</div>
+</DraggableWindow>
