@@ -1,97 +1,65 @@
 <script lang="ts">
-    import { AvatarScaleType, AvatarSetType } from '@nitrots/nitro-renderer';
+    import { AvatarScaleType, AvatarSetType, type IAvatarImage } from '@nitrots/nitro-renderer';
     import { GetAvatarRenderManager } from '$lib/api';
-    import { onDestroy } from 'svelte';
-    import type { HTMLAttributes, ClassValue } from 'svelte/elements';
+		import type { ClassValue, HTMLAttributes } from 'svelte/elements';
+		import { untrack } from 'svelte';
 
     interface AvatarImageProps extends HTMLAttributes<HTMLDivElement> {
+				class: ClassValue;
         figure?: string;
         gender?: string;
         headOnly?: boolean;
         direction?: number;
         scale?: number;
-        class?: ClassValue,
     }
 
     let {
-        figure = '',
+				class: classes,
+        figure = $bindable(''),
         gender = 'M',
         headOnly = false,
         direction = 2,
         scale = 1,
-        class: className = '',
         style = '',
         ...rest
     }: AvatarImageProps = $props();
 
-    let avatarUrl = $state<string | null>(null);
-    let randomValue = $state(-1);
-    let isDisposed = false;
-    
+		let avatarUrl = $state('');
 
-    $effect(() => {
-        const currentFigure = figure;
-        const currentGender = gender;
-        const currentDirection = direction;
-        const currentHeadOnly = headOnly;
-        randomValue;
+		const resetFigure = (f: string) => {
+			let avatarImage: undefined | IAvatarImage;
+			untrack(() => avatarImage = getAvatarImage(f, gender));
+			if (!avatarImage) return;
+			const img = avatarImage.getCroppedImage(headOnly ? AvatarSetType.HEAD : AvatarSetType.FULL);
+			if (img) avatarUrl = img.src;
+			avatarImage.dispose();
+		};
 
-        const avatarImage = GetAvatarRenderManager().createAvatarImage(
-            currentFigure,
-            AvatarScaleType.LARGE,
-            currentGender,
-            {
-                resetFigure: (f) => {
-                    if (isDisposed) return;
-                    randomValue = Math.random();
-                },
-                dispose: () => {},
-                disposed: false
-            },
-            null
-        );
+		const getAvatarImage = (f: string, g: string) => {
+			const out = GetAvatarRenderManager().createAvatarImage(
+				f,
+				AvatarScaleType.LARGE,
+				g,
+				{
+					resetFigure,
+					dispose: () => {},
+					disposed: false
+				},
+				undefined
+			);
+			let setType = AvatarSetType.FULL;
+			if (!out) return;
 
-        if (!avatarImage) return;
+			untrack(() => out.setDirection(setType, direction));
+			return out;
+		};
 
-        let setType = AvatarSetType.FULL;
-        if (currentHeadOnly) setType = AvatarSetType.HEAD;
+		$effect(
+			() => {
+				resetFigure(figure);
+			}
+		);
 
-        avatarImage.setDirection(setType, currentDirection);
-
-        const image = avatarImage.getCroppedImage(setType);
-        if (image) avatarUrl = image.src;
-
-        return () => {
-            avatarImage.dispose();
-        };
-    });
-
-    onDestroy(() => {
-        isDisposed = true;
-    });
-
-    let computedStyle = $derived.by(() => {
-        let styles: string[] = [];
-        
-        if (avatarUrl && avatarUrl.length) {
-            styles.push(`background-image: url('${avatarUrl}')`);
-        }
-        
-        if (scale !== 1) {
-            styles.push(`transform: scale(${scale})`);
-            if (!(scale % 1)) {
-                styles.push(`image-rendering: pixelated`);
-            }
-        }
-        
-        if (typeof style === 'string' && style.length > 0) {
-            styles.push(style);
-        }
-        
-        return styles.join('; ');
-    });
-
-    let computedClass = $derived(['w-[90px] h-[130px]', className].flat().filter(Boolean).join(' '));
 </script>
 
-<div class={computedClass} style={computedStyle} {...rest}></div>
+<div class={['w-[90px] h-[130px]', classes]} style:background-image="url('{avatarUrl}')" style:image-rendering={scale % 1 ? 'pixelated' : ''} style:transform="scale({scale})" {style} {...rest}></div>
