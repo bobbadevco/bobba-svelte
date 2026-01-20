@@ -21,7 +21,7 @@
 		}
 	);
 </script>
-<div class="w-screen h-screen overflow-hidden" style:image-rendering="pixelated">
+<div class="w-screen h-screen overflow-hidden bg-black" style:image-rendering="pixelated">
 	{#if !getIsReady()}
 		<LoadingView />
 	{/if}

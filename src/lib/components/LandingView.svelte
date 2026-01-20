@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { GetConfiguration } from "$lib/api";
-	import { getUserInfo, getUserLook, initializeSession, registerRoomSessionManagerEvent } from "$lib/events";
+	import { getRoomSession, getUserInfo, getUserLook, initializeSession, registerRoomSessionManagerEvent } from "$lib/events";
 	import { NitroConfiguration, RoomSessionEvent } from "@nitrots/nitro-renderer";
 	import { onMount } from "svelte";
+	import AvatarImage from "./commons/layout/AvatarImage.svelte";
 
-    let isVisible = $state(true);
+    let isVisible = $state(!getRoomSession());
     let avatarLook = $derived(getUserLook());
 
     const widgetSlotCount = 7;
@@ -28,10 +29,10 @@
                 switch(event.type)
                 {
                     case RoomSessionEvent.CREATED:
-                        isVisible = true;
+                        isVisible = false;
                         break;
                     case RoomSessionEvent.ENDED:
-                        isVisible = false;
+                        isVisible = true;
                         break;
                 }
         });
@@ -40,6 +41,6 @@
 
 {#if isVisible}
     <div class="fixed d-block w-full h-full" style={ (backgroundColor && backgroundColor) && `background-color: ${backgroundColor};` }>
-        <div></div>
+        <AvatarImage figure={ avatarLook }/>
     </div>
 {/if}

@@ -1,47 +1,62 @@
 <script lang="ts">
-	import {
-		type ILinkEventTracker,
-	} from '@nitrots/nitro-renderer';
-	import { AddEventLinkTracker, CreateLinkEvent, TryVisitRoom } from '$lib/api';
+	import { type ILinkEventTracker } from '@nitrots/nitro-renderer';
+	import { AddEventLinkTracker, CreateLinkEvent, TryVisitRoom, RemoveLinkEventTracker } from '$lib/api';
 	import { onMount } from 'svelte';
 	import { getHomeRoomId, registerNavigatorEvents } from '$lib/events/navigator.svelte';
 
-	const initialize = () => {
-		AddEventLinkTracker({
+	let isVisible = $state(false);
+
+	$effect(() => {
+		const linkTracker: ILinkEventTracker = {
 			linkReceived: (url: string) => {
 				const parts = url.split('/');
 
-				if(parts.length < 2) return;
+				let method = parts[0];
+				let value = parts.length > 1 ? parts[1] : undefined;
 
-				switch(parts[1]) {
+				if (method === 'navigator' && parts.length > 1) {
+					method = parts[1];
+					value = parts.length > 2 ? parts[2] : undefined;
+				}
+
+				switch (method) {
+					case 'show':
+						isVisible = true;
+						return;
+					case 'hide':
+						isVisible = false;
+						return;
+					case 'toggle':
+						isVisible = !isVisible;
+						return;
 					case 'goto':
-						if(parts.length <= 2) return;
+						if (!value) return;
 
-						switch(parts[2])
-						{
-							case 'home':
-								if(getHomeRoomId() <= 0) return;
-
-								TryVisitRoom(getHomeRoomId());
-								break;
-							default: {
-								const roomId = parseInt(parts[2]);
-
-								TryVisitRoom(roomId);
-							}
+						if (value === 'home') {
+							if (getHomeRoomId() > 0) TryVisitRoom(getHomeRoomId());
+						} else {
+							const roomId = parseInt(value);
+							if (!isNaN(roomId)) TryVisitRoom(roomId);
 						}
 						return;
 				}
 			},
 			eventUrlPrefix: 'navigator/',
-		} as ILinkEventTracker);
-	};
+		};
+
+		AddEventLinkTracker(linkTracker);
+
+		return () => RemoveLinkEventTracker(linkTracker);
+	});
 
 	onMount(() => {
 		registerNavigatorEvents();
-		initialize();
 	});
 </script>
-<div class="cursor-pointer absolute bottom-0 left-0">
+<div class="absolute bottom-0 left-0">
 	<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/goto/home")}>Go To Home</button>
+	<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/toggle")}>Show</button>
+	{#if isVisible}
+		<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/goto/325")}>test</button>
+	{/if}
 </div>
