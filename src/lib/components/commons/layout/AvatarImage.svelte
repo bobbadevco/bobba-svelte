@@ -2,7 +2,6 @@
     import { AvatarScaleType, AvatarSetType, type IAvatarImage } from '@nitrots/nitro-renderer';
     import { GetAvatarRenderManager } from '$lib/api';
 		import type { ClassValue, HTMLAttributes } from 'svelte/elements';
-		import { untrack } from 'svelte';
 
     interface AvatarImageProps extends HTMLAttributes<HTMLDivElement> {
 				class?: ClassValue;
@@ -28,7 +27,7 @@
 
 		const resetFigure = (f: string) => {
 			let avatarImage: undefined | IAvatarImage;
-			untrack(() => avatarImage = getAvatarImage(f, gender));
+			avatarImage = getAvatarImage(f, gender);
 			if (!avatarImage) return;
 			const img = avatarImage.getCroppedImage(headOnly ? AvatarSetType.HEAD : AvatarSetType.FULL);
 			if (img) avatarUrl = img.src;
@@ -50,7 +49,7 @@
 			let setType = AvatarSetType.FULL;
 			if (!out) return;
 
-			untrack(() => out.setDirection(setType, direction));
+			out.setDirection(setType, direction);
 			return out;
 		};
 
