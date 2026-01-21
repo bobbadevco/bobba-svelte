@@ -1,8 +1,7 @@
-import {  registerMainEvent, registerMessageEvent } from '$lib/events';
+import { registerMessageEvent } from '$lib/events';
 import {
 	GetGuestRoomResultEvent,
 	NavigatorHomeRoomEvent,
-	NitroCommunicationDemoEvent,
 	RoomDataParser,
 	UserInfoEvent,
 	type NitroEvent,
@@ -20,94 +19,201 @@ import {
 	LegacyExternalInterface,
 	RoomDoorbellAcceptedEvent,
 	FlatAccessDeniedMessageEvent,
-	GenericErrorEvent
+	GenericErrorEvent,
+	NavigatorMetadataEvent,
+	NavigatorTopLevelContext,
+	NavigatorSearchEvent,
+	NavigatorSearchResultSet,
+	NavigatorCategoryDataParser,
+	UserFlatCatsEvent,
+	NavigatorEventCategoryDataParser,
+	UserEventCatsEvent,
+	FlatCreatedEvent,
+	FollowFriendMessageComposer
 } from '@nitrots/nitro-renderer';
 import { DoorStateType } from '$lib/api/navigator/DoorStateType';
 import {
+	CreateLinkEvent,
 	CreateRoomSession,
 	GetConfiguration,
 	GetSessionDataManager,
+	LocalizeText,
 	SendMessageComposer,
 	TryVisitRoom
 } from '$lib/api';
+import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
+import { NotificationAlertType } from '$lib/api/notification/NotificationAlertType';
 
-class NavigatorListener {
-	homeRoomId: number = $state(0);
+class NavigatorListener implements ILinkEventTracker {
+	homeRoomId = $state(0);
 	isVisible: boolean = $state(false);
-	doorData = $state<{roomInfo: RoomDataParser | undefined, state: number}>({roomInfo: undefined, state: DoorStateType.NONE});
+	doorData = $state<{ roomInfo: RoomDataParser | undefined; state: number }>({
+		roomInfo: undefined,
+		state: DoorStateType.NONE
+	});
 	enteredGuestRoom = $state<RoomDataParser>();
 	currentRoomIsStaffPick = $state(false);
 	createdFlatId = $state(-1);
-	linkTracker: ILinkEventTracker;
 	currentRoomRating = $state(0);
 	canRate = $state(false);
 	eventMod = $state(false);
 	roomPicker = $state(false);
 	currentRoomOwner = $state(false);
 	roomId = $state(-1);
-	
+	topLevelContext = $state<NavigatorTopLevelContext>();
+	topLevelContexts = $state<NavigatorTopLevelContext[]>();
+	searchResult = $state<NavigatorSearchResultSet>();
+	categories = $state<NavigatorCategoryDataParser[]>()	;
+	eventCategories = $state<NavigatorEventCategoryDataParser[]>();
+	settingsReceived = $state(false);
+
+	eventUrlPrefix = 'navigator/';
+
 	private static instance: NavigatorListener;
 
+
+	linkReceived = (url: string) => {
+		const parts = url.split('/');
+
+		let method = parts[0];
+		let value = parts.length > 1 ? parts[1] : undefined;
+
+		if (method === 'navigator' && parts.length > 1) {
+			method = parts[1];
+			value = parts.length > 2 ? parts[2] : undefined;
+		}
+
+		switch (method) {
+			case 'show':
+				this.isVisible = true;
+				return;
+			case 'hide':
+				this.isVisible = false;
+				return;
+			case 'toggle':
+				this.isVisible = !this.isVisible;
+				return;
+			case 'goto':
+				if (!value) return;
+
+				if (value === 'home') {
+					if (this.homeRoomId > 0) TryVisitRoom(this.homeRoomId);
+				} else {
+					const roomId = parseInt(value);
+					if (!isNaN(roomId)) TryVisitRoom(roomId);
+				}
+				return;
+		}
+	};
+
 	constructor() {
-		registerMainEvent(NitroCommunicationDemoEvent.CONNECTION_AUTHENTICATED, this.init);
-		this.linkTracker = {
-			linkReceived: (url: string) => {
-				const parts = url.split('/');
-
-				let method = parts[0];
-				let value = parts.length > 1 ? parts[1] : undefined;
-
-				if (method === 'navigator' && parts.length > 1) {
-					method = parts[1];
-					value = parts.length > 2 ? parts[2] : undefined;
-				}
-
-				switch (method) {
-					case 'show':
-						this.isVisible = true;
-						return;
-					case 'hide':
-						this.isVisible = false;
-						return;
-					case 'toggle':
-						this.isVisible = !this.isVisible;
-						return;
-					case 'goto':
-						if (!value) return;
-
-						if (value === 'home') {
-							if (this.homeRoomId > 0) TryVisitRoom(this.homeRoomId);
-						} else {
-							const roomId = parseInt(value);
-							if (!isNaN(roomId)) TryVisitRoom(roomId);
-						}
-						return;
-				}
-			},
-			eventUrlPrefix: 'navigator/'
-		};
 	}
 
-	private init(_e: NitroEvent) {
-		registerMessageEvent(NavigatorHomeRoomEvent, this.onHomeRoom);
-		registerMessageEvent(GetGuestRoomResultEvent, this.onGuestResult);
-		registerMessageEvent(RoomScoreEvent, this.onRoomScore);
-		registerMessageEvent(RoomSettingsUpdatedEvent, this.onRoomSettingsUpdate);
-		registerMessageEvent(UserInfoEvent, this.onUserInfo);
-		registerMessageEvent(UserPermissionsEvent, this.onUserPermissions);
-		registerMessageEvent(RoomForwardEvent, this.onRoomForward);
-		registerMessageEvent(RoomEntryInfoMessageEvent, this.onRoomEntryInfo);
-		registerMessageEvent(RoomDoorbellAcceptedEvent, this.onRoomDoorbellAccepted);
-		registerMessageEvent(FlatAccessDeniedMessageEvent, this.onFlatAccessDenied);
-		registerMessageEvent(GenericErrorEvent, this.onGenericError);
+	public init(_e: NitroEvent) {
+		registerMessageEvent(NavigatorHomeRoomEvent, this.onHomeRoom.bind(this));
+		registerMessageEvent(GetGuestRoomResultEvent, this.onGuestResult.bind(this));
+		registerMessageEvent(RoomScoreEvent, this.onRoomScore.bind(this));
+		registerMessageEvent(RoomSettingsUpdatedEvent, this.onRoomSettingsUpdate.bind(this));
+		registerMessageEvent(UserInfoEvent, this.onUserInfo.bind(this));
+		registerMessageEvent(UserPermissionsEvent, this.onUserPermissions.bind(this));
+		registerMessageEvent(RoomForwardEvent, this.onRoomForward.bind(this));
+		registerMessageEvent(RoomEntryInfoMessageEvent, this.onRoomEntryInfo.bind(this));
+		registerMessageEvent(RoomDoorbellAcceptedEvent, this.onRoomDoorbellAccepted.bind(this));
+		registerMessageEvent(FlatAccessDeniedMessageEvent, this.onFlatAccessDenied.bind(this));
+		registerMessageEvent(GenericErrorEvent, this.onGenericError.bind(this));
+		registerMessageEvent(NavigatorMetadataEvent, this.onMetadata.bind(this));
+		registerMessageEvent(NavigatorSearchEvent, this.onSearch.bind(this));
+		registerMessageEvent(UserFlatCatsEvent, this.onUserFlatCategories.bind(this));
+		registerMessageEvent(UserEventCatsEvent, this.onUserEventCategories.bind(this));
+		registerMessageEvent(FlatCreatedEvent, this.onFlatCreated.bind(this));
+	}
+
+
+
+	private onFlatCreated(event: FlatCreatedEvent) {
+		const parser = event.getParser();
+		CreateRoomSession(parser.roomId);
+	}
+
+	private onUserEventCategories(event: UserEventCatsEvent) {
+		const parser = event.getParser();
+		this.eventCategories = parser.categories;
+	}
+
+	private onUserFlatCategories(event: UserFlatCatsEvent) {
+		const parser = event.getParser();
+		this.categories = parser.categories;
+	}
+
+	private onSearch(event: NavigatorSearchEvent) {
+		const parser = event.getParser();
+		this.searchResult = parser.result;
+		let currContext = this.topLevelContext;
+
+		if (!currContext) currContext = ((this.topLevelContexts && this.topLevelContexts.length && this.topLevelContexts[0]) || undefined);
+		if (!currContext) return;
+
+		if ((parser.result.code !== currContext.code) && this.topLevelContexts && this.topLevelContexts.length) {
+			for (const context of this.topLevelContexts) {
+				if (context.code !== parser.result.code) continue;
+				currContext = context;
+			}
+		}
+
+		if (this.topLevelContexts) {
+			for (const context of this.topLevelContexts) {
+				if (context.code !== parser.result.code) continue;
+				currContext = context;
+			}
+		}
+
+		this.topLevelContext = currContext;
+	}
+
+	private onMetadata(event: NavigatorMetadataEvent) {
+		const parser = event.getParser();
+		this.topLevelContexts = parser.topLevelContexts;
+		if (parser.topLevelContexts.length > 0) {
+			this.topLevelContext = parser.topLevelContexts[0];
+		}
 	}
 
 	private onGenericError(event: GenericErrorEvent) {
 		const parser = event.getParser();
 
-		switch(parser.errorCode) {
+		switch (parser.errorCode) {
 			case -100002:
 				this.doorData.state = DoorStateType.STATE_WRONG_PASSWORD;
+				return;
+			case 4009:
+				getAlertListener().simpleAlert(LocalizeText('navigator.alert.need.to.be.vip'), NotificationAlertType.DEFAULT, undefined, undefined, LocalizeText('generic.alert.title'));
+				return;
+			case 4010:
+				getAlertListener().simpleAlert(
+					LocalizeText('navigator.alert.invalid_room_name'),
+					NotificationAlertType.DEFAULT,
+					undefined,
+					undefined,
+					LocalizeText('generic.alert.title')
+				);
+				return;
+			case 4011:
+				getAlertListener().simpleAlert(
+					LocalizeText('navigator.alert.cannot_perm_ban'),
+					NotificationAlertType.DEFAULT,
+					undefined,
+					undefined,
+					LocalizeText('generic.alert.title')
+				);
+				return;
+			case 4013:
+				getAlertListener().simpleAlert(
+					LocalizeText('navigator.alert.room_in_maintenance'),
+					NotificationAlertType.DEFAULT,
+					undefined,
+					undefined,
+					LocalizeText('generic.alert.title')
+				);
 				return;
 		}
 	}
@@ -115,14 +221,14 @@ class NavigatorListener {
 	private onFlatAccessDenied(event: FlatAccessDeniedMessageEvent) {
 		const parser = event.getParser();
 
-		if (!parser.userName || (parser.userName.length === 0)) {
+		if (!parser.userName || parser.userName.length === 0) {
 			this.doorData.state = DoorStateType.STATE_NO_ANSWER;
 		}
 	}
 
 	private onRoomDoorbellAccepted(event: RoomDoorbellAcceptedEvent) {
 		const parser = event.getParser();
-		if (!parser.userName || (parser.userName.length === 0)) {
+		if (!parser.userName || parser.userName.length === 0) {
 			this.doorData.state = DoorStateType.STATE_ACCEPTED;
 		}
 	}
@@ -137,7 +243,7 @@ class NavigatorListener {
 		if (LegacyExternalInterface.available) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
-			LegacyExternalInterface.call('legacyTrack', 'navigator', 'private', [ parser.roomId ]);
+			LegacyExternalInterface.call('legacyTrack', 'navigator', 'private', [parser.roomId]);
 		}
 	}
 
@@ -148,8 +254,8 @@ class NavigatorListener {
 
 	private onUserPermissions(event: UserPermissionsEvent) {
 		const parser = event.getParser();
-		this.eventMod = (parser.securityLevel >= SecurityLevel.MODERATOR);
-		this.roomPicker = (parser.securityLevel >= SecurityLevel.COMMUNITY);
+		this.eventMod = parser.securityLevel >= SecurityLevel.MODERATOR;
+		this.roomPicker = parser.securityLevel >= SecurityLevel.COMMUNITY;
 	}
 
 	private onUserInfo(_event: UserInfoEvent) {
@@ -170,24 +276,59 @@ class NavigatorListener {
 
 	private onHomeRoom(event: NavigatorHomeRoomEvent) {
 		const parser = event.getParser();
+		const prevSettingsReceived = this.settingsReceived;
 		this.homeRoomId = parser.homeRoomId;
+		this.settingsReceived = true;
+
+		if (prevSettingsReceived) {
+			return;
+		}
+
+		let forwardType = -1;
+		let forwardId = -1;
+
+		if((GetConfiguration<string>('friend.id') !== undefined) && (parseInt(GetConfiguration<string>('friend.id')) > 0)) {
+			forwardType = 0;
+			SendMessageComposer(
+				new FollowFriendMessageComposer(parseInt(GetConfiguration<string>('friend.id')))
+			);
+		}
+
+		if (
+			GetConfiguration<number>('forward.type') !== undefined &&
+			GetConfiguration<number>('forward.id') !== undefined
+		) {
+			forwardType = parseInt(GetConfiguration<string>('forward.type'));
+			forwardId = parseInt(GetConfiguration<string>('forward.id'));
+		}
+
+		if (forwardType === 2) {
+			TryVisitRoom(forwardId);
+		} else if (forwardType === -1 && parser.roomIdToEnter > 0) {
+			CreateLinkEvent('navigator/close');
+
+			if (parser.roomIdToEnter !== parser.homeRoomId) {
+				CreateRoomSession(parser.roomIdToEnter);
+			} else {
+				CreateRoomSession(parser.homeRoomId);
+			}
+		}
 	}
 
 	private onGuestResult(event: GetGuestRoomResultEvent) {
 		const parser = event.getParser();
-		if (parser.roomEnter)
-		{
-			this.doorData = {roomInfo: undefined, state: DoorStateType.NONE};
+		if (parser.roomEnter) {
+			this.doorData = { roomInfo: undefined, state: DoorStateType.NONE };
 			this.enteredGuestRoom = parser.data;
 			this.currentRoomIsStaffPick = parser.staffPick;
-			if (this.createdFlatId != parser.data.roomId && parser.data.displayRoomEntryAd)
-			{
-				if (GetConfiguration<boolean>('roomenterad.habblet.enabled', false)) HabboWebTools.openRoomEnterAd();
+			if (this.createdFlatId != parser.data.roomId && parser.data.displayRoomEntryAd) {
+				if (GetConfiguration<boolean>('roomenterad.habblet.enabled', false))
+					HabboWebTools.openRoomEnterAd();
 			}
 			this.createdFlatId = 0;
 		} else if (parser.roomForward) {
-			if ((parser.data.ownerName !== GetSessionDataManager().userName) && !parser.isGroupMember) {
-				switch(parser.data.doorMode) {
+			if (parser.data.ownerName !== GetSessionDataManager().userName && !parser.isGroupMember) {
+				switch (parser.data.doorMode) {
 					case RoomDataParser.DOORBELL_STATE:
 						this.doorData.roomInfo = parser.data;
 						this.doorData.state = DoorStateType.START_DOORBELL;
@@ -199,7 +340,13 @@ class NavigatorListener {
 				}
 			}
 
-			if ((parser.data.doorMode === RoomDataParser.NOOB_STATE) && !GetSessionDataManager().isAmbassador && !GetSessionDataManager().isRealNoob && !GetSessionDataManager().isModerator) return;
+			if (
+				parser.data.doorMode === RoomDataParser.NOOB_STATE &&
+				!GetSessionDataManager().isAmbassador &&
+				!GetSessionDataManager().isRealNoob &&
+				!GetSessionDataManager().isModerator
+			)
+				return;
 
 			CreateRoomSession(parser.data.roomId);
 		} else {
@@ -207,7 +354,7 @@ class NavigatorListener {
 			this.currentRoomIsStaffPick = parser.staffPick;
 		}
 	}
-	
+
 	public static getInstance(): NavigatorListener {
 		if (!NavigatorListener.instance) {
 			NavigatorListener.instance = new NavigatorListener();
@@ -215,5 +362,6 @@ class NavigatorListener {
 		return NavigatorListener.instance;
 	}
 }
+
 
 export const getNavigatorListener = () => NavigatorListener.getInstance();

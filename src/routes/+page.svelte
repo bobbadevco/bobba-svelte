@@ -9,10 +9,11 @@
 	import MainLogic from '$lib/components/logic/MainLogic.svelte';
 
 	let MainView = $state<Snippet>();
-
+	let bootstrapped = $state(false);
 	onMount(
 		async () => {
 			Nitro.bootstrap();
+			bootstrapped = true;
 			GetNitroInstance().core.configuration.init();
 			initialize();
 			
@@ -26,10 +27,12 @@
 	{#if !getIsReady()}
 		<LoadingView />
 	{/if}
+	{#if bootstrapped}
+		<MainLogic />
+	{/if}
 	{#if getIsReady() }
 		<LandingView />
 		<RoomView />
-		<MainLogic />
 	{/if}
 	{#if MainView && getIsReady()}
 		{@render MainView()}
