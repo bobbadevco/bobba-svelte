@@ -19,7 +19,7 @@
 				{title}
 			</p>
 			<button class="hover:brightness-125 cursor-pointer" type="button" onclick={() => visible = false}>
-				<img src={close_button} alt="close button" />
+				<img src={close_button} alt="close button" class="w-6.25 h-6.75" />
 			</button>
 		</Draggable>
 		<div class="h-[calc(100%-3rem)] min-h-fit relative flex flex-col">
