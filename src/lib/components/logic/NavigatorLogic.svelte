@@ -1,8 +1,13 @@
 <script lang="ts">
 	import {onMount} from 'svelte';
-	import {initialize} from '$lib/events/navigator.svelte';
+	import { AddEventLinkTracker, RemoveLinkEventTracker } from '$lib/api';
+	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 
-	onMount(
-		initialize
-	);
+	onMount(() =>
+	{
+		AddEventLinkTracker(getNavigatorListener().linkTracker);
+		return () => {
+			RemoveLinkEventTracker(getNavigatorListener().linkTracker);
+		}
+	});
 </script>

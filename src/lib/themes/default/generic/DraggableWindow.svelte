@@ -2,7 +2,6 @@
 	import Draggable from '$lib/components/commons/layout/Draggable.svelte';
 	import type { ClassValue } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
-	import close_button from "$lib/assets/default/close.png";
 
 	let {visible = $bindable(false), title='', class: classes = '', children = undefined}: { visible?: boolean, class?: ClassValue, children?: Snippet, title: string } = $props();
 
@@ -18,8 +17,10 @@
 			<p class="w-full text-center font-semibold">
 				{title}
 			</p>
-			<button class="hover:brightness-125 cursor-pointer" type="button" onclick={() => visible = false}>
-				<img src={close_button} alt="close button" class="w-6.25 h-6.75" />
+			<button aria-label="close" class="bg-default-inactive hover:bg-default-active border border-black border-b-[3px] rounded-md size-7 m-auto cursor-pointer p-0.75 pb-1" type="button" onclick={() => visible = false}>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="size-full">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+				</svg>
 			</button>
 		</Draggable>
 		<div class="h-[calc(100%-3rem)] min-h-fit relative flex flex-col">
