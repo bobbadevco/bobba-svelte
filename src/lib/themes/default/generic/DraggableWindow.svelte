@@ -2,6 +2,7 @@
 	import Draggable from '$lib/components/commons/layout/Draggable.svelte';
 	import type { ClassValue } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
+	import close_button from "$lib/assets/default/close.png";
 
 	let {visible = $bindable(false), title='', class: classes = '', children = undefined}: { visible?: boolean, class?: ClassValue, children?: Snippet, title: string } = $props();
 
@@ -12,13 +13,18 @@
 </script>
 
 {#if visible}
-	<div style:width="{width}px" style:height="{height}px" style:left="{x}px" style:top="{y}px" class={["absolute flex flex-col min-w-fit min-h-fit border border-red-500", classes]} bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
-		<Draggable bind:x={x} bind:y={y} class="h-20 w-full flex bg-black text-white flex-row justify-between items-center px-4 border border-blue-500">
-			{title}
-			<button class="rounded-md border bg-rose-800 text-white p-2" type="button" onclick={() => visible = false}>x</button>
+	<div style:width="{width}px" style:height="{height}px" style:left="{x}px" style:top="{y}px" class={["absolute rounded-lg  px-4 text-white bg-default-primary flex flex-col min-w-fit min-h-fit", classes]} bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
+		<Draggable bind:x={x} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b border-b-default-tertiary">
+			<p class="w-full text-center font-semibold">
+				{title}
+			</p>
+			<button class="hover:brightness-125 cursor-pointer" type="button" onclick={() => visible = false}>
+				<img src={close_button} alt="close button" />
+			</button>
 		</Draggable>
-
-		{@render children?.()}
+		<div class="h-[calc(100%-3rem)] min-h-fit relative flex flex-col">
+				{@render children?.()}
+		</div>
 		<Draggable bind:x={width} bind:y={height} class="absolute -bottom-5 -right-5 cursor-se-resize size-10" />
 	</div>
 {/if}

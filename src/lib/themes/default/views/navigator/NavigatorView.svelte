@@ -2,8 +2,8 @@
 	import { CreateLinkEvent } from '$lib/api';
 	import DraggableWindow from '$lib/themes/default/generic/DraggableWindow.svelte';
 	import {componentState} from '$lib/events/navigator.svelte';
-
 </script>
+
 <div class="absolute bottom-0 left-0">
 	<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/goto/home")}>Go To Home</button>
 	<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/toggle")}>Show</button>
@@ -12,7 +12,7 @@
 	{/if}
 </div>
 <DraggableWindow title="Navigator" bind:visible={componentState.visible} >
-	<div class="h-[calc(100%-5rem)] min-h-fit relative flex flex-col bg-black">
+	<div class="size-full min-h-40 min-w-40">
 		<p class="text-white">
 			testinggg
 		</p>
