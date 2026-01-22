@@ -1,4 +1,4 @@
-import { registerMessageEvent } from '$lib/events';
+import { registerMainEvent, registerMessageEvent } from '$lib/events';
 import {
 	GetGuestRoomResultEvent,
 	NavigatorHomeRoomEvent,
@@ -29,10 +29,12 @@ import {
 	NavigatorEventCategoryDataParser,
 	UserEventCatsEvent,
 	FlatCreatedEvent,
-	FollowFriendMessageComposer
+	FollowFriendMessageComposer,
+	NitroCommunicationDemoEvent
 } from '@nitrots/nitro-renderer';
 import { DoorStateType } from '$lib/api/navigator/DoorStateType';
 import {
+	AddEventLinkTracker,
 	CreateLinkEvent,
 	CreateRoomSession,
 	GetConfiguration,
@@ -107,9 +109,11 @@ class NavigatorListener implements ILinkEventTracker {
 	};
 
 	constructor() {
+		registerMainEvent(NitroCommunicationDemoEvent.CONNECTION_AUTHENTICATED, this.init.bind(this));
 	}
 
 	public init(_e: NitroEvent) {
+		AddEventLinkTracker(this);
 		registerMessageEvent(NavigatorHomeRoomEvent, this.onHomeRoom.bind(this));
 		registerMessageEvent(GetGuestRoomResultEvent, this.onGuestResult.bind(this));
 		registerMessageEvent(RoomScoreEvent, this.onRoomScore.bind(this));
