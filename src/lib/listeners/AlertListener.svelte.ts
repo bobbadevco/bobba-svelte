@@ -18,13 +18,26 @@ import {
 	PetReceivedMessageEvent,
 	RespectReceivedEvent,
 	UserBannedMessageEvent,
-	type NitroEvent, Vector3d,
-    type IGetImageListener
+	type NitroEvent,
+	Vector3d,
+	type IGetImageListener,
+	MOTDNotificationEvent,
+	PetLevelNotificationEvent,
+	InfoFeedEnableMessageEvent,
+	ClubGiftSelectedEvent,
+	MaintenanceStatusMessageEvent,
+	ModeratorCautionEvent,
+	NotificationDialogMessageEvent,
+	HotelWillCloseInMinutesEvent,
+	HotelClosedAndOpensEvent,
+	ConnectionErrorEvent,
+	SimpleAlertMessageEvent
 } from '@nitrots/nitro-renderer';
 import { registerMainEvent, registerMessageEvent } from '$lib/events';
 import { NotificationBubbleItem } from '$lib/api/notification/NotificationBubbleItem';
 import { SvelteMap } from 'svelte/reactivity';
 import { NotificationBubbleType } from '$lib/api/notification/NotificationBubbleType';
+import { ProductImageUtility } from '$lib/api/utils/ProductImageUtility';
 
 const cleanText = (text: string) => (text && text.length ? text.replace(/\\r/g, '\r') : '');
 const getTimeZeroPadded = (time: number) =>
@@ -62,6 +75,194 @@ class AlertListener {
 		registerMessageEvent(UserBannedMessageEvent, this.onUserBanned.bind(this));
 		registerMessageEvent(HotelClosesAndWillOpenAtEvent, this.onHotelClosesAndWillOpenAt.bind(this));
 		registerMessageEvent(PetReceivedMessageEvent, this.onPetReceived.bind(this));
+		registerMessageEvent(MOTDNotificationEvent, this.onMOTDNotification.bind(this));
+		registerMessageEvent(PetLevelNotificationEvent, this.onPetLevelNotification.bind(this));
+		registerMessageEvent(InfoFeedEnableMessageEvent, this.onInfoFeedEnable.bind(this));
+		registerMessageEvent(ClubGiftSelectedEvent, this.onClubGiftSelected.bind(this));
+		registerMessageEvent(MaintenanceStatusMessageEvent, this.onMaintenanceStatus.bind(this));
+		registerMessageEvent(ModeratorCautionEvent, this.onModeratorCaution.bind(this));
+		registerMessageEvent(NotificationDialogMessageEvent, this.onNotificationDialog.bind(this));
+		registerMessageEvent(HotelWillCloseInMinutesEvent, this.onHotelWillCloseInMinutes.bind(this));
+		registerMessageEvent(HotelClosedAndOpensEvent, this.onHotelClosedAndOpens.bind(this));
+		registerMessageEvent(ConnectionErrorEvent, this.onConnectionError.bind(this));
+		registerMessageEvent(SimpleAlertMessageEvent, this.onSimpleAlert.bind(this));
+	}
+
+	private onSimpleAlert(event: SimpleAlertMessageEvent)	{
+		const parser = event.getParser();
+
+		this.simpleAlert(
+			LocalizeText(parser.alertMessage),
+			NotificationAlertType.DEFAULT,
+			undefined,
+			undefined,
+			LocalizeText(parser.titleMessage ? parser.titleMessage : 'notifications.broadcast.title')
+		);
+	}
+
+	private onConnectionError(event: ConnectionErrorEvent) {
+		const parser = event.getParser();
+
+		switch (parser.errorCode) {
+			default:
+			case 0:
+				this.simpleAlert(
+					LocalizeText(
+						'connection.server.error.desc',
+						['errorCode'],
+						[parser.errorCode.toString()]
+					),
+					NotificationAlertType.ALERT,
+					undefined,
+					undefined,
+					LocalizeText('connection.server.error.title')
+				);
+				break;
+			case 1001:
+			case 1002:
+			case 1003:
+			case 1004:
+			case 1005:
+			case 1006:
+			case 1007:
+			case 1008:
+			case 1009:
+			case 1010:
+			case 1011:
+			case 1012:
+			case 1013:
+			case 1014:
+			case 1015:
+			case 1016:
+			case 1017:
+			case 1018:
+			case 1019:
+				event.connection.dispose();
+				break;
+			case 4013:
+				this.simpleAlert(
+					LocalizeText('connection.room.maintenance.desc'),
+					NotificationAlertType.ALERT,
+					undefined,
+					undefined,
+					LocalizeText('connection.room.maintenance.title')
+				);
+				break;
+		}
+	}
+
+	private onHotelClosedAndOpens(event: HotelClosedAndOpensEvent) {
+		const parser = event.getParser();
+
+		this.simpleAlert(
+			LocalizeText(
+				'opening.hours.disconnected',
+				['h', 'm'],
+				[parser.openHour.toString(), parser.openMinute.toString()]
+			),
+			NotificationAlertType.DEFAULT,
+			undefined,
+			undefined,
+			LocalizeText('opening.hours.title')
+		);
+	}
+
+	private onHotelWillCloseInMinutes(event: HotelWillCloseInMinutesEvent) {
+		const parser = event.getParser();
+
+		this.simpleAlert(
+			LocalizeText('opening.hours.shutdown', ['m'], [parser.openMinute.toString()]),
+			NotificationAlertType.DEFAULT,
+			undefined,
+			undefined,
+			LocalizeText('opening.hours.title')
+		);
+	}
+
+	private onNotificationDialog(event: NotificationDialogMessageEvent) {
+		const parser = event.getParser();
+
+		this.showNotification(parser.type, parser.parameters);
+	}
+
+	private onModeratorCaution(event: ModeratorCautionEvent) {
+		const parser = event.getParser();
+
+		this.showModeratorMessage(parser.message, parser.url);
+	}
+
+	private onMaintenanceStatus(event: MaintenanceStatusMessageEvent)	{
+		const parser = event.getParser();
+
+		this.simpleAlert(
+			LocalizeText(
+				'maintenance.shutdown',
+				['m', 'd'],
+				[parser.minutesUntilMaintenance.toString(), parser.duration.toString()]
+			),
+			NotificationAlertType.DEFAULT,
+			undefined,
+			undefined,
+			LocalizeText('opening.hours.title')
+		);
+	}
+
+	private onClubGiftSelected(event: ClubGiftSelectedEvent) {
+		const parser = event.getParser();
+
+		if (!parser.products || !parser.products.length) return;
+
+		const productData = parser.products[0];
+
+		if (!productData) return;
+
+		this.showSingleBubble(
+			LocalizeText('notifications.text.club_gift.selected'),
+			NotificationBubbleType.INFO,
+			ProductImageUtility.getProductImageUrl(
+				productData.productType,
+				productData.furniClassId,
+				productData.extraParam
+			)
+		);
+	}
+
+	private onInfoFeedEnable(event: InfoFeedEnableMessageEvent)	 {
+		const parser = event.getParser();
+		this.bubblesDisabled = !parser.enabled;
+	}
+
+	private onPetLevelNotification(event: PetLevelNotificationEvent) {
+		const parser = event.getParser();
+		let imageUrl: string | undefined;
+		const imageResult = GetRoomEngine().getRoomObjectPetImage(
+			parser.figureData.typeId,
+			parser.figureData.paletteId,
+			parseInt(parser.figureData.color, 16),
+			new Vector3d(45 * 3),
+			64,
+			{} as IGetImageListener,
+			true
+		);
+
+		if (imageResult) imageUrl = imageResult.getImage().src;
+
+		this.showSingleBubble(
+			LocalizeText(
+				'notifications.text.petlevel',
+				['pet_name', 'level'],
+				[parser.petName, parser.level.toString()]
+			),
+			NotificationBubbleType.PETLEVEL,
+			imageUrl
+		);
+	}
+
+	private onMOTDNotification(event: MOTDNotificationEvent) {
+		const parser = event.getParser();
+		const messages = parser.messages.map(cleanText);
+		const alertItem = new NotificationAlertItem(messages, NotificationAlertType.MOTD, undefined, undefined, LocalizeText('notifications.motd.title'));
+		this.alerts.push(alertItem);
 	}
 
 	private onPetReceived(event: PetReceivedMessageEvent) {
@@ -70,7 +271,14 @@ class AlertListener {
 
 		let imageUrl: string | undefined = undefined;
 
-		const imageResult = GetRoomEngine().getRoomObjectPetImage(parser.pet.typeId, parser.pet.paletteId, parseInt(parser.pet.color, 16), new Vector3d(45 * 3), 64, {} as IGetImageListener, true);
+		const imageResult = GetRoomEngine().getRoomObjectPetImage(
+			parser.pet.typeId,
+			parser.pet.paletteId,
+			parseInt(parser.pet.color, 16),
+			new Vector3d(45 * 3),
+			64,
+			{} as IGetImageListener,
+			true);
 
 		if(imageResult) imageUrl = imageResult.getImage().src;
 
