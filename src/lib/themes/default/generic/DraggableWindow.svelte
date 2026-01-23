@@ -26,6 +26,6 @@
 		<div class="h-[calc(100%-3rem)] min-h-fit relative flex flex-col">
 				{@render children?.()}
 		</div>
-		<Draggable bind:x={width} bind:y={height} class="absolute -bottom-5 -right-5 cursor-se-resize size-10" />
+		<Draggable bind:x={width} bind:y={height} class="absolute -bottom-5 -right-5 cursor-se-resize size-20" />
 	</div>
 {/if}
