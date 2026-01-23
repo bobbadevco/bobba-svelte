@@ -1,9 +1,10 @@
 <script lang="ts">
-	import Draggable from '$lib/components/commons/layout/Draggable.svelte';
 	import type { ClassValue } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
+	import Draggable from '$lib/components/commons/layout/Draggable.svelte';
+	import draggableImg from '../../assets/draggable.png';
 
-	let {visible = $bindable(false), title='', class: classes = '', children = undefined}: { visible?: boolean, class?: ClassValue, children?: Snippet, title: string } = $props();
+	let {visible = $bindable(false), disableDrag = false, title='', class: classes = '', children = undefined}: { visible?: boolean, disableDrag?: boolean, class?: ClassValue, children?: Snippet, title: string } = $props();
 
 	let x = $state(0);
 	let y = $state(0);
@@ -17,7 +18,7 @@
 			<p class="w-full text-center font-semibold">
 				{title}
 			</p>
-			<button aria-label="close" class="bg-default-inactive hover:bg-default-active border border-black border-b-[3px] rounded-md size-7 m-auto cursor-pointer p-0.75 pb-1" type="button" onclick={() => visible = false}>
+			<button aria-label="close" class="absolute right-3 bg-default-inactive hover:bg-default-active border border-black border-b-[3px] rounded-[5px] size-6 m-auto cursor-pointer p-0.5" type="button" onclick={() => visible = false}>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="size-full">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
 				</svg>
@@ -26,6 +27,11 @@
 		<div class="h-[calc(100%-3rem)] min-h-fit relative flex flex-col">
 				{@render children?.()}
 		</div>
-		<Draggable bind:x={width} bind:y={height} class="absolute -bottom-5 -right-5 cursor-se-resize size-20" />
+		
+		{#if !disableDrag}
+			<Draggable bind:x={width} bind:y={height} class="absolute bottom-0 right-0 cursor-se-resize size-[19px]">
+				<img src={draggableImg} alt="draggable resize icon " class="pointer-events-none relative right-[3px] bottom-[3px] size-full"/>
+			</Draggable>
+		{/if}
 	</div>
 {/if}

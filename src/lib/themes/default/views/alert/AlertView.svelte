@@ -1,6 +1,6 @@
 <script lang="ts">
-import DraggableWindow from "$lib/themes/default/generic/DraggableWindow.svelte";
-import {getAlertListener} from "$lib/listeners/AlertListener.svelte";
+    import {getAlertListener} from "$lib/listeners/AlertListener.svelte";
+	import DraggableWindow from "../../generic/card/BobbaWindow.svelte";
 </script>
 
 {#each getAlertListener().alerts as alert}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CreateLinkEvent } from '$lib/api';
-	import DraggableWindow from '$lib/themes/default/generic/DraggableWindow.svelte';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
+	import DraggableWindow from '../../generic/card/BobbaWindow.svelte';
 
 </script>
 
