@@ -29,8 +29,8 @@
 		</div>
 		
 		{#if !disableDrag}
-			<Draggable bind:x={width} bind:y={height} class="absolute bottom-0 right-0 cursor-se-resize size-[19px]">
-				<img src={draggableImg} alt="draggable resize icon " class="pointer-events-none relative right-[3px] bottom-[3px] size-full"/>
+			<Draggable bind:x={width} bind:y={height} class="absolute bottom-0 right-0 cursor-se-resize size-4.75">
+				<img src={draggableImg} alt="draggable resize icon " class="pointer-events-none relative right-0.75 bottom-0.75 size-full"/>
 			</Draggable>
 		{/if}
 	</div>

@@ -5,8 +5,13 @@
 
 	let {x = $bindable(0), y = $bindable(0), moving = $bindable(false), class: classes = "", children = undefined}: {x?: number, y?: number, moving?: boolean, class?: ClassValue, children?: Snippet} = $props();
 
-	function onmousedown() {
+	let lastX = 0;
+	let lastY = 0;
+
+	function onmousedown(e: MouseEvent) {
 		moving = true;
+		lastX = e.clientX;
+		lastY = e.clientY;
 	}
 
 	function onmouseup() {
@@ -15,19 +20,18 @@
 
 	function onmousemove(e: MouseEvent) {
 		if (moving) {
-			x += e.movementX;
-			y += e.movementY;
+			x += e.clientX - lastX;
+			y += e.clientY - lastY;
+			lastX = e.clientX;
+			lastY = e.clientY;
 		}
 	}
 
-	function onmouseout() {
-		moving = false;
-	}
 	function onblur() {
 		moving = false;
 	}
 </script>
-
-<div role="tab" tabindex="-1" aria-roledescription="draggable window" {onmousedown} {onmouseup} {onmousemove} {onmouseout} {onblur} class={[classes]}>
+<svelte:window {onmouseup} {onmousemove} {onblur} />
+<div role="tab" tabindex="-1" aria-roledescription="draggable window" {onmousedown}  {onblur} class={[classes]}>
 	{@render children?.()}
 </div>

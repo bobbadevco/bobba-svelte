@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CreateLinkEvent } from '$lib/api';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
-	import DraggableWindow from '../../generic/card/BobbaWindow.svelte';
+	import BobbaWindow from '../../generic/card/BobbaWindow.svelte';
 
 </script>
 
@@ -12,10 +12,10 @@
 		<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/goto/325")}>test</button>
 	{/if}
 </div>
-<DraggableWindow title="Navigator" bind:visible={() => getNavigatorListener().isVisible, (v) => getNavigatorListener().isVisible = v} >
+<BobbaWindow title="Navigator" bind:visible={() => getNavigatorListener().isVisible, (v) => getNavigatorListener().isVisible = v} >
 	<div class="size-full min-h-40 min-w-40">
 		<p class="text-white">
 			testinggg
 		</p>
 	</div>
-</DraggableWindow>
+</BobbaWindow>
