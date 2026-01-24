@@ -21,7 +21,7 @@ class ToolbarListener {
     }
 
     public init(_e: NitroEvent) {
-        registerMessageEvent(PerkAllowancesMessageEvent, this.onPrkAllowances.bind(this));
+        registerMessageEvent(PerkAllowancesMessageEvent, this.onPerkAllowances.bind(this));
     }
 
     public static getInstance(): ToolbarListener {
@@ -31,7 +31,7 @@ class ToolbarListener {
 		return ToolbarListener.instance;
 	}
 
-    private onPrkAllowances(event: PerkAllowancesMessageEvent) {
+    private onPerkAllowances(event: PerkAllowancesMessageEvent) {
         const parser = event.getParser();
 
         this.useGuideTool = parser.isAllowed(PerkEnum.USE_GUIDE_TOOL);

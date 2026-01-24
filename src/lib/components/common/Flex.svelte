@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { ClassValue } from 'svelte/elements';
+	import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 
-	export interface FlexProps {
+	export interface FlexProps extends HTMLAttributes<HTMLDivElement> {
 		children?: Snippet,
 		fit?: boolean,
 		fullWidth?: boolean,
@@ -15,7 +15,6 @@
 		inline?: boolean,
 		grow?: boolean,
 		class?: ClassValue,
-		
 		pointer?: boolean,
 	}
 
@@ -23,7 +22,7 @@
 	const {children, pointer = false, column = false, reverse = false, center = false, wrap = true, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ... p }: FlexProps = $props();
 </script>
 
-<div class={[ "flex", 
+<div  class={[ "flex", 
 	column ? "flex-col" : "flex-row", 
 	pointer && "cursor-pointer",
 	wrap && "flex-wrap", 
