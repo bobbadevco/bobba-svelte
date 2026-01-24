@@ -8,8 +8,8 @@ export class ChatBubbleMessage {
 	public height: number = 0;
 	public skipMovement: boolean = false;
 
-	private _top: number = $state(0);
-	private _left: number = $state(0);
+	top: number = $state(0);
+	left: number = $state(0);
 
 	constructor(
 		public senderId: number = -1,
@@ -25,21 +25,5 @@ export class ChatBubbleMessage {
 		public color: string | undefined = undefined
 	) {
 		this.id = ++ChatBubbleMessage.BUBBLE_COUNTER;
-	}
-
-	public get top(): number {
-		return this._top;
-	}
-
-	public set top(value: number) {
-		this._top = value;
-	}
-
-	public get left(): number {
-		return this._left;
-	}
-
-	public set left(value: number) {
-		this._left = value;
 	}
 }
