@@ -6,6 +6,7 @@
 	import { registerRoomEngineEvent } from '$lib/events';
 	import AlertLogic from '$lib/components/logic/AlertLogic.svelte';
 	import ToolbarLogic from './ToolbarLogic.svelte';
+	import RoomLogic from '$lib/components/logic/RoomLogic.svelte';
 
 	onMount(
 		() => {
@@ -14,6 +15,7 @@
 	);
 </script>
 
+<RoomLogic />
 <NavigatorLogic />
 <AlertLogic />
 <ToolbarLogic />

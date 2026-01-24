@@ -1,5 +1,66 @@
 @import 'tailwindcss';
 
+@font-face {
+    font-family: Ubuntu;
+    src: url('$lib/assets/webfonts/Ubuntu.woff');
+    font-weight: normal;
+    font-style: normal;
+    --tw-text-opacity: 1;
+}
+
+@font-face {
+    font-family: Ubuntu;
+    src: url('$lib/assets/webfonts/UbuntuCondensed.woff');
+    font-stretch: condensed;
+    font-weight: 400;
+    font-style: normal;
+    --tw-text-opacity: 1;
+}
+
+@font-face {
+    font-family: Ubuntu;
+    src: url('$lib/assets/webfonts/Ubuntu-i.ttf');
+    font-weight: normal;
+    font-style: italic;
+    --tw-text-opacity: 1;
+}
+
+@font-face {
+    font-family: Ubuntu;
+    src: url('$lib/assets/webfonts/UbuntuBoldItalic.woff');
+    font-weight: bold;
+    font-style: italic;
+    --tw-text-opacity: 1;
+}
+
+@font-face {
+    font-family: Ubuntu;
+    src: url('$lib/assets/webfonts/UbuntuBold.woff');
+    font-weight: bold;
+    font-style: normal;
+    --tw-text-opacity: 1;
+}
+
+@font-face {
+    font-family: Ubuntu;
+    src: url('$lib/assets/webfonts/UbuntuSemi.woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Goldfish;
+    src: url('$lib/assets/webfonts/Volter.woff');
+}
+
+@font-face {
+    font-family: Goldfish;
+    src: url('$lib/assets/webfonts/VolterBold.woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
 @theme {
     --color-default-primary: #19191a;
     --color-default-secondary: #141415;
