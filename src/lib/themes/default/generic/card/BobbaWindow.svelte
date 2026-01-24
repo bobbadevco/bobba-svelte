@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
-	import Draggable from '$lib/components/commons/layout/Draggable.svelte';
+	import Draggable from '$lib/components/common/layout/Draggable.svelte';
 	import draggableImg from '../../assets/draggable.png';
 
 	let {visible = $bindable(false), disableDrag = false, title='', class: classes = '', children = undefined}: { visible?: boolean, disableDrag?: boolean, class?: ClassValue, children?: Snippet, title: string } = $props();

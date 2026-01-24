@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { GetNitroInstance, DispatchTouchEvent, DispatchMouseEvent } from '$lib/api';
-	import { getRoomSession, handleRoomState, registerRoomEvents } from '$lib/events';
-	import { onMount } from 'svelte';
+	import { getRoomSession } from '$lib/events';
 
 	function attachView(node: HTMLElement) {
 		const canvas = GetNitroInstance().application.renderer.view;
@@ -18,12 +17,6 @@
 
 		node.appendChild(canvas);
 	}
-
-	onMount(() => {
-		registerRoomEvents();
-	});
-
-	$effect(handleRoomState);
 </script>
 
 <div class={["max-w-screen max-h-screen", !getRoomSession() && "hidden"]} use:attachView></div>

@@ -5,3 +5,5 @@ export * from './GetRoomEngine';
 export * from './ProcessFurnitureOperation';
 export * from './SetActiveRoomId';
 export * from './TryVisitRoom';
+export * from './widgets';
+export * from './GetRoomObjectScreenLocation';

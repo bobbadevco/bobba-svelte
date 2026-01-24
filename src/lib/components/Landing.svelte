@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { GetConfiguration } from "$lib/api";
-	import { getRoomSession, getUserInfo, getUserLook, initializeSession, registerRoomSessionManagerEvent } from "$lib/events";
-	import { NitroConfiguration, RoomSessionEvent } from "@nitrots/nitro-renderer";
-	import { onMount } from "svelte";
-	import AvatarImage from "./commons/layout/AvatarImage.svelte";
+    import { GetConfiguration } from "$lib/api";
+    import { getRoomSession, getUserInfo, getUserLook, initializeSession, registerRoomSessionManagerEvent } from "$lib/events";
+    import { NitroConfiguration, RoomSessionEvent } from "@nitrots/nitro-renderer";
+    import { onMount } from "svelte";
+    import AvatarImage from "$lib/components/common/layout/AvatarImage.svelte";
 
     let isVisible = $state(!getRoomSession());
     let avatarLook = $derived(getUserLook());
@@ -21,21 +21,21 @@
     const right = NitroConfiguration.interpolate(hotelViewConf.images['right']);
 
     onMount(() => {
-        initializeSession();
-        registerRoomSessionManagerEvent<RoomSessionEvent>([
-            RoomSessionEvent.CREATED,
-            RoomSessionEvent.ENDED,], event =>
-            {
-                switch(event.type)
-                {
-                    case RoomSessionEvent.CREATED:
-                        isVisible = false;
-                        break;
-                    case RoomSessionEvent.ENDED:
-                        isVisible = true;
-                        break;
-                }
-        });
+      initializeSession();
+      registerRoomSessionManagerEvent<RoomSessionEvent>([
+          RoomSessionEvent.CREATED,
+          RoomSessionEvent.ENDED,], event =>
+          {
+              switch(event.type)
+              {
+                  case RoomSessionEvent.CREATED:
+                      isVisible = false;
+                      break;
+                  case RoomSessionEvent.ENDED:
+                      isVisible = true;
+                      break;
+              }
+      });
     });
 </script>
 
