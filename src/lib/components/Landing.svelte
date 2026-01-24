@@ -1,6 +1,6 @@
 <script lang="ts">
     import { GetConfiguration } from "$lib/api";
-    import { getRoomSession, getUserInfo, getUserLook, initializeSession, registerRoomSessionManagerEvent } from "$lib/events";
+    import { getRoomSession, getUserLook, initializeSession, registerRoomSessionManagerEvent } from "$lib/events";
     import { NitroConfiguration, RoomSessionEvent } from "@nitrots/nitro-renderer";
     import { onMount } from "svelte";
     import AvatarImage from "$lib/components/common/layout/AvatarImage.svelte";

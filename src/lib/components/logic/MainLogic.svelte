@@ -5,10 +5,10 @@
 	import { RoomEngineEvent } from '@nitrots/nitro-renderer';
 	import { registerRoomEngineEvent } from '$lib/events';
 	import AlertLogic from '$lib/components/logic/AlertLogic.svelte';
+	import ToolbarLogic from './ToolbarLogic.svelte';
 
 	onMount(
 		() => {
-			console.log("main mount");
 			registerRoomEngineEvent(RoomEngineEvent.ENGINE_INITIALIZED, () => setTimeout(() => GetCommunication().connection.onReady(), 300));
 		}
 	);
@@ -16,3 +16,4 @@
 
 <NavigatorLogic />
 <AlertLogic />
+<ToolbarLogic />

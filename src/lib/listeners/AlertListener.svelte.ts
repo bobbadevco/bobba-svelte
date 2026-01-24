@@ -40,6 +40,7 @@ import { NotificationBubbleType } from '$lib/api/notification/NotificationBubble
 import { ProductImageUtility } from '$lib/api/utils/ProductImageUtility';
 
 const cleanText = (text: string) => (text && text.length ? text.replace(/\\r/g, '\r') : '');
+
 const getTimeZeroPadded = (time: number) =>
 {
 	const text = ('0' + time);

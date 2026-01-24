@@ -132,7 +132,12 @@ class NavigatorListener implements ILinkEventTracker {
 		registerMessageEvent(FlatCreatedEvent, this.onFlatCreated.bind(this));
 	}
 
-
+	public static getInstance(): NavigatorListener {
+		if (!NavigatorListener.instance) {
+			NavigatorListener.instance = new NavigatorListener();
+		}
+		return NavigatorListener.instance;
+	}
 
 	private onFlatCreated(event: FlatCreatedEvent) {
 		const parser = event.getParser();
@@ -357,13 +362,6 @@ class NavigatorListener implements ILinkEventTracker {
 			this.enteredGuestRoom = parser.data;
 			this.currentRoomIsStaffPick = parser.staffPick;
 		}
-	}
-
-	public static getInstance(): NavigatorListener {
-		if (!NavigatorListener.instance) {
-			NavigatorListener.instance = new NavigatorListener();
-		}
-		return NavigatorListener.instance;
 	}
 }
 
