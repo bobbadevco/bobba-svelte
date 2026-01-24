@@ -1,1 +1,1 @@
-export * from './ChatBubbleMessage';
+export * from './ChatBubbleMessage.svelte';

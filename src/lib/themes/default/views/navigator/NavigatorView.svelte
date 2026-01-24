@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CreateLinkEvent } from '$lib/api';
+	import { CreateLinkEvent, TryVisitRoom } from '$lib/api';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import BobbaWindow from '../../generic/card/BobbaWindow.svelte';
 
@@ -9,9 +9,9 @@
 {#if getNavigatorListener().visible}
 	<BobbaWindow headerTitle="Navigator" onCloseClick={ navigatorClose }>
 		<div class="size-full min-h-40 min-w-40">
-			<p class="text-white">
+			<button onclick={() => TryVisitRoom(325)} class="text-white">
 				testinggg
-			</p>
+			</button>
 		</div>
 	</BobbaWindow>
 {/if}
