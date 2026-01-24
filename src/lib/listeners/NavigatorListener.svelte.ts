@@ -1,4 +1,4 @@
-import { registerMainEvent, registerMessageEvent } from '$lib/events';
+import { registerMainEvent, registerMessageEvent, registerRoomSessionManagerEvent } from '$lib/events';
 import {
 	GetGuestRoomResultEvent,
 	NavigatorHomeRoomEvent,
@@ -30,7 +30,9 @@ import {
 	UserEventCatsEvent,
 	FlatCreatedEvent,
 	FollowFriendMessageComposer,
-	NitroCommunicationDemoEvent
+	NitroCommunicationDemoEvent,
+	RoomSessionEvent,
+	NavigatorSearchComposer
 } from '@nitrots/nitro-renderer';
 import { DoorStateType } from '$lib/api/navigator/DoorStateType';
 import {
@@ -49,10 +51,15 @@ import { NotificationAlertType } from '$lib/api/notification/NotificationAlertTy
 class NavigatorListener implements ILinkEventTracker {
 	homeRoomId = $state(0);
 	visible: boolean = $state(false);
+	creatorOpen: boolean = $state(false);
+	needsInit: boolean = $state(true);
+	needsSearch: boolean = $state(false);
+	ready: boolean = $state(false);
 	doorData = $state<{ roomInfo: RoomDataParser | undefined; state: number }>({
 		roomInfo: undefined,
 		state: DoorStateType.NONE
 	});
+	pendingSearch = $state<{ current: { value: string; code: string } | null }>({ current: null });
 	enteredGuestRoom = $state<RoomDataParser>();
 	currentRoomIsStaffPick = $state(false);
 	createdFlatId = $state(-1);
@@ -62,6 +69,7 @@ class NavigatorListener implements ILinkEventTracker {
 	roomPicker = $state(false);
 	currentRoomOwner = $state(false);
 	roomId = $state(-1);
+	loading: boolean = $state(false);
 	topLevelContext = $state<NavigatorTopLevelContext>();
 	topLevelContexts = $state<NavigatorTopLevelContext[]>();
 	searchResult = $state<NavigatorSearchResultSet>();
@@ -130,6 +138,7 @@ class NavigatorListener implements ILinkEventTracker {
 		registerMessageEvent(UserFlatCatsEvent, this.onUserFlatCategories.bind(this));
 		registerMessageEvent(UserEventCatsEvent, this.onUserEventCategories.bind(this));
 		registerMessageEvent(FlatCreatedEvent, this.onFlatCreated.bind(this));
+		registerRoomSessionManagerEvent(RoomSessionEvent.CREATED, this.onRoomCreated.bind(this));
 	}
 
 	public static getInstance(): NavigatorListener {
@@ -137,6 +146,47 @@ class NavigatorListener implements ILinkEventTracker {
 			NavigatorListener.instance = new NavigatorListener();
 		}
 		return NavigatorListener.instance;
+	}
+
+	public sendSearch(value: string, code: string) {
+		this.creatorOpen = false;
+
+        SendMessageComposer(new NavigatorSearchComposer(code, value));
+
+		this.loading = true;
+	}
+
+	public reloadCurrentSearch() {
+		if(!this.ready)
+        {
+            this.needsSearch = true;
+
+            return;
+        }
+
+        if(this.pendingSearch.current)
+        {
+            this.sendSearch(this.pendingSearch.current.value, this.pendingSearch.current.code);
+
+            this.pendingSearch.current = null;
+            return;
+        }
+
+        if(this.searchResult)
+        {
+            this.sendSearch(this.searchResult.data, this.searchResult.code);
+
+            return;
+        }
+
+        if(!this.topLevelContext) return;
+
+        this.sendSearch('', this.topLevelContext.code);
+	}
+
+	private onRoomCreated(_e: RoomSessionEvent) {
+		this.visible = false;
+		this.creatorOpen = false;
 	}
 
 	private onFlatCreated(event: FlatCreatedEvent) {
