@@ -4,7 +4,7 @@
 	import Button from "$lib/components/common/Button.svelte";
 	import Flex from "$lib/components/common/Flex.svelte";
 	import AvatarImage from "$lib/components/common/layout/AvatarImage.svelte";
-	import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+	import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 	import Fa from "svelte-fa";
     
 	let userLook = $derived(getUserLook());
@@ -23,7 +23,7 @@
 					<Button class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-7 h-7 bg-position-[-77px_-26px]" onclick={() => GoToHotelView()} />
 				{/if}
 			</Flex>
-			<Button class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-11 h-7.5 bg-position-[-77px_-127px]" />
+			<Button class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-11 h-7.5 bg-position-[-77px_-127px]" onclick={() => CreateLinkEvent("navigator/toggle")} />
 			<Button class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-9.25 h-9.25 bg-position-[-2px_-38px]" />
 			<Button class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-11 h-10.25 bg-position-[-63px_-85px]" />
 			<Button class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-9.75 h-11.25 bg-position-[-38px_0px]" />
