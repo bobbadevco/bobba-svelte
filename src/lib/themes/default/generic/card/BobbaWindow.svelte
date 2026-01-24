@@ -3,6 +3,7 @@
 	import type { Snippet } from 'svelte';
 	import Draggable from '$lib/components/common/draggable-window/Draggable.svelte';
 	import draggableImg from '../../assets/draggable.png';
+	import Button from '$lib/components/common/Button.svelte';
 
 	let {onCloseClick = () => {}, disableDrag = false, headerTitle='', class: classes = '', children = undefined}: { onCloseClick?: () => void, disableDrag?: boolean, class?: ClassValue, children?: Snippet, headerTitle: string } = $props();
 
@@ -17,11 +18,11 @@
 		<p class="w-full text-center font-semibold">
 			{headerTitle}
 		</p>
-		<button aria-label="close" class="absolute right-3 bg-default-inactive hover:bg-default-active border border-black border-b-[3px] rounded-[5px] size-6 m-auto cursor-pointer p-0.5" type="button" onclick={ onCloseClick }>
+		<Button aria-label="close" class="absolute right-3 bg-default-inactive hover:bg-default-active border border-black border-b-[3px] rounded-[5px] size-6 m-auto cursor-pointer p-0.5" onclick={ onCloseClick }>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="size-full">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
 			</svg>
-		</button>
+		</Button>
 	</Draggable>
 	<div class="h-[calc(100%-3rem)] min-h-fit relative flex flex-col">
 			{@render children?.()}
