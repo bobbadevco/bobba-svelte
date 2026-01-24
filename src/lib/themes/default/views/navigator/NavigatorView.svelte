@@ -12,7 +12,7 @@
 		<button class="cursor-pointer" onclick={() => CreateLinkEvent("navigator/goto/325")}>test</button>
 	{/if}
 </div>
-<BobbaWindow title="Navigator" bind:visible={() => getNavigatorListener().isVisible, (v) => getNavigatorListener().isVisible = v} >
+<BobbaWindow headerTitle="Navigator" bind:visible={() => getNavigatorListener().isVisible, (v) => getNavigatorListener().isVisible = v} >
 	<div class="size-full min-h-40 min-w-40">
 		<p class="text-white">
 			testinggg

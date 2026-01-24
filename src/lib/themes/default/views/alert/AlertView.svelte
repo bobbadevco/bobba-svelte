@@ -1,11 +1,11 @@
 <script lang="ts">
     import {getAlertListener} from "$lib/listeners/AlertListener.svelte";
-	import DraggableWindow from "../../generic/card/BobbaWindow.svelte";
+	import BobbaWindow from "../../generic/card/BobbaWindow.svelte";
 </script>
 
 {#each getAlertListener().alerts as alert (alert.id)}
-    {@const title = alert.title || 'Alert'}
-    <DraggableWindow {title} bind:visible={() => true, (v) => {
+    {@const headerTitle = alert.title || 'Alert'}
+    <BobbaWindow {headerTitle} bind:visible={() => true, (v) => {
         if (!v) {
             getAlertListener().closeAlert(alert);
         }
@@ -15,5 +15,5 @@
                 <p>{message}</p>
             {/each}
         </div>
-    </DraggableWindow>
+    </BobbaWindow>
 {/each}

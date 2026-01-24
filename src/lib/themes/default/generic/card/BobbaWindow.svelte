@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
-	import Draggable from '$lib/components/common/layout/Draggable.svelte';
+	import Draggable from '$lib/components/common/draggable-window/Draggable.svelte';
 	import draggableImg from '../../assets/draggable.png';
 
-	let {visible = $bindable(false), disableDrag = false, title='', class: classes = '', children = undefined}: { visible?: boolean, disableDrag?: boolean, class?: ClassValue, children?: Snippet, title: string } = $props();
+	let {visible = $bindable(false), disableDrag = false, headerTitle='', class: classes = '', children = undefined}: { visible?: boolean, disableDrag?: boolean, class?: ClassValue, children?: Snippet, headerTitle: string } = $props();
 
 	let x = $state(0);
 	let y = $state(0);
@@ -16,7 +16,7 @@
 	<div style:width="{width}px" style:height="{height}px" style:left="{x}px" style:top="{y}px" class={["absolute rounded-lg cursor-auto  px-4 text-white bg-default-primary flex flex-col min-w-fit min-h-fit", classes]} bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
 		<Draggable bind:x={x} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b border-b-default-tertiary">
 			<p class="w-full text-center font-semibold">
-				{title}
+				{headerTitle}
 			</p>
 			<button aria-label="close" class="absolute right-3 bg-default-inactive hover:bg-default-active border border-black border-b-[3px] rounded-[5px] size-6 m-auto cursor-pointer p-0.5" type="button" onclick={() => visible = false}>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="size-full">
