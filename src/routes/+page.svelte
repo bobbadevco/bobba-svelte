@@ -18,8 +18,7 @@
 			initialize();
 			
 			const theme = GetConfiguration<string>('theme', 'default');
-			const mainComponentPath = `/src/lib/themes/${theme}/MainView.svelte`;
-			MainView = (await import(/* @vite-ignore */ mainComponentPath)).default;
+			MainView = (await import(`../lib/themes/${theme}/MainView.svelte`)).default;
 		}
 	);
 </script>
