@@ -23,7 +23,7 @@
 					<Button id="hotel-view-button" class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-7 h-7 bg-position-[-77px_-26px]" onclick={() => GoToHotelView()} />
 				{/if}
 			</Flex>
-			<Button id="rooms-button" class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-11 h-7.5 bg-position-[-77px_-127px]" />
+			<Button id="rooms-button" class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-11 h-7.5 bg-position-[-77px_-127px]" onclick={() => CreateLinkEvent("navigator/toggle")}/>
 			<Button id="catalog-button" class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-9.25 h-9.25 bg-position-[-2px_-38px]" />
 			<Button id="inventory-button" class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-11 h-10.25 bg-position-[-63px_-85px]" />
 			<Button id="camera-button" class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-9.75 h-11.25 bg-position-[-38px_0px]" />

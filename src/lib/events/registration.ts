@@ -1,5 +1,7 @@
 
-import { GetNitroInstance, GetConfigurationManager, GetRoomEngine, GetRoomSessionManager, GetCommunication } from '$lib/api';
+import { GetNitroInstance, GetConfigurationManager, GetRoomEngine, GetRoomSessionManager, GetCommunication,
+	RoomWidgetUpdateRoomObjectEvent
+} from '$lib/api';
 import {
 	EventDispatcher,
 	MessageEvent,
@@ -67,3 +69,5 @@ export const registerMessageEvent = <T extends IMessageEvent>(
 
 	GetCommunication().registerMessageEvent(event);
 }
+
+export const registerObjectSelectedEvent = (handler: (event: RoomWidgetUpdateRoomObjectEvent) => void) => registerUiEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED, handler);
