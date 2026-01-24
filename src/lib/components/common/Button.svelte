@@ -16,7 +16,8 @@
 	const {children, pointer = true, center = false, wrap = true, onclick, ... p }: ButtonProps = $props();
 </script>
 
-<button {onclick} class={[ "flex", 
+<button {onclick} onmousedown={(e) => e.stopPropagation()} 
+	class={[ "flex", 
 	pointer && "cursor-pointer",
 	wrap && "flex-wrap", 
 	center && "justify-center items-center", 

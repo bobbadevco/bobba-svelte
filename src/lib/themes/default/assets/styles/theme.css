@@ -1,0 +1,17 @@
+@theme {
+    /* COLORS */
+    --color-default-primary: #19191a;
+    --color-default-secondary: #141415;
+    --color-default-tertiary: #222222;
+    --color-default-active: #181818;
+    --color-default-hover: #3d3d3d;
+    --color-default-inactive: #2b2b2b;
+    --color-default-border: #0e0e0e;
+    
+    /* FONTS */
+    --font-sans: 'Ubuntu', sans-serif;
+    --font-goldfish: 'Goldfish', sans-serif;
+
+    /* SPRITESHEETS */
+    --toolbar-spritesheet: url('$lib/themes/default/assets/images/toolbar/toolbar_spritesheet.png');
+}
