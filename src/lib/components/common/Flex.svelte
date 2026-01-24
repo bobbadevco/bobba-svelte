@@ -15,6 +15,7 @@
 		inline?: boolean,
 		grow?: boolean,
 		class?: ClassValue,
+		
 		pointer?: boolean,
 	}
 

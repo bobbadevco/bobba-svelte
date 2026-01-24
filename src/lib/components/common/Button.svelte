@@ -17,7 +17,7 @@
 </script>
 
 <button {onclick} onmousedown={(e) => e.stopPropagation()} 
-	class={[ "flex", 
+class={[ "flex", 
 	pointer && "cursor-pointer",
 	wrap && "flex-wrap", 
 	center && "justify-center items-center", 

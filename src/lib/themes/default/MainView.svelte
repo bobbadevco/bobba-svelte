@@ -1,9 +1,9 @@
 <script lang="ts">
 	import NavigatorView from './views/navigator/NavigatorView.svelte';
     import AlertView from "$lib/themes/default/views/alert/AlertView.svelte";
-	import ToolbarComponent from './views/toolbar/ToolbarComponent.svelte';
+	import ToolbarLeftComponent from './views/toolbar/ToolbarLeftComponent.svelte';
 </script>
 
 <AlertView />
 <NavigatorView />
-<ToolbarComponent />
+<ToolbarLeftComponent />

@@ -5,9 +5,6 @@
     import { onMount } from "svelte";
     import AvatarImage from "$lib/components/common/layout/AvatarImage.svelte";
 
-    let isVisible = $state(!getRoomSession());
-    let avatarLook = $derived(getUserLook());
-
     const widgetSlotCount = 7;
 
     const hotelViewConf = GetConfiguration<{ images: { [key: string]: string } }>('hotelview', { images: {} });
@@ -19,6 +16,9 @@
     const left = NitroConfiguration.interpolate(hotelViewConf.images['left']);
     const rightRepeat = NitroConfiguration.interpolate(hotelViewConf.images['right.repeat']);
     const right = NitroConfiguration.interpolate(hotelViewConf.images['right']);
+
+    let isVisible = $state(!getRoomSession());
+    let avatarLook = $derived(getUserLook());
 
     onMount(() => {
       initializeSession();
