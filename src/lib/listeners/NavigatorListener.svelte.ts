@@ -48,7 +48,7 @@ import { NotificationAlertType } from '$lib/api/notification/NotificationAlertTy
 
 class NavigatorListener implements ILinkEventTracker {
 	homeRoomId = $state(0);
-	isVisible: boolean = $state(false);
+	visible: boolean = $state(false);
 	doorData = $state<{ roomInfo: RoomDataParser | undefined; state: number }>({
 		roomInfo: undefined,
 		state: DoorStateType.NONE
@@ -87,13 +87,13 @@ class NavigatorListener implements ILinkEventTracker {
 
 		switch (method) {
 			case 'show':
-				this.isVisible = true;
+				this.visible = true;
 				return;
 			case 'hide':
-				this.isVisible = false;
+				this.visible = false;
 				return;
 			case 'toggle':
-				this.isVisible = !this.isVisible;
+				this.visible = !this.visible;
 				return;
 			case 'goto':
 				if (!value) return;
@@ -309,7 +309,7 @@ class NavigatorListener implements ILinkEventTracker {
 		if (forwardType === 2) {
 			TryVisitRoom(forwardId);
 		} else if (forwardType === -1 && parser.roomIdToEnter > 0) {
-			CreateLinkEvent('navigator/close');
+			CreateLinkEvent('navigator/hide');
 
 			if (parser.roomIdToEnter !== parser.homeRoomId) {
 				CreateRoomSession(parser.roomIdToEnter);

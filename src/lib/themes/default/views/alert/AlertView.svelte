@@ -5,11 +5,7 @@
 
 {#each getAlertListener().alerts as alert (alert.id)}
     {@const headerTitle = alert.title || 'Alert'}
-    <BobbaWindow {headerTitle} bind:visible={() => true, (v) => {
-        if (!v) {
-            getAlertListener().closeAlert(alert);
-        }
-    }}>
+    <BobbaWindow {headerTitle} onCloseClick={() => getAlertListener().closeAlert(alert)}>
         <div class="flex flex-col min-h-40 min-w-100">
             {#each alert.messages as message, i (i)}
                 <p>{message}</p>
