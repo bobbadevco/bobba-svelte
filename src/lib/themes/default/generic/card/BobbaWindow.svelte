@@ -13,7 +13,7 @@
 </script>
 
 {#if visible}
-	<div style:width="{width}px" style:height="{height}px" style:left="{x}px" style:top="{y}px" class={["absolute rounded-lg  px-4 text-white bg-default-primary flex flex-col min-w-fit min-h-fit", classes]} bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
+	<div style:width="{width}px" style:height="{height}px" style:left="{x}px" style:top="{y}px" class={["absolute rounded-lg cursor-auto  px-4 text-white bg-default-primary flex flex-col min-w-fit min-h-fit", classes]} bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
 		<Draggable bind:x={x} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b border-b-default-tertiary">
 			<p class="w-full text-center font-semibold">
 				{title}
