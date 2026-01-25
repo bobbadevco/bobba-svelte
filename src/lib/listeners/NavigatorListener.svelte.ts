@@ -37,7 +37,6 @@ import {
 import { DoorStateType } from '$lib/api/navigator/DoorStateType';
 import {
 	AddEventLinkTracker,
-	CreateLinkEvent,
 	CreateRoomSession,
 	GetConfiguration,
 	GetSessionDataManager,
@@ -364,8 +363,6 @@ class NavigatorListener implements ILinkEventTracker {
 		if (forwardType === 2) {
 			TryVisitRoom(forwardId);
 		} else if (forwardType === -1 && parser.roomIdToEnter > 0) {
-			CreateLinkEvent('navigator/hide');
-
 			if (parser.roomIdToEnter !== parser.homeRoomId) {
 				CreateRoomSession(parser.roomIdToEnter);
 			} else {

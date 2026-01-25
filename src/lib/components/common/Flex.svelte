@@ -10,6 +10,7 @@
 		column?: boolean,
 		reverse?: boolean,
 		center?: boolean,
+		onclick?: (e: MouseEvent) => void,
 		wrap?: boolean,
 		shrink?: boolean,
 		inline?: boolean,
@@ -19,10 +20,10 @@
 	}
 
 
-	const {children, pointer = false, column = false, reverse = false, center = false, wrap = true, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ... p }: FlexProps = $props();
+	const {children, pointer = false, onclick = (() => {}), column = false, reverse = false, center = false, wrap = true, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ... p }: FlexProps = $props();
 </script>
 
-<div  class={[ "flex", 
+<button class={[ "flex", 
 	column ? "flex-col" : "flex-row", 
 	pointer && "cursor-pointer",
 	wrap && "flex-wrap", 
@@ -33,8 +34,8 @@
 	grow && "grow", 
 	reverse && (column ? "flex-col-reverse" : "flex-row-reverse"), 
 	center && "justify-center items-center", 
-	p.class ]}>
+	p.class ]} {onclick}>
 	{#if children}
 		{@render children()}
 	{/if}
-</div>
+</button>
