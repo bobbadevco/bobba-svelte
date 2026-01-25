@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CreateLinkEvent, TryVisitRoom } from '$lib/api';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
-	import BobbaWindow from '../../generic/card/BobbaWindow.svelte';
+	import BobbaWindow from '../../generic/window/BobbaWindow.svelte';
 
 	const navigatorClose = () => { CreateLinkEvent("navigator/hide"); };
 </script>
