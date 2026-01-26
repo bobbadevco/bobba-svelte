@@ -3,7 +3,7 @@
 	import type { ClassValue } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
 
-	let {x = $bindable(0), y = $bindable(0), moving = $bindable(false), class: classes = "", children = undefined}: {x?: number, y?: number, moving?: boolean, class?: ClassValue, children?: Snippet} = $props();
+	let {x = $bindable(0), y = $bindable(0), moving = $bindable(false), class: classes = "", unique = '', windowPos = '', children = undefined}: {x?: number, y?: number, moving?: boolean, unique: string, windowPos?: string, class?: ClassValue, children?: Snippet} = $props();
 
 	let lastX = 0;
 	let lastY = 0;
