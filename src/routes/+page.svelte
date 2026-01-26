@@ -4,26 +4,26 @@
 	import { initialize, getIsReady } from "$lib";
 	import { type Snippet, onMount } from "svelte";
 	import RoomView from "$lib/components/Room.svelte";
-	import LoadingView from "$lib/themes/default/views/loading/LoadingView.svelte";
 	import LandingView from '$lib/components/Landing.svelte';
 	import MainLogic from '$lib/components/logic/MainLogic.svelte';
 
 	let MainView = $state<Snippet>();
+	let LoadingView = $state<Snippet>();
 	let bootstrapped = $state(false);
 	onMount(
 		async () => {
 			Nitro.bootstrap();
 			bootstrapped = true;
 			GetNitroInstance().core.configuration.init();
-			initialize();
-			
 			const theme = GetConfiguration<string>('theme', 'default');
+			LoadingView = (await import(`../lib/themes/${theme}/LoadingView.svelte`)).default;
+			initialize();
 			MainView = (await import(`../lib/themes/${theme}/MainView.svelte`)).default;
 		}
 	);
 </script>
 <div class="w-screen h-screen overflow-hidden bg-black" style:image-rendering="pixelated">
-	{#if !getIsReady()}
+	{#if !getIsReady() && LoadingView}
 		<LoadingView />
 	{/if}
 	{#if bootstrapped}

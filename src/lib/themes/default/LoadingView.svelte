@@ -1,5 +1,5 @@
 <script>
-	import { getIsError, getIsReady, getMessage, getPercent } from '$lib/initialize.svelte';
+	import { getIsError, getIsReady, getMessage, getPercent } from '$lib/initialize.svelte.ts';
 </script>
 
 <div class="text-white">
