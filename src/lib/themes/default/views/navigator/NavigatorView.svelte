@@ -14,7 +14,7 @@
 	<BobbaWindow class="min-h-135" unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
 		<BobbaTabs>
 			{#if navigatorListener.topLevelContexts && (navigatorListener.topLevelContexts.length > 0)}
-				{#each navigatorListener.topLevelContexts as context}
+				{#each navigatorListener.topLevelContexts as context, i (i)}
 					<BobbaTabsItem class="items-center" active={ navigatorListener.topLevelContext === context } onclick={ () => navigatorListener.sendSearch('', context.code)}>
 						{ LocalizeText('navigator.toplevelview.' + context.code) }
 					</BobbaTabsItem>

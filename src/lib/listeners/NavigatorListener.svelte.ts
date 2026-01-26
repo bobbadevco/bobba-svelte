@@ -46,6 +46,7 @@ import {
 } from '$lib/api';
 import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
 import { NotificationAlertType } from '$lib/api/notification/NotificationAlertType';
+import { SearchOptions } from '$lib/api/navigator/SearchOptions';
 
 class NavigatorListener implements ILinkEventTracker {
 	homeRoomId = $state(0);
@@ -53,6 +54,9 @@ class NavigatorListener implements ILinkEventTracker {
 	creatorOpen: boolean = $state(false);
 	needsInit: boolean = $state(true);
 	needsSearch: boolean = $state(false);
+	searchValue: string = $state('');
+	searched: boolean = $state(false);
+	searchIndex: number = $state(0);
 	ready: boolean = $state(false);
 	doorData = $state<{ roomInfo: RoomDataParser | undefined; state: number }>({
 		roomInfo: undefined,
@@ -153,6 +157,17 @@ class NavigatorListener implements ILinkEventTracker {
         SendMessageComposer(new NavigatorSearchComposer(code, value));
 
 		this.loading = true;
+	}
+		public processSearch() {
+		if(!this.topLevelContext) return;
+
+		let searchFilter = SearchOptions[this.searchIndex];
+
+		if(!searchFilter) searchFilter = SearchOptions[0];
+
+		const searchQuery = ((searchFilter.query ? (searchFilter.query + ':') : '') + this.searchValue);
+
+		this.sendSearch((searchQuery || ''), this.topLevelContext.code);
 	}
 
 	public reloadCurrentSearch() {
