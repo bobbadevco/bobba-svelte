@@ -73,9 +73,9 @@
 			{/if}
 		</div>
 		<div class="chat-content">
-			<span class="username mr-1">
+			<span class="font-bold mr-1">
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html chat.username}
+				{@html chat.username}:
 			</span>
 			<span class="message" >
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
