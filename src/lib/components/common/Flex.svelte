@@ -26,7 +26,7 @@
 <button class={[ "flex", 
 	column ? "flex-col" : "flex-row", 
 	pointer && "cursor-pointer",
-	wrap && "flex-wrap", 
+	wrap ? "flex-wrap" : 'flex-nowrap', 
 	inline && "inline-flex", 
 	shrink && "shrink-0", 
 	fit || fullWidth && "w-full", 

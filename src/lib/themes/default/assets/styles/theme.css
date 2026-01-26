@@ -1,13 +1,15 @@
 @theme {
     /* COLORS */
-    --color-default-primary: #19191a;
-    --color-default-secondary: #141415;
-    --color-default-tertiary: #222222;
-    --color-default-active: #181818;
-    --color-default-hover: #3d3d3d;
-    --color-default-inactive: #2b2b2b;
-    --color-default-border: #0e0e0e;
-    
+    --color-primary: #0e0e0e;
+    --color-secondary: #131313;
+    --color-tertiary: #191919;
+    --color-quaternary: #222222;
+    --color-base-primary: #2b2b2b;
+    --color-bright-primary: #3d3d3d;
+    --color-dark-primary: #181818;
+    --color-bright-accent: #404040;
+    --color-active-accent: #505050;
+
     /* FONTS */
     --font-sans: 'Ubuntu', sans-serif;
     --font-goldfish: 'Goldfish', sans-serif;
