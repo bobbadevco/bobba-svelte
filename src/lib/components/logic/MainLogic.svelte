@@ -7,6 +7,7 @@
 	import AlertLogic from '$lib/components/logic/AlertLogic.svelte';
 	import ToolbarLogic from './ToolbarLogic.svelte';
 	import RoomLogic from '$lib/components/logic/RoomLogic.svelte';
+	import FriendsLogic from '$lib/components/logic/FriendsLogic.svelte';
 
 	onMount(
 		() => {
@@ -19,3 +20,4 @@
 <NavigatorLogic />
 <AlertLogic />
 <ToolbarLogic />
+<FriendsLogic />

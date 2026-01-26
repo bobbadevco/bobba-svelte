@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-
-@import '$lib/themes/default/assets/styles/theme.css';
+@import './tailwind.css';
+@import '$lib/themes/themes.scss';
+@import '$lib/assets/styles/main.scss';
 
 @font-face {
     font-family: Ubuntu;

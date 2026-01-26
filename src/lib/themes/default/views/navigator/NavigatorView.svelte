@@ -2,7 +2,7 @@
 	import { LocalizeText } from '$lib/api';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import LoadingImage from '../../assets/images/loading.png';
-	import BobbaWindow from '../../generic/window/BobbaWindow.svelte';
+	import BobbaWindow from "$lib/themes/default/generic/window/BobbaWindow.svelte";
 	import BobbaTabs from '../../generic/window/tabs/BobbaTabs.svelte';
 	import BobbaTabsItem from '../../generic/window/tabs/BobbaTabsItem.svelte';
 

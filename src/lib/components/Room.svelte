@@ -15,9 +15,8 @@
 		canvas.ontouchmove = event => DispatchTouchEvent(event);
 		canvas.ontouchend = event => DispatchTouchEvent(event);
 		canvas.ontouchcancel = event => DispatchTouchEvent(event);
-
-	node.appendChild(canvas);
-}
+		node.appendChild(canvas);
+	}
 </script>
 
 <div class={["max-w-screen max-h-screen", !getRoomSession() && "hidden"]} use:attachView></div>
