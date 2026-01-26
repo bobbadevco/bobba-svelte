@@ -61,7 +61,7 @@
 			else
 			{
 				chatValue = '';
-				getChatInputListener().sendChat(text, chatType, recipientName, 1);
+				getChatInputListener().sendChat(text, chatType, recipientName, 0);
 			}
 		}
 
