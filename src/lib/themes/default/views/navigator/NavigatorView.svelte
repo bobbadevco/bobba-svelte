@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LocalizeText, TryVisitRoom } from '$lib/api';
+	import { LocalizeText } from '$lib/api';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import LoadingImage from '../../assets/images/loading.png';
 	import BobbaWindow from '../../generic/window/BobbaWindow.svelte';
