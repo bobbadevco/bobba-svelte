@@ -1,6 +1,6 @@
 <script lang="ts">
     import {getAlertListener} from "$lib/listeners/AlertListener.svelte";
-	import BobbaWindow from "../../generic/window/BobbaWindow.svelte";
+	import BobbaWindow from "$lib/themes/default/generic/window/BobbaWindow.svelte";
 </script>
 
 {#each getAlertListener().alerts as alert (alert.id)}
