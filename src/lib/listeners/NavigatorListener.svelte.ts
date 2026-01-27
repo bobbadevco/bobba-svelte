@@ -85,6 +85,7 @@ class NavigatorListener implements ILinkEventTracker {
 
 	private static instance: NavigatorListener;
 
+	simpleAlert = getAlertListener().simpleAlert;
 
 	linkReceived = (url: string) => {
 		const parts = url.split('/');
@@ -260,10 +261,10 @@ class NavigatorListener implements ILinkEventTracker {
 				this.doorData.state = DoorStateType.STATE_WRONG_PASSWORD;
 				return;
 			case 4009:
-				getAlertListener().simpleAlert(LocalizeText('navigator.alert.need.to.be.vip'), NotificationAlertType.DEFAULT, undefined, undefined, LocalizeText('generic.alert.title'));
+				this.simpleAlert(LocalizeText('navigator.alert.need.to.be.vip'), NotificationAlertType.DEFAULT, undefined, undefined, LocalizeText('generic.alert.title'));
 				return;
 			case 4010:
-				getAlertListener().simpleAlert(
+				this.simpleAlert(
 					LocalizeText('navigator.alert.invalid_room_name'),
 					NotificationAlertType.DEFAULT,
 					undefined,
@@ -272,7 +273,7 @@ class NavigatorListener implements ILinkEventTracker {
 				);
 				return;
 			case 4011:
-				getAlertListener().simpleAlert(
+				this.simpleAlert(
 					LocalizeText('navigator.alert.cannot_perm_ban'),
 					NotificationAlertType.DEFAULT,
 					undefined,
@@ -281,7 +282,7 @@ class NavigatorListener implements ILinkEventTracker {
 				);
 				return;
 			case 4013:
-				getAlertListener().simpleAlert(
+				this.simpleAlert(
 					LocalizeText('navigator.alert.room_in_maintenance'),
 					NotificationAlertType.DEFAULT,
 					undefined,
