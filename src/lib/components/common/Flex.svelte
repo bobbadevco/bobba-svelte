@@ -19,23 +19,28 @@
 		pointer?: boolean,
 	}
 
-
-	const {children, pointer = false, onclick = (() => {}), column = false, reverse = false, center = false, wrap = true, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ... p }: FlexProps = $props();
+	const {children, pointer = false, onclick = undefined, column = false, reverse = false, center = false, wrap = true, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ...p }: FlexProps = $props();
 </script>
 
-<button class={[ "flex", 
-	column ? "flex-col" : "flex-row", 
-	pointer && "cursor-pointer",
-	wrap ? "flex-wrap" : 'flex-nowrap', 
-	inline && "inline-flex", 
-	shrink && "shrink-0", 
-	fit || fullWidth && "w-full", 
-	fit || fullHeight && "h-full", 
-	grow && "grow", 
-	reverse && (column ? "flex-col-reverse" : "flex-row-reverse"), 
-	center && "justify-center items-center", 
-	p.class ]} {onclick}>
+<svelte:element
+	this={onclick ? 'button' : 'div'}
+	type={onclick ? 'button' : undefined}
+	onclick={onclick}
+	{...p}
+	class={[ "flex",
+  column ? "flex-col" : "flex-row",
+  pointer && "cursor-pointer",
+  wrap ? "flex-wrap" : 'flex-nowrap',
+  inline && "inline-flex",
+  shrink && "shrink-0",
+  fullWidth && "w-full",
+  fullHeight && "h-full",
+  fit && 'w-fit h-fit',
+  grow && "grow",
+  reverse && (column ? "flex-col-reverse" : "flex-row-reverse"),
+  center && "justify-center items-center",
+  p.class ]}>
 	{#if children}
 		{@render children()}
 	{/if}
-</button>
+</svelte:element>

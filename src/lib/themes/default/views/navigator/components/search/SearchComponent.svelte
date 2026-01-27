@@ -38,10 +38,10 @@ const handleInput = (event: Event) =>
 					 placeholder={LocalizeText('navigator.filter.input.placeholder')}
 					 value={navigator.searchValue} onchange={ handleInput } {onkeydown} />
 		{#if (!navigator.searchValue || !navigator.searchValue.length)}
-			<Flex class="icon icon-pen position-absolute navigator-search-button"/> }
+			<Flex class="icon icon-pen absolute navigator-search-button"/> }
 		{/if}
 		{#if navigator.searchValue && !!navigator.searchValue.length}
-			<Flex onclick={ () => navigator.searchValue = '' } class="icon icon-clear position-absolute navigator-clear-button cursor-pointer"/>
+			<Flex onclick={ () => navigator.searchValue = '' } class="icon icon-clear absolute navigator-clear-button cursor-pointer"/>
 		{/if}
 		{#if navigator.searched && navigator.searchValue && !!navigator.searchValue.length}
 			<Flex onclick={ navigator.processSearch } class="icon icon-reload-navigator cursor-pointer" />

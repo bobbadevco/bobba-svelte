@@ -5,6 +5,7 @@
 	import BobbaWindow from "$lib/themes/default/generic/window/BobbaWindow.svelte";
 	import BobbaTabs from '../../generic/window/tabs/BobbaTabs.svelte';
 	import BobbaTabsItem from '../../generic/window/tabs/BobbaTabsItem.svelte';
+	import Flex from '$lib/components/common/Flex.svelte';
 
 	const navigatorListener = getNavigatorListener();
 	const navigatorClose = () => { navigatorListener.visible = false; };
@@ -21,12 +22,13 @@
 				{/each}
 			{/if}
 		</BobbaTabs>
-		<div class="flex flex-col w-full h-full py-2">
+		<Flex column fullWidth fullHeight class="py-2 relative mb-3">
 			{#if navigatorListener.loading}
-				<div class="w-full h-full bg-[#FFFFFF10] rounded-md justify-center items-center flex">
+				<Flex fullWidth fullHeight class="bg-[#FFFFFF10] rounded-md justify-center absolute items-center">
 					<img src={LoadingImage} alt="loading" class="size-4 animate-spin"/>
-				</div>
+				</Flex>
 			{/if}
-		</div>
+			asd
+		</Flex>
 	</BobbaWindow>
 {/if}
