@@ -1,4 +1,5 @@
-import type { INavigatorSearchFilter } from '$lib/api'
+import type { INavigatorSearchFilter } from '$lib/api';
+
 
 export const SearchOptions: INavigatorSearchFilter[] = [
 	{

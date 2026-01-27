@@ -43,6 +43,6 @@
 		"vite-plugin-devtools-json": "^1.0.0"
 	},
 	"dependencies": {
-		"@jsrob/svelte-portal": "^0.2.1"
+		"svelte-portal": "^2.2.1"
 	}
 }

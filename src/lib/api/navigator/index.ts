@@ -1,4 +1,3 @@
 export * from './IRoomChatSettings';
 export * from './DoorStateType';
-export * from	'./INavigatorSearchFilter';
-export * from './SearchOptions';
+export * from './INavigatorSearchFilter';

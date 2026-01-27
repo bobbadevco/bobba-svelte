@@ -47,14 +47,14 @@
 
 		SendMessageComposer(new NavigatorInitComposer());
 
-		navigator.needsInit = false;
+        navigator.needsInit = false;
 	})
 
 	$effect(() =>
 	{
 		if(!navigator.searchResult) return;
 
-		navigator.loading = false;
+        navigator.loading = false;
 
 		// need to be added to view
 		// if(elementRef && elementRef.current) elementRef.current.scrollTop = 0;
@@ -64,16 +64,16 @@
 	{
 		if(!navigator.visible || !navigator.ready || !navigator.needsSearch) return;
 
-		navigator.reloadCurrentSearch();
+        navigator.reloadCurrentSearch();
 
-		navigator.needsSearch = false;
+        navigator.needsSearch = false;
 	})
 
 	$effect(() =>
 	{
 		if(navigator.ready || !navigator.topLevelContext) return;
 
-		navigator.ready = true;
+        navigator.ready = true;
 	})
 
 	$effect(() =>
@@ -82,6 +82,6 @@
 
 		SendMessageComposer(new NavigatorInitComposer());
 
-		navigator.needsInit = false;
+        navigator.needsInit = false;
 	})
 </script>

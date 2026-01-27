@@ -160,7 +160,7 @@ class NavigatorListener implements ILinkEventTracker {
 
 		this.loading = true;
 	}
-	public processSearch() {
+		public processSearch() {
 		if(!this.topLevelContext) return;
 
 		let searchFilter = SearchOptions[this.searchIndex];

@@ -2,10 +2,11 @@
 <svelte:document {onclick}/>
 
 <script lang="ts">
+
 	import type { ClassValue } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
 	import Flex from '$lib/components/common/Flex.svelte';
-	import { Portal } from '@jsrob/svelte-portal';
+	import Portal from 'svelte-portal';
 
 	export interface ISelectOptions {
 		value: string | number;
@@ -23,12 +24,12 @@
 		class?: ClassValue;
 		dropdownClass?: ClassValue;
 		fullWidth?: boolean;
-		style?: string;
+		style?: CSSStyleValue;
 		dropdownStyle?: CSSStyleValue;
 		children?: Snippet;
 	}
 
-	let { options = [], value = '', setValue = () => {}, disabled = false, class: classes = '', dropdownClass = '', fullWidth = false, style = '', dropdownStyle = {}, children }: SelectProps = $props();
+	let { options = [], value = '', setValue = () => {}, disabled = false, class: classes = '', dropdownClass = '', fullWidth = false, style = {}, dropdownStyle = {}, children }: SelectProps = $props();
 
 	let element: HTMLElement | undefined = $state<HTMLDivElement>();
 	let listElement: HTMLElement | undefined = $state<HTMLUListElement>();
@@ -145,4 +146,5 @@
 		</Portal>
 	{/if}
 </Flex>
+
 
