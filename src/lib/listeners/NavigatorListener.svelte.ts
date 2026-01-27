@@ -1,3 +1,4 @@
+
 import { registerMainEvent, registerMessageEvent, registerRoomSessionManagerEvent } from '$lib/events';
 import {
 	GetGuestRoomResultEvent,
@@ -84,6 +85,7 @@ class NavigatorListener implements ILinkEventTracker {
 
 	private static instance: NavigatorListener;
 
+	simpleAlert = getAlertListener().simpleAlert;
 
 	linkReceived = (url: string) => {
 		const parts = url.split('/');
@@ -154,7 +156,7 @@ class NavigatorListener implements ILinkEventTracker {
 	public sendSearch(value: string, code: string) {
 		this.creatorOpen = false;
 
-        SendMessageComposer(new NavigatorSearchComposer(code, value));
+		SendMessageComposer(new NavigatorSearchComposer(code, value));
 
 		this.loading = true;
 	}
@@ -172,30 +174,30 @@ class NavigatorListener implements ILinkEventTracker {
 
 	public reloadCurrentSearch() {
 		if(!this.ready)
-        {
-            this.needsSearch = true;
+		{
+			this.needsSearch = true;
 
-            return;
-        }
+			return;
+		}
 
-        if(this.pendingSearch.current)
-        {
-            this.sendSearch(this.pendingSearch.current.value, this.pendingSearch.current.code);
+		if(this.pendingSearch.current)
+		{
+			this.sendSearch(this.pendingSearch.current.value, this.pendingSearch.current.code);
 
-            this.pendingSearch.current = null;
-            return;
-        }
+			this.pendingSearch.current = null;
+			return;
+		}
 
-        if(this.searchResult)
-        {
-            this.sendSearch(this.searchResult.data, this.searchResult.code);
+		if(this.searchResult)
+		{
+			this.sendSearch(this.searchResult.data, this.searchResult.code);
 
-            return;
-        }
+			return;
+		}
 
-        if(!this.topLevelContext) return;
+		if(!this.topLevelContext) return;
 
-        this.sendSearch('', this.topLevelContext.code);
+		this.sendSearch('', this.topLevelContext.code);
 	}
 
 	private onRoomCreated(_e: RoomSessionEvent) {
@@ -259,10 +261,10 @@ class NavigatorListener implements ILinkEventTracker {
 				this.doorData.state = DoorStateType.STATE_WRONG_PASSWORD;
 				return;
 			case 4009:
-				getAlertListener().simpleAlert(LocalizeText('navigator.alert.need.to.be.vip'), NotificationAlertType.DEFAULT, undefined, undefined, LocalizeText('generic.alert.title'));
+				this.simpleAlert(LocalizeText('navigator.alert.need.to.be.vip'), NotificationAlertType.DEFAULT, undefined, undefined, LocalizeText('generic.alert.title'));
 				return;
 			case 4010:
-				getAlertListener().simpleAlert(
+				this.simpleAlert(
 					LocalizeText('navigator.alert.invalid_room_name'),
 					NotificationAlertType.DEFAULT,
 					undefined,
@@ -271,7 +273,7 @@ class NavigatorListener implements ILinkEventTracker {
 				);
 				return;
 			case 4011:
-				getAlertListener().simpleAlert(
+				this.simpleAlert(
 					LocalizeText('navigator.alert.cannot_perm_ban'),
 					NotificationAlertType.DEFAULT,
 					undefined,
@@ -280,7 +282,7 @@ class NavigatorListener implements ILinkEventTracker {
 				);
 				return;
 			case 4013:
-				getAlertListener().simpleAlert(
+				this.simpleAlert(
 					LocalizeText('navigator.alert.room_in_maintenance'),
 					NotificationAlertType.DEFAULT,
 					undefined,

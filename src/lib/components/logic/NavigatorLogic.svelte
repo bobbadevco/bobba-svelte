@@ -45,7 +45,7 @@
 	{
 		if(!navigator.visible || !navigator.needsInit) return;
 
-        SendMessageComposer(new NavigatorInitComposer());
+		SendMessageComposer(new NavigatorInitComposer());
 
         navigator.needsInit = false;
 	})
@@ -56,7 +56,7 @@
 
         navigator.loading = false;
 
-        // need to be added to view
+		// need to be added to view
 		// if(elementRef && elementRef.current) elementRef.current.scrollTop = 0;
 	})
 
@@ -80,7 +80,7 @@
 	{
 		if(!navigator.visible || !navigator.needsInit) return;
 
-        SendMessageComposer(new NavigatorInitComposer());
+		SendMessageComposer(new NavigatorInitComposer());
 
         navigator.needsInit = false;
 	})
