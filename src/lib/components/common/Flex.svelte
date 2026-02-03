@@ -4,6 +4,7 @@
 
 	export interface FlexProps extends HTMLAttributes<HTMLDivElement> {
 		children?: Snippet,
+		element?: HTMLElement | null,
 		fit?: boolean,
 		fullWidth?: boolean,
 		fullHeight?: boolean,
@@ -19,12 +20,13 @@
 		pointer?: boolean,
 	}
 
-	const {children, pointer = false, onclick = undefined, column = false, reverse = false, center = false, wrap = true, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ...p }: FlexProps = $props();
+	let {children, element = $bindable<HTMLElement | null>(null), pointer = false, onclick = undefined, column = false, reverse = false, center = false, wrap = true, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ...p }: FlexProps = $props();
 </script>
 
 <svelte:element
 	this={onclick ? 'button' : 'div'}
 	type={onclick ? 'button' : undefined}
+	bind:this={element}
 	onclick={onclick}
 	{...p}
 	class={[ "flex",

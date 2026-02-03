@@ -1,5 +1,5 @@
 <svelte:window onscroll={ handleScrollOrResize } onresize={ handleScrollOrResize } />
-<svelte:document {onclick}/>
+<svelte:document onpointerdown={onclick}/>
 
 <script lang="ts">
 
@@ -7,6 +7,8 @@
 	import type { Snippet } from 'svelte';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import Portal from 'svelte-portal';
+	import Fa from 'svelte-fa';
+	import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 	export interface ISelectOptions {
 		value: string | number;
@@ -24,14 +26,14 @@
 		class?: ClassValue;
 		dropdownClass?: ClassValue;
 		fullWidth?: boolean;
-		style?: CSSStyleValue;
+		style?: string;
 		dropdownStyle?: CSSStyleValue;
 		children?: Snippet;
 	}
 
-	let { options = [], value = '', setValue = () => {}, disabled = false, class: classes = '', dropdownClass = '', fullWidth = false, style = {}, dropdownStyle = {}, children }: SelectProps = $props();
+	let { options = [], value = '', setValue = () => {}, disabled = false, class: classes = '', dropdownClass = '', fullWidth = false, style = '', dropdownStyle = {}, children }: SelectProps = $props();
 
-	let element: HTMLElement | undefined = $state<HTMLDivElement>();
+	let element: HTMLElement | null = $state<HTMLElement | null>(null);
 	let listElement: HTMLElement | undefined = $state<HTMLUListElement>();
 	let isOpen = $state(false);
 	let anchorRect = $state<{ left: number, top: number, width: number, height: number }>({} as { left: number, top: number, width: number, height: number });
@@ -107,7 +109,7 @@
 	}
 </script>
 <Flex class={[`relative items-center ${fullWidth && 'w-full'}`, classes]} style="z-index: 2000;">
-	<Flex {style} pointer onclick={handleClick}>
+	<Flex {style} pointer onclick={handleClick} bind:element={element}>
 		<Flex class="items-center justify-between" fullWidth>
 			<Flex class="items-center">
 				<p class="max-w-25 text-white truncate">{getOptionLabel(value)}</p>
@@ -122,7 +124,7 @@
 						<div class="h-full w-5" style="backgroundColor: '#{selectedOption?.colorB}';"></div>
 					</Flex>
 				{/if}
-				<img src="si" alt="dropdown icon"/>
+				<Fa icon={ faAngleDown } class="ms-2 text-white"/>
 			</Flex>
 		</Flex>
 	</Flex>
@@ -130,8 +132,8 @@
 		<Portal target="body">
 			<ul bind:this={listElement} class="{dropdownClass}" style={getDropdownStyle()}>
 				{#each safeOptions as option, i (i)}
-					<li class={ `relative dropdown-item pointer ${ value === option.value ? 'active' : '' }` }>
-						<button onclick={ () => { setValue(option.value); isOpen = false; } }>
+					<li class={ `relative dropdown-item hover:bg-blue-300 cursor-pointer ${ value === option.value ? 'bg-blue-100' : '' }` }>
+						<button class="cursor-pointer w-full text-start" onclick={ () => { setValue(option.value); isOpen = false; } }>
 							{ option.label }
 							{#if option.colorA}
 								<Flex class="overflow-hidden w-5.25 h-3.5 right-7.5 absolute border">
@@ -146,5 +148,3 @@
 		</Portal>
 	{/if}
 </Flex>
-
-
