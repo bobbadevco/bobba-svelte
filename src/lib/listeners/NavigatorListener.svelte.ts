@@ -153,6 +153,31 @@ class NavigatorListener implements ILinkEventTracker {
 		return NavigatorListener.instance;
 	}
 
+	public visitRoom(roomData: RoomDataParser) {
+		if(roomData.ownerId !== GetSessionDataManager().userId)
+		{
+			if(roomData.habboGroupId !== 0)
+			{
+				TryVisitRoom(roomData.roomId);
+
+				return;
+			}
+
+			switch(roomData.doorMode)
+			{
+				case RoomDataParser.DOORBELL_STATE:
+					this.doorData.roomInfo = roomData;
+					this.doorData.state = DoorStateType.START_DOORBELL;
+					return;
+				case RoomDataParser.PASSWORD_STATE:
+					this.doorData.roomInfo = roomData;
+					this.doorData.state = DoorStateType.START_PASSWORD;
+					return;
+			}
+		}
+		CreateRoomSession(roomData.roomId);
+	}
+
 	public sendSearch(value: string, code: string) {
 		this.creatorOpen = false;
 

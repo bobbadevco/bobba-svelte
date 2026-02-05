@@ -9,6 +9,8 @@
 	import SearchComponent from '$lib/themes/default/views/navigator/components/search/SearchComponent.svelte';
 	import RoomThumbnail from '$lib/components/common/layout/RoomThumbnail.svelte';
 	import room_thumbnail from '$lib/themes/default/assets/images/navigator/room_thumbnail.png'
+	import SearchResultComponent
+		from '$lib/themes/default/views/navigator/components/search/SearchResultComponent.svelte';
 
 	const navigator = getNavigatorListener();
 	const navigatorClose = () => { navigator.visible = false; };
@@ -34,9 +36,7 @@
 			<Flex column fullWidth fullHeight class="py-2 relative mb-3">
 				<SearchComponent />
 				<Flex column class="overflow-auto">
-					<RoomThumbnail defaultImage={room_thumbnail} class="bg-[#b3b3aa] overflow-hidden">
-
-					</RoomThumbnail>
+					<SearchResultComponent />
 					<!--{#if navigator.searchResult}
 							{#each navigator.searchResult.results as result, i (i)}
 								<SearchResultView searchResult={ result }/>

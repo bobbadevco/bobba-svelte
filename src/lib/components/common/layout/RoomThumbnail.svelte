@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ClassValue } from 'svelte/elements';
 	import { GetConfiguration } from '$lib/api';
 	import {type FlexProps} from '$lib/components/common/Flex.svelte';
 
