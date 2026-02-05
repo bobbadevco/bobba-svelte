@@ -84,7 +84,7 @@
         .user-image {
             position: absolute;
             top: -25px;
-            left: -10.25px;
+            left: -8.25px;
             width: 45px;
             height: 85px;
             background-repeat: no-repeat;
@@ -119,11 +119,11 @@
 	<div style:border-image-source="url({bubble})" class={ `chat-bubble bubble-${ chat.styleId } type-${ chat.type }` } style:max-width="{maxWidth}px">
 		<div class="user-container">
 			{#if chat.imageUrl && (chat.imageUrl.length > 0)}
-			<div class="user-image" style:background-image="url({ chat.imageUrl })">
+			<div class="user-image" style:background-image="url({ chat.imageUrl })" style:image-rendering='auto'>
 			</div>
 			{/if}
 		</div>
-		<div class="chat-content">
+		<div class="chat-content h-full items-center flex">
 			<span class="font-bold mr-1">
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html chat.username}:
