@@ -2,17 +2,19 @@ import { MessengerFriend } from '$lib/api/friends/MessengerFriend';
 import { registerMainEvent, registerMessageEvent } from '$lib/events';
 import  {
 	AcceptFriendMessageComposer,
-	DeclineFriendMessageComposer, FollowFriendMessageComposer, FriendListFragmentEvent,
+	DeclineFriendMessageComposer,
+	FindFriendsProcessResultEvent, FollowFriendMessageComposer, FriendListFragmentEvent,
 	FriendListUpdateComposer, FriendListUpdateEvent,
 	type FriendParser,
 	FriendRequestsEvent,
 	MessengerInitComposer,
 	MessengerInitEvent,
 	NewFriendRequestEvent, NitroCommunicationDemoEvent, type NitroEvent, RequestFriendComposer, SetRelationshipStatusComposer } from '@nitrots/nitro-renderer';
-import { GetSessionDataManager, SendMessageComposer } from '$lib/api';
+import { GetSessionDataManager, LocalizeText, SendMessageComposer } from '$lib/api';
 import { MessengerSettings } from '$lib/api/friends/MessengerSettings';
 import { MessengerRequest } from '$lib/api/friends/MessengerRequest';
 import { CloneObject } from '$lib/api/utils/CloneObject';
+import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
 
 class FriendListener {
 	friends = $state<MessengerFriend[]>([]);
@@ -91,6 +93,7 @@ class FriendListener {
 		registerMessageEvent(FriendListUpdateEvent, this.onFriendListUpdate.bind(this));
 		registerMessageEvent(FriendRequestsEvent, this.onFriendRequests.bind(this));
 		registerMessageEvent(NewFriendRequestEvent, this.onNewFriendRequest.bind(this));
+		registerMessageEvent(FindFriendsProcessResultEvent, this.onFriendsProcessResult.bind(this));
 
 		SendMessageComposer(new MessengerInitComposer());
 		clearInterval(this.interval);
@@ -199,6 +202,13 @@ class FriendListener {
 			this.requests.push(newRequest);
 		}
 	}
+
+	private onFriendsProcessResult(event: FindFriendsProcessResultEvent) {
+		const parser = event.getParser();
+		if (!parser) return;
+
+		getAlertListener().simpleAlert(LocalizeText(!parser.success ? 'friendbar.find.error.text' : 'friendbar.find.success.text'), '', '', '', LocalizeText(!parser.success ? 'friendbar.find.error.title' : 'friendbar.find.success.title'));
+	};
 }
 
 export const getFriendListener = () => FriendListener.getInstance();
