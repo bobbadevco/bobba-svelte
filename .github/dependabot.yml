@@ -1,0 +1,63 @@
+version: 2
+updates:
+  # Configuración para npm/yarn (package.json)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "maintainers"
+    assignees:
+      - "maintainers"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "npm"
+    # Agrupar actualizaciones relacionadas
+    groups:
+      svelte-dependencies:
+        patterns:
+          - "svelte*"
+          - "@sveltejs/*"
+      eslint-dependencies:
+        patterns:
+          - "eslint*"
+          - "@eslint/*"
+      fortawesome-dependencies:
+        patterns:
+          - "@fortawesome/*"
+      vite-dependencies:
+        patterns:
+          - "vite*"
+          - "@vitejs/*"
+    # Ignorar dependencias específicas si es necesario
+    ignore:
+      - dependency-name: "svelte"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@sveltejs/kit"
+        update-types: ["version-update:semver-major"]
+
+  # Configuración para GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "maintainers"
+    assignees:
+      - "maintainers"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
