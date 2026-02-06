@@ -91,7 +91,7 @@
             background-position: center;
             transform: scale(0.5);
             overflow: hidden;
-            image-rendering: initial;
+            image-rendering: smooth;
         }
     }
 
@@ -119,7 +119,7 @@
 	<div style:border-image-source="url({bubble})" class={ `chat-bubble bubble-${ chat.styleId } type-${ chat.type }` } style:max-width="{maxWidth}px">
 		<div class="user-container">
 			{#if chat.imageUrl && (chat.imageUrl.length > 0)}
-			<div class="user-image" style:background-image="url({ chat.imageUrl })" style:image-rendering='auto'>
+			<div class="user-image" style:background-image="url({ chat.imageUrl })">
 			</div>
 			{/if}
 		</div>
