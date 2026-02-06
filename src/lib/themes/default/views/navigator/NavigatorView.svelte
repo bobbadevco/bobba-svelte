@@ -7,10 +7,7 @@
 	import BobbaTabsItem from '../../generic/window/tabs/BobbaTabsItem.svelte';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import SearchComponent from '$lib/themes/default/views/navigator/components/search/SearchComponent.svelte';
-	import RoomThumbnail from '$lib/components/common/layout/RoomThumbnail.svelte';
-	import room_thumbnail from '$lib/themes/default/assets/images/navigator/room_thumbnail.png'
-	import SearchResultComponent
-		from '$lib/themes/default/views/navigator/components/search/SearchResultComponent.svelte';
+	import SearchResultComponent from '$lib/themes/default/views/navigator/components/search/SearchResultComponent.svelte';
 
 	const navigator = getNavigatorListener();
 	const navigatorClose = () => { navigator.visible = false; };
