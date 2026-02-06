@@ -33,15 +33,10 @@
 			</Flex>
 		{/if}
 		<Flex column class="overflow-hidden">
-			<Flex column fullWidth fullHeight class="py-2 relative mb-3">
+			<Flex column fullWidth fullHeight class="py-2 relative mb-3 gap-2">
 				<SearchComponent />
 				<Flex column class="overflow-auto">
 					<SearchResultComponent />
-					<!--{#if navigator.searchResult}
-							{#each navigator.searchResult.results as result, i (i)}
-								<SearchResultView searchResult={ result }/>
-						{/each}
-					{/if} -->
 				</Flex>
 			</Flex>
 		</Flex>
