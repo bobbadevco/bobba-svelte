@@ -26,6 +26,8 @@ export const registerNitroEvent = <T extends NitroEvent>(
 export const DispatchEvent = (eventDispatcher: IEventDispatcher, event: NitroEvent) =>
 	eventDispatcher.dispatchEvent(event);
 
+export const DispatchMainEvent = (event: NitroEvent) => DispatchEvent(GetNitroInstance().events, event);
+
 export const registerUiEvent = <T extends NitroEvent>(
 	type: string | string[],
 	handler: (evt: T) => void

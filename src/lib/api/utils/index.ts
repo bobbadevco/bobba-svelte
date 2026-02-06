@@ -4,3 +4,5 @@ export * from './LocalizeText';
 export * from './LocalizeBadgeName';
 export * from './RoomChatFormatter';
 export * from './DoChatsOverlap';
+export * from './PlaySound';
+export * from './SoundNames';

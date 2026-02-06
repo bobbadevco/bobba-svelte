@@ -8,6 +8,7 @@
 	import ToolbarLogic from './ToolbarLogic.svelte';
 	import RoomLogic from '$lib/components/logic/RoomLogic.svelte';
 	import FriendsLogic from '$lib/components/logic/FriendsLogic.svelte';
+	import MessengerLogic from '$lib/components/logic/MessengerLogic.svelte';
 
 	onMount(
 		() => {
@@ -21,3 +22,4 @@
 <AlertLogic />
 <ToolbarLogic />
 <FriendsLogic />
+<MessengerLogic />
