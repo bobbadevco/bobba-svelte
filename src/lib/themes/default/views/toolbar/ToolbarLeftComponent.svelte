@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { CreateLinkEvent, GoToHotelView } from "$lib/api";
-	import { getRoomSession, getUserLook } from "$lib/events";
+	import { getRoomSession } from "$lib/events";
 	import Button from "$lib/components/common/Button.svelte";
 	import Flex from "$lib/components/common/Flex.svelte";
-	import AvatarImage from "$lib/components/common/layout/AvatarImage.svelte";
 	import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-	import Fa from "svelte-fa";
-    
+	import { Fa } from 'svelte-fa';
+
 	let isVisible = $state(false);
 </script>
 
