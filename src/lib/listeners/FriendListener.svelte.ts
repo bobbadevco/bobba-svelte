@@ -12,7 +12,7 @@ import  {
 	MessengerInitEvent,
 	NewFriendRequestEvent, NitroCommunicationDemoEvent, type NitroEvent, RemoveFriendComposer, RequestFriendComposer,
 	SendRoomInviteComposer, SetRelationshipStatusComposer } from '@nitrots/nitro-renderer';
-import { GetSessionDataManager, LocalizeText, SendMessageComposer } from '$lib/api';
+import { AddEventLinkTracker, GetSessionDataManager, LocalizeText, SendMessageComposer } from '$lib/api';
 import { MessengerSettings } from '$lib/api/friends/MessengerSettings';
 import { MessengerRequest } from '$lib/api/friends/MessengerRequest';
 import { CloneObject } from '$lib/api/utils/CloneObject';
@@ -179,6 +179,7 @@ class FriendListener implements ILinkEventTracker {
 		registerMessageEvent(FindFriendsProcessResultEvent, this.onFriendsProcessResult.bind(this));
 
 		SendMessageComposer(new MessengerInitComposer());
+		AddEventLinkTracker(this);
 		clearInterval(this.interval);
 		this.interval = setInterval(() => SendMessageComposer(new FriendListUpdateComposer()), 120000);
 	}
