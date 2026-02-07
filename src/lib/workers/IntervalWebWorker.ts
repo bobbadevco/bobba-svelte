@@ -8,7 +8,7 @@ export default () => {
 
 		switch (data.action) {
 			case 'START':
-				interval = setInterval(() => {postMessage(null); console.log("worker")}, data.content);
+				interval = setInterval(() => {postMessage(null);}, data.content);
 				break;
 			case 'STOP':
 				if (interval) {
