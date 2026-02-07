@@ -7,16 +7,18 @@ import  {
 	FriendListUpdateComposer, FriendListUpdateEvent,
 	type FriendParser,
 	FriendRequestsEvent,
+	type ILinkEventTracker,
 	MessengerInitComposer,
 	MessengerInitEvent,
-	NewFriendRequestEvent, NitroCommunicationDemoEvent, type NitroEvent, RequestFriendComposer, SetRelationshipStatusComposer } from '@nitrots/nitro-renderer';
+	NewFriendRequestEvent, NitroCommunicationDemoEvent, type NitroEvent, RemoveFriendComposer, RequestFriendComposer,
+	SendRoomInviteComposer, SetRelationshipStatusComposer } from '@nitrots/nitro-renderer';
 import { GetSessionDataManager, LocalizeText, SendMessageComposer } from '$lib/api';
 import { MessengerSettings } from '$lib/api/friends/MessengerSettings';
 import { MessengerRequest } from '$lib/api/friends/MessengerRequest';
 import { CloneObject } from '$lib/api/utils/CloneObject';
 import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
 
-class FriendListener {
+class FriendListener implements ILinkEventTracker {
 	friends = $state<MessengerFriend[]>([]);
 	requests = $state<MessengerRequest[]>([]);
 	sentRequests = $state<number[]>([]);
@@ -25,6 +27,34 @@ class FriendListener {
 	friendListTotalFragments = $state(0);
 	friendsListReady = $state(false);
 	interval: ReturnType<typeof setInterval>;
+
+	selectedFriendsIds = $state<number[]>([]);
+	showRoomInvite = $state(false);
+	showRemoveFriendsConfirmation = $state(false);
+
+	eventUrlPrefix: string = 'friends/';
+	visible = $state(false);
+
+	removeFriendsText = $derived.by(() =>
+	{
+		if(!this.selectedFriendsIds || !this.selectedFriendsIds.length) return '';
+
+		const userNames: string[] = [];
+
+		for(const userId of this.selectedFriendsIds)
+		{
+			let existingFriend: MessengerFriend | undefined = this.onlineFriends.find(f => f.id === userId);
+
+			if(!existingFriend) existingFriend = this.offlineFriends.find(f => f.id === userId);
+
+			if(!existingFriend) continue;
+
+			userNames.push(existingFriend.name || '');
+		}
+
+		return LocalizeText('friendlist.removefriendconfirm.userlist', [ 'user_names' ], [ userNames.join(', ') ]);
+	});
+
 
 	onlineFriends = $derived(this.friends.filter((friend) => friend.online).toSorted());
 	offlineFriends = $derived(this.friends.filter((friend) => !friend.online).toSorted());
@@ -83,6 +113,59 @@ class FriendListener {
 			}
 
 			this.requests.splice(index, 1);
+		}
+	}
+
+	public selectFriend(userId: number) {
+		if(userId < 0) return;
+		const existingUserIdIndex: number = this.selectedFriendsIds.indexOf(userId);
+
+		if(existingUserIdIndex > -1)
+		{
+			this.selectedFriendsIds.splice(existingUserIdIndex, 1)
+		}
+		else
+		{
+			this.selectedFriendsIds.push(userId);
+		}
+	}
+
+	public sendRoomInvite(message: string) {
+		if(!this.selectedFriendsIds.length || !message || !message.length || (message.length > 255)) return;
+
+		SendMessageComposer(new SendRoomInviteComposer(message, this.selectedFriendsIds));
+
+		this.showRoomInvite = false;
+	}
+
+	public removeSelectedFriends() {
+		if(this.selectedFriendsIds.length === 0) return;
+
+		SendMessageComposer(new RemoveFriendComposer(...this.selectedFriendsIds));
+		this.selectedFriendsIds = [];
+
+		this.showRemoveFriendsConfirmation = false;
+	}
+
+	public linkReceived(url: string) {
+		const parts = url.split('/');
+		if(parts.length < 2) return;
+
+		switch(parts[1])
+		{
+			case 'show':
+				this.visible = true;
+				return;
+			case 'hide':
+				this.visible = false;
+				return;
+			case 'toggle':
+				this.visible = !this.visible;
+				return;
+			case 'request':
+				if(parts.length < 4) return;
+
+				this.requestFriend(parseInt(parts[2]), parts[3]);
 		}
 	}
 
