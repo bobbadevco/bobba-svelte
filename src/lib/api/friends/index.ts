@@ -6,3 +6,4 @@ export * from './IGroupChatData';
 export * from './MessengerThreadChat';
 export * from './MessengerThreadChatGroup';
 export * from './MessengerIconState';
+export * from './OpenMessengerChat';

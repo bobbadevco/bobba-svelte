@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MessengerFriend } from '$lib/api';
+	import { MessengerFriend, OpenMessengerChat } from '$lib/api';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import AvatarImage from '$lib/components/common/layout/AvatarImage.svelte';
 	import ProfileButton from '$lib/themes/default/views/friends/components/ProfileButton.svelte';
@@ -50,7 +50,10 @@
 			<button title="message" class="icon icon-follow cursor-pointer" onclick={() => friends.followFriend(friend)}>
 			</button>
 		{/if}
-		<button title="message" class="icon icon-friend_message cursor-pointer" onclick={() => friends.followFriend(friend)}>
+		<button title="message" class="icon icon-friend_message cursor-pointer" onclick={(event) => {
+			event.stopPropagation();
+			OpenMessengerChat(friend.id);
+		}}>
 		</button>
 	</Flex>
 </Flex>
