@@ -21,13 +21,13 @@
 {#if friends.visible}
 	<BobbaWindow headerTitle="Friends" class="min-h-70" onCloseClick={() => friends.visible = false}>
 		<Flex fullWidth column fullHeight class="justify-between">
-			<AccordionItem class="" headerText={LocalizeText('friendlist.friends.all')} name="friends" bind:current={current}>
-				<AccordionItem headerText="{LocalizeText('friendlist.friends')} ({friends.onlineFriends.length})" class="max-h-fit" name="friends_online" current="friends_online">
+			<AccordionItem class="max-h-full overflow-y-auto" headerText={LocalizeText('friendlist.friends.all')} name="friends" bind:current={current}>
+				<AccordionItem class="max-h-fit flex-1" headerText="{LocalizeText('friendlist.friends')} ({friends.onlineFriends.length})" name="friends_online" current="friends_online">
 					{#each friends.onlineFriends as friend (friend.id)}
 						<FriendListItem {friend} />
 					{/each}
 				</AccordionItem>
-				<AccordionItem class="max-h-fit" headerText="{LocalizeText('friendlist.friends.offlinecaption')} ({friends.offlineFriends.length})" name="friends_offline" current="friends_offline">
+				<AccordionItem class="max-h-fit flex-1" headerText="{LocalizeText('friendlist.friends.offlinecaption')} ({friends.offlineFriends.length})" name="friends_offline" current="friends_offline">
 					{#each friends.offlineFriends as friend (friend.id)}
 						<FriendListItem {friend} />
 					{/each}

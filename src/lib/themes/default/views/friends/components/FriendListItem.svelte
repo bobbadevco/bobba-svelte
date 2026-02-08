@@ -18,9 +18,11 @@
 				<AvatarImage class="absolute w-[90px!important] h-[130px!important]" figure={friend.figure} headOnly scale={0.5} direction={2} />
 			</Flex>
 		{/if}
-		<div style:margin-left={(friend.id < 0 || !friend.online) ? '14px' : ''}>
-			<ProfileButton userId={friend.id} />
+		{#if friend.id > 0}
+		<div class="relative" style:margin-left={(friend.id < 0 || !friend.online) ? '14px' : ''}>
+			<ProfileButton class="cursor-pointer" userId={friend.id} />
 		</div>
+		{/if}
 		<p>{friend.name}</p>
 	</Flex>
 </Flex>

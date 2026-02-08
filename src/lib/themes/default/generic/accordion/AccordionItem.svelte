@@ -13,12 +13,12 @@
 	let {headerText, name, current = $bindable(''), children, class: classes = '', ...props}: AccordionSetProps = $props();
 </script>
 
-<Flex fullWidth column class={[name === current && 'flex-1', classes]} {...props}>
+<Flex fullWidth wrap={false} column class={[name === current && 'flex-1', classes]} {...props}>
 	<Flex class="shrink-0" pointer onclick={() => current = (name === current) ? '' : name}>
 		<p class="text-white">{headerText}</p>
 	</Flex>
 	{#if name === current}
-		<Flex fullHeight column class="overflow-hidden gap-0 flex-1">
+		<Flex column class="gap-0 flex-1">
 			{@render children?.()}
 		</Flex>
 	{/if}
