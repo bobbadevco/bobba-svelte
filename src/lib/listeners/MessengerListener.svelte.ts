@@ -16,6 +16,7 @@ class MessengerListener implements ILinkEventTracker {
 	messageThreads = $state<MessengerThread[]>([]);
 	hiddenThreadIds = $state<number[]>([]);
 	activeThreadId = $state(-1);
+	lastThreadId = $state(-1);
 
 	visible = $state(false);
 
