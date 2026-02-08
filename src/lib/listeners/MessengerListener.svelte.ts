@@ -1,5 +1,6 @@
 import { registerMainEvent, registerMessageEvent } from '$lib/events';
 import {
+	FollowFriendFailedEvent,
 	type ILinkEventTracker, NewConsoleMessageEvent, NitroCommunicationDemoEvent, type NitroEvent,
 	RoomInviteErrorEvent, RoomInviteEvent, SendMessageComposer as SendMessageComposerPacket } from '@nitrots/nitro-renderer';
 import {
@@ -10,6 +11,7 @@ import { CloneObject } from '$lib/api/utils/CloneObject';
 import { SoundNames } from '$lib/api/utils/SoundNames';
 import { NotificationAlertType } from '$lib/api/notification/NotificationAlertType';
 import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
+import { MessengerFollowFriendFailedType } from '$lib/api/friends/MessengerFollowFriendFailedType';
 
 class MessengerListener implements ILinkEventTracker {
 	private static instance: MessengerListener;
@@ -147,6 +149,7 @@ class MessengerListener implements ILinkEventTracker {
 		registerMessageEvent(NewConsoleMessageEvent, this.onNewConsoleMessage.bind(this));
 		registerMessageEvent(RoomInviteEvent, this.onRoomInvite.bind(this));
 		registerMessageEvent(RoomInviteErrorEvent, this.onRoomInviteError.bind(this));
+		registerMessageEvent(FollowFriendFailedEvent, this.onFollowFriendFailed.bind(this));
 
 		AddEventLinkTracker(this);
 	}
@@ -172,6 +175,28 @@ class MessengerListener implements ILinkEventTracker {
 		const parser = event.getParser();
 
 		getAlertListener().simpleAlert(`Received room invite error: ${ parser.errorCode },recipients: ${ parser.failedRecipients }`, NotificationAlertType.DEFAULT, undefined, undefined, LocalizeText('friendlist.alert.title'));
+	}
+
+	private onFollowFriendFailed(event: FollowFriendFailedEvent) {
+		const parser = event.getParser();
+
+		if (!parser) return null;
+
+		switch(parser.errorCode)
+		{
+			case MessengerFollowFriendFailedType.NOT_IN_FRIEND_LIST:
+				getAlertListener().simpleAlert(LocalizeText('friendlist.followerror.notfriend'), undefined, undefined, undefined, LocalizeText('friendlist.alert.title'), undefined);
+				break;
+			case MessengerFollowFriendFailedType.FRIEND_OFFLINE:
+				getAlertListener().simpleAlert(LocalizeText('friendlist.followerror.offline'), undefined, undefined, undefined, LocalizeText('friendlist.alert.title'), undefined);
+				break;
+			case MessengerFollowFriendFailedType.FRIEND_NOT_IN_ROOM:
+				getAlertListener().simpleAlert(LocalizeText('friendlist.followerror.hotelview'), undefined, undefined, undefined, LocalizeText('friendlist.alert.title'), undefined);
+				break;
+			case MessengerFollowFriendFailedType.FRIEND_BLOCKED_STALKING:
+				getAlertListener().simpleAlert(LocalizeText('friendlist.followerror.prevented'), undefined, undefined, undefined, LocalizeText('friendlist.alert.title'), undefined);
+				break;
+		}
 	}
 }
 
