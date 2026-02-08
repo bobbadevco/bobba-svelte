@@ -1,7 +1,9 @@
 import { registerMainEvent, registerMessageEvent } from '$lib/events';
-import { NewConsoleMessageEvent, NitroCommunicationDemoEvent, type NitroEvent,
+import {
+	type ILinkEventTracker, NewConsoleMessageEvent, NitroCommunicationDemoEvent, type NitroEvent,
 	RoomInviteErrorEvent, RoomInviteEvent, SendMessageComposer as SendMessageComposerPacket } from '@nitrots/nitro-renderer';
-import { GetSessionDataManager, LocalizeText,
+import {
+	AddEventLinkTracker, GetSessionDataManager, LocalizeText,
 	MessengerIconState, MessengerThread, MessengerThreadChat, PlaySound, SendMessageComposer } from '$lib/api';
 import { getFriendListener } from '$lib/listeners/FriendListener.svelte';
 import { CloneObject } from '$lib/api/utils/CloneObject';
@@ -9,11 +11,13 @@ import { SoundNames } from '$lib/api/utils/SoundNames';
 import { NotificationAlertType } from '$lib/api/notification/NotificationAlertType';
 import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
 
-class MessengerListener {
+class MessengerListener implements ILinkEventTracker {
 	private static instance: MessengerListener;
 	messageThreads = $state<MessengerThread[]>([]);
 	hiddenThreadIds = $state<number[]>([]);
 	activeThreadId = $state(-1);
+
+	visible = $state(false);
 
 	visibleThreads = $derived.by(() => this.messageThreads.filter(thread => (this.hiddenThreadIds.indexOf(thread.threadId) === -1)));
 	activeThread = $derived.by(() => ((this.activeThreadId > 0) && this.visibleThreads.find(thread => (thread.threadId === this.activeThreadId) || null)));
@@ -48,6 +52,36 @@ class MessengerListener {
 		}
 		return MessengerListener.instance;
 	}
+
+	public linkReceived(url: string) {
+		const parts = url.split('/');
+
+		if(parts.length === 2)
+		{
+			if(parts[1] === 'open')
+			{
+				this.visible = true;
+
+				return;
+			}
+
+			if(parts[1] === 'toggle')
+			{
+				this.visible = !this.visible;
+
+				return;
+			}
+
+			const thread = this.getMessageThread(parseInt(parts[1]));
+
+			if(!thread) return;
+
+			this.activeThreadId = thread.threadId;
+			this.visible = true;
+		}
+	}
+
+	eventUrlPrefix = 'friends-messenger/';
 
 	public getMessageThread(userId: number) {
 		let thread = this.messageThreads.find(thread => (thread.participant && (thread.participant.id === userId)));
@@ -112,6 +146,8 @@ class MessengerListener {
 		registerMessageEvent(NewConsoleMessageEvent, this.onNewConsoleMessage.bind(this));
 		registerMessageEvent(RoomInviteEvent, this.onRoomInvite.bind(this));
 		registerMessageEvent(RoomInviteErrorEvent, this.onRoomInviteError.bind(this));
+
+		AddEventLinkTracker(this);
 	}
 
 	private onNewConsoleMessage(event: NewConsoleMessageEvent) {

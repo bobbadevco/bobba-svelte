@@ -2,9 +2,11 @@
 	import { onMount, untrack } from 'svelte';
 	import { getMessengerListener } from '$lib/listeners/MessengerListener.svelte';
 	import { CloneObject } from '$lib/api/utils/CloneObject';
+	import { RemoveLinkEventTracker } from '$lib/api';
 
 	onMount(() => {
 		getMessengerListener();
+		return () => RemoveLinkEventTracker(getMessengerListener());
 	});
 
 	$effect(() => {
