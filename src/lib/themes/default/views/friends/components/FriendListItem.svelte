@@ -47,7 +47,7 @@
 	</Flex>
 	<Flex>
 		{#if friend.followingAllowed}
-			<button title="message" class="nitro-friends-spritesheet icon-follow cursor-pointer" onclick={() => friends.followFriend(friend)}>
+			<button title="follow" class="nitro-friends-spritesheet icon-follow cursor-pointer" onclick={() => friends.followFriend(friend)}>
 			</button>
 		{/if}
 		<button title="message" class="icon icon-friend_message cursor-pointer" onclick={(event) => {

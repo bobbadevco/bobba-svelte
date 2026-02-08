@@ -6,6 +6,7 @@
 	import draggableImg from '../../assets/images/draggable.png';
 	import Button from '$lib/components/common/Button.svelte';
 	import { faXmark } from '@fortawesome/free-solid-svg-icons';
+	import { getWindowListener } from '$lib/listeners/WindowListener.svelte';
 
 	let {onCloseClick = () => {}, unique = '', disableDrag = false, headerTitle='', class: classes = '', children = undefined}: { onCloseClick?: () => void, unique?: string, disableDrag?: boolean, class?: ClassValue, children?: Snippet, headerTitle: string } = $props();
 
@@ -13,10 +14,14 @@
 	let y = $state(0);
 	let width = $state(0);
 	let height = $state(0);
+
+	const id = $state(getWindowListener().getId());
+	const zIndex = $derived(getWindowListener().windows.indexOf(id) + 500);
+	const onClick = () => getWindowListener().pushToTop(id);
 </script>
 
-<div style:width="{width}px" style:height="{height}px" style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col min-w-fit min-h-fit" bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
-	<Draggable {unique} bind:x={x} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b shadow-[inset_0_-1px_#222222] border-b-[#202020]">
+<div style:width="{width}px" style:z-index={zIndex} style:height="{height}px" style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col min-w-fit min-h-fit" bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
+	<Draggable {unique} bind:x={x} {onClick} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b shadow-[inset_0_-1px_#222222] border-b-[#202020]">
 		<p class="w-full text-center font-semibold">
 			{headerTitle}
 		</p>
