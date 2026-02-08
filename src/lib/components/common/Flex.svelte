@@ -20,7 +20,7 @@
 		pointer?: boolean,
 	}
 
-	let {children, element = $bindable<HTMLElement | null>(null), pointer = false, onclick = undefined, column = false, reverse = false, center = false, wrap = true, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ...p }: FlexProps = $props();
+	let {children, element = $bindable<HTMLElement | null>(null), pointer = false, onclick = undefined, column = false, reverse = false, center = false, wrap = false, shrink = false, inline = false, fit = false, fullWidth = false, fullHeight = false, grow = false, ...p }: FlexProps = $props();
 </script>
 
 <svelte:element

@@ -91,7 +91,6 @@
             background-position: center;
             transform: scale(0.5);
             overflow: hidden;
-            image-rendering: smooth;
         }
     }
 
@@ -124,13 +123,15 @@
 			{/if}
 		</div>
 		<div class="chat-content h-full items-center flex">
-			<span class="font-bold mr-1">
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html chat.username}:
-			</span>
-			<span class="message" >
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html chat.formattedText}
+			<span class="mr-1 flex min-h-full items-start justify-start gap-1">
+				<span class="username min-w-fit font-bold" >
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+					{@html chat.username}:
+				</span>
+				<span class="message" >
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+					{@html chat.formattedText}
+				</span>
 			</span>
 		</div>
 		<div class="cursor-pointer">

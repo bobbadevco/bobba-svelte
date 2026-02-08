@@ -10,6 +10,13 @@
 	import SearchResultComponent from '$lib/themes/default/views/navigator/components/search/SearchResultComponent.svelte';
 
 	const navigator = getNavigatorListener();
+    
+    // Forzar reactividad profunda
+    let searchResults = $derived.by(() => {
+        if (!navigator.searchResult) return [];
+        return navigator.searchResult.results;
+    });
+
 	const navigatorClose = () => { navigator.visible = false; };
 </script>
 
@@ -25,15 +32,19 @@
 			{/if}
 		</BobbaTabs>
 		{#if navigator.loading}
-			<Flex fullWidth fullHeight class="bg-[#FFFFFF10] rounded-md justify-center absolute items-center">
+			<Flex fullWidth fullHeight class="bg-[#FFFFFF10] rounded-md justify-center absolute items-center z-50">
 				<img src={LoadingImage} alt="loading" class="size-4 animate-spin"/>
 			</Flex>
 		{/if}
-		<Flex column class="overflow-hidden">
+		<Flex column grow class="overflow-hidden">
 			<Flex column fullWidth fullHeight class="py-2 relative mb-3 gap-2">
 				<SearchComponent />
-				<Flex column class="overflow-auto">
-					<SearchResultComponent />
+				<Flex fullWidth column class="overflow-auto">
+					{#if searchResults.length > 0}
+						{#each searchResults as result, index (index)}
+							<SearchResultComponent searchResult={result} />
+						{/each}
+					{/if}
 				</Flex>
 			</Flex>
 		</Flex>

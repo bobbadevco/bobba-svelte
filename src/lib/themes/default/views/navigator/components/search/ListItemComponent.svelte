@@ -1,7 +1,5 @@
 <script lang="ts">
 	import Flex from '$lib/components/common/Flex.svelte';
-	import avatar_icon from '$lib/themes/default/assets/images/navigator/avatar_icon.png';
-	import room_group from '$lib/themes/default/assets/images/navigator/room_group.png';
 	import type { RoomDataParser } from '@nitrots/nitro-renderer';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import type { ClassValue } from 'svelte/elements';
@@ -36,15 +34,15 @@
 
 <Flex pointer class={['overflow-hidden gap-2 items-center', classes]} onclick={visitRoom}>
 	<Flex class="justify-center items-center rounded-sm p-0 px-2 gap-2 font-bold" style="background-color: {occupancyColor()}">
-		<div class="w-1.75 h-2 bg-no-repeat" style:background-image="url({avatar_icon})"></div>
+		<div class="bg-(image:--navigator-spritesheet) bg-position-[-50px_-58px] w-1.75 h-2 bg-no-repeat"></div>
 		<p class="text-[12px]">
 			{roomData.userCount}
 		</p>
 	</Flex>
-	<p class="truncate grow text-start">{roomData.roomName}</p>
+	<p class="truncate grow text-start text-[14px]">{roomData.roomName}</p>
 	<Flex class="flex-row-reverse gap-1 items-center">
 		{#if roomData.habboGroupId}
-			<i style:background-image="url({room_group})" class="w-3.25 h-2.75"></i>
+			<i class="bg-(image:--navigator-spritesheet) bg-position-[0px_-54px] w-3.25 h-2.75 me-2"></i>
 		{/if}
 	</Flex>
 </Flex>

@@ -247,20 +247,16 @@ class NavigatorListener implements ILinkEventTracker {
 
 	private onSearch(event: NavigatorSearchEvent) {
 		const parser = event.getParser();
+
 		this.searchResult = parser.result;
+		this.loading = false;
+
 		let currContext = this.topLevelContext;
 
 		if (!currContext) currContext = ((this.topLevelContexts && this.topLevelContexts.length && this.topLevelContexts[0]) || undefined);
 		if (!currContext) return;
 
 		if ((parser.result.code !== currContext.code) && this.topLevelContexts && this.topLevelContexts.length) {
-			for (const context of this.topLevelContexts) {
-				if (context.code !== parser.result.code) continue;
-				currContext = context;
-			}
-		}
-
-		if (this.topLevelContexts) {
 			for (const context of this.topLevelContexts) {
 				if (context.code !== parser.result.code) continue;
 				currContext = context;
@@ -280,6 +276,7 @@ class NavigatorListener implements ILinkEventTracker {
 
 	private onGenericError(event: GenericErrorEvent) {
 		const parser = event.getParser();
+		this.loading = false;
 
 		switch (parser.errorCode) {
 			case -100002:

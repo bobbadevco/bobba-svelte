@@ -5,7 +5,7 @@
 	import defaultImage from "$lib/themes/default/assets/images/navigator/room_thumbnail.png";
 	import RoomThumbnail from '$lib/components/common/layout/RoomThumbnail.svelte';
 	import Fa from 'svelte-fa';
-	import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
+	import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 	interface ThumbnailItemProps
 	{
@@ -17,11 +17,11 @@
 	const visitRoom = () => navigator.visitRoom(roomData);
 </script>
 
-<Flex onclick={visitRoom} pointer column >
-	<RoomThumbnail {defaultImage} roomId={roomData.roomId} customUrl={roomData.officialRoomPicRef} class="flex flex-col items-center justify-end mb-1">
-		<Flex center class="absolute m-1 p-1 inline-block">
+<Flex class="bg-secondary rounded-md p-2 max-w-31.5" onclick={visitRoom} pointer column >
+	<RoomThumbnail {defaultImage} roomId={roomData.roomId} customUrl={roomData.officialRoomPicRef} class="flex bg-tertiary rounded-sm flex-col items-center justify-end mb-1">
+		<Flex center class="absolute m-1 p-1">
 			<Fa icon={faUser} />
-			{roomData.userCount}
+			<span class="ml-1 text-xs">{roomData.userCount}</span>
 		</Flex>
 	</RoomThumbnail>
 	<Flex fullWidth>
