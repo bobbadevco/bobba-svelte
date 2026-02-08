@@ -17,3 +17,10 @@
     /* SPRITESHEETS */
     --toolbar-spritesheet: url('$lib/themes/default/assets/images/toolbar/toolbar_spritesheet.png');
 }
+.icon {
+    display: inline-block;
+    outline: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+}
