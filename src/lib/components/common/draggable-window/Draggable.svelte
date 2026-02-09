@@ -15,7 +15,20 @@
 		onClick();
 	}
 
+	function ontouchstart(e: TouchEvent) {
+		moving = true;
+		const touch = e.touches[0];
+		lastX = touch.clientX;
+		lastY = touch.clientY;
+		onClick();
+	}
+
+
 	function onmouseup() {
+		moving = false;
+	}
+
+	function ontouchend() {
 		moving = false;
 	}
 
@@ -28,11 +41,22 @@
 		}
 	}
 
+	function ontouchmove(e: TouchEvent) {
+		if (moving) {
+			const touch = e.touches[0];
+			x += touch.clientX - lastX;
+			y += touch.clientY - lastY;
+			lastX = touch.clientX;
+			lastY = touch.clientY;
+		}
+	}
+
 	function onblur() {
 		moving = false;
 	}
+
 </script>
-<svelte:window {onmouseup} {onmousemove} {onblur} />
-<div role="tab" tabindex="-1" aria-roledescription="draggable window" {onmousedown}  {onblur} class={[classes]}>
+<svelte:window {onmouseup} {ontouchend} {ontouchmove} {onmousemove} {onblur} />
+<div role="tab" tabindex="-1" aria-roledescription="draggable window" {onmousedown} {ontouchstart} {onblur} class={[classes]}>
 	{@render children?.()}
 </div>
