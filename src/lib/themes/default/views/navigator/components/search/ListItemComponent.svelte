@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Flex from '$lib/components/common/Flex.svelte';
-	import { RoomData, RoomDataParser } from '@nitrots/nitro-renderer';
+	import { RoomDataParser } from '@nitrots/nitro-renderer';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import type { ClassValue } from 'svelte/elements';
 

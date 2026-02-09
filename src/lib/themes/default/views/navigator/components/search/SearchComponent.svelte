@@ -5,8 +5,8 @@
 	import Select from '$lib/components/common/Select.svelte';
 	import { LocalizeText } from '$lib/api';
 	import { SearchOptions } from '$lib/api/navigator/SearchOptions';
-	import Fa from 'svelte-fa';
 	import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+	import { Fa } from 'svelte-fa';
 
 	const navigator = getNavigatorListener();
 
@@ -26,7 +26,7 @@
 <Flex fullWidth class="gap-3 items-center relative">
 	<Flex>
 		<Select
-			class="h-[28px]"
+			class="h-7"
 			options={filterOptions}
 			bind:value={navigator.searchIndex} />
 	</Flex>

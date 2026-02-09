@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { CreateLinkEvent, LocalizeText, SendMessageComposer } from '$lib/api';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import LoadingImage from '../../assets/images/loading.png';
 	import BobbaWindow from "$lib/themes/default/generic/window/BobbaWindow.svelte";
@@ -10,6 +9,7 @@
 	import SearchResultComponent from '$lib/themes/default/views/navigator/components/search/SearchResultComponent.svelte';
 	import { untrack } from 'svelte';
 	import { FindNewFriendsMessageComposer } from '@nitrots/nitro-renderer';
+	import { LocalizeText, SendMessageComposer } from '$lib/api';
 
 	const navigator = getNavigatorListener();
     

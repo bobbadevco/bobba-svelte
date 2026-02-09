@@ -7,8 +7,8 @@
 	import { LocalizeText, SendMessageComposer } from '$lib/api';
 	import { type NavigatorSearchResultList, NavigatorSearchComposer } from '@nitrots/nitro-renderer';
 	import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-	import Fa from 'svelte-fa';
-	
+	import { Fa } from 'svelte-fa';
+
 	interface SearchResultComponentProps {
 		searchResult: NavigatorSearchResultList;
 	}
@@ -97,15 +97,15 @@
 	</Flex>
 	<div class="flex flex-col w-full">
 		{#if isExtended}
-            <div class={gridHasTwoColumns ? "grid grid-cols-3 gap-1 justify-center" : "flex flex-col gap-1"}>
-                {#each rooms as roomData, roomIndex}
-                    {#if gridHasTwoColumns}
-                        <ThumbnailItemComponent roomData={roomData} />
-                    {:else}
-                        <ListItemComponent class={roomIndex % 2 === 0 ? 'bg-tertiary' : ''} roomData={roomData} />
-                    {/if}
-                {/each}
-            </div>
+			<div class={gridHasTwoColumns ? "grid grid-cols-3 gap-1 justify-center" : "flex flex-col gap-1"}>
+					{#each rooms as roomData, roomIndex (roomData.roomId)}
+							{#if gridHasTwoColumns}
+									<ThumbnailItemComponent roomData={roomData} />
+							{:else}
+									<ListItemComponent class={roomIndex % 2 === 0 ? 'bg-tertiary' : ''} roomData={roomData} />
+							{/if}
+					{/each}
+			</div>
 		{/if}
 	</div>
 </div>
