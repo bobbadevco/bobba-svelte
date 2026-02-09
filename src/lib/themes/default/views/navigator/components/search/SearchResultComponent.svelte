@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { SvelteSet } from 'svelte/reactivity';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import ListItemComponent from '$lib/themes/default/views/navigator/components/search/ListItemComponent.svelte';
@@ -17,7 +18,7 @@
 
 	let isExtended = $derived(!searchResult.closed);
 	let displayMode = $derived(searchResult.mode);
-    let rooms = $derived(searchResult.rooms);
+	let rooms = $derived(searchResult.rooms);
 
 	const navigator = getNavigatorListener();
 

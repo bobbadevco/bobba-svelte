@@ -74,6 +74,8 @@ class NavigatorListener implements ILinkEventTracker {
 	currentRoomOwner = $state(false);
 	roomId = $state(-1);
 	loading: boolean = $state(false);
+	roomInfoData = $state<RoomDataParser | null>(null);
+	roomInfoId = $state<number | null>(null);
 	topLevelContext = $state<NavigatorTopLevelContext>();
 	topLevelContexts = $state<NavigatorTopLevelContext[]>();
 	searchResult = $state<NavigatorSearchResultSet>();

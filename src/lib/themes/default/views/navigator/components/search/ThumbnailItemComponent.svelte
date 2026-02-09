@@ -5,7 +5,9 @@
 	import defaultImage from "$lib/themes/default/assets/images/navigator/room_thumbnail.png";
 	import RoomThumbnail from '$lib/components/common/layout/RoomThumbnail.svelte';
 
-	interface ThumbnailItemProps
+ import RoomInfoComponent from '$lib/themes/default/views/navigator/components/search/RoomInfoComponent.svelte';
+
+ 	interface ThumbnailItemProps
 	{
 		roomData: RoomDataParser
 	}
@@ -32,7 +34,13 @@
 	};
 </script>
 
-<Flex class="bg-secondary rounded-md p-2 max-w-31.5" onclick={visitRoom} pointer column >
+<Flex 
+	class="bg-secondary rounded-md p-2 max-w-31.5 relative" 
+	data-room-id={roomData.roomId}
+	onclick={visitRoom} 
+	pointer 
+	column 
+>
 	<RoomThumbnail {defaultImage} roomId={roomData.roomId} customUrl={roomData.officialRoomPicRef} class="flex bg-tertiary rounded-sm flex-col items-center justify-end mb-1">
 		<Flex class="justify-center items-center rounded-sm p-0 px-2 mb-1 gap-2 font-bold" style="background-color: {occupancyColor()}">
 			<div class="bg-(image:--navigator-spritesheet) bg-position-[-69px_-58px] w-1.75 h-2 bg-no-repeat"></div>
@@ -41,7 +49,10 @@
 			</p>
 		</Flex>
 	</RoomThumbnail>
-	<Flex fullWidth>
+	<Flex fullWidth class="items-center justify-between gap-1">
 		<p class="grow truncate">{roomData.roomName}</p>
+		<div onmouseleave={(e) => e.stopPropagation()}>
+			<RoomInfoComponent {roomData} />
+		</div>
 	</Flex>
 </Flex>

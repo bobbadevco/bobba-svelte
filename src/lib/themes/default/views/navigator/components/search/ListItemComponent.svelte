@@ -3,6 +3,7 @@
 	import { RoomDataParser } from '@nitrots/nitro-renderer';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import type { ClassValue } from 'svelte/elements';
+	import RoomInfoComponent from '$lib/themes/default/views/navigator/components/search/RoomInfoComponent.svelte';
 
 	interface ListItemProps
 	{
@@ -32,7 +33,12 @@
 </script>
 
 
-<Flex pointer class={['overflow-hidden gap-2 items-center w-full', classes]} onclick={visitRoom}>
+<Flex 
+	pointer 
+	class={['overflow-hidden gap-2 items-center w-full', classes]} 
+	data-room-id={roomData.roomId}
+	onclick={visitRoom}
+>
 	<Flex fullWidth class="overflow-hidden gap-2 items-center">
 		<Flex class="justify-center items-center rounded-sm p-0 px-2 gap-2 font-bold" style="background-color: {occupancyColor()}">
 			<div class="bg-(image:--navigator-spritesheet) bg-position-[-69px_-58px] w-1.75 h-2 bg-no-repeat"></div>
@@ -42,7 +48,8 @@
 		</Flex>
 		<p class="truncate max-w-75 grow text-start text-[14px]">{roomData.roomName}</p>
 	</Flex>
-	<Flex reverse class="flex-row-reverse gap-1 items-center me-1.5">
+	<Flex reverse class="flex-row-reverse gap-1 items-center me-1.5" onmouseleave={(e) => { e.stopPropagation(); }}>
+		<RoomInfoComponent {roomData} />
 		{#if roomData.habboGroupId}
 			<i class="bg-(image:--navigator-spritesheet) bg-position-[-19px_-54px] w-3.25 h-2.75"></i>
 		{/if}
