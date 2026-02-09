@@ -5,7 +5,7 @@ import {
 	RoomInviteErrorEvent, RoomInviteEvent, SendMessageComposer as SendMessageComposerPacket } from '@nitrots/nitro-renderer';
 import {
 	AddEventLinkTracker, GetSessionDataManager, LocalizeText,
-	MessengerIconState, MessengerThread, MessengerThreadChat, PlaySound, SendMessageComposer } from '$lib/api';
+	MessengerIconState, MessengerThreadSvelte, MessengerThreadChat, PlaySound, SendMessageComposer } from '$lib/api';
 import { getFriendListener } from '$lib/listeners/FriendListener.svelte';
 import { CloneObject } from '$lib/api/utils/CloneObject';
 import { SoundNames } from '$lib/api/utils/SoundNames';
@@ -15,7 +15,7 @@ import { MessengerFollowFriendFailedType } from '$lib/api/friends/MessengerFollo
 
 class MessengerListener implements ILinkEventTracker {
 	private static instance: MessengerListener;
-	messageThreads = $state<MessengerThread[]>([]);
+	messageThreads = $state<MessengerThreadSvelte[]>([]);
 	hiddenThreadIds = $state<number[]>([]);
 	activeThreadId = $state(-1);
 	lastThreadId = $state(-1);
@@ -95,7 +95,7 @@ class MessengerListener implements ILinkEventTracker {
 
 			if(!friend) return undefined;
 
-			thread = new MessengerThread(friend);
+			thread = new MessengerThreadSvelte(friend);
 
 			thread.addMessage(0, LocalizeText('messenger.moderationinfo'), 0, undefined, MessengerThreadChat.SECURITY_NOTIFICATION);
 
@@ -121,7 +121,7 @@ class MessengerListener implements ILinkEventTracker {
 		this.hiddenThreadIds.push(threadId);
 	}
 
-	public sendMessage(thread: MessengerThread, senderId: number, messageText: string, secondsSinceSent: number, extraData?: string, messageType: number = MessengerThreadChat.CHAT) {
+	public sendMessage(thread: MessengerThreadSvelte, senderId: number, messageText: string, secondsSinceSent: number = 0, extraData?: string, messageType: number = MessengerThreadChat.CHAT) {
 		if(!thread || !messageText || !messageText.length) return;
 
 		const ownMessage = (senderId === GetSessionDataManager().userId);
