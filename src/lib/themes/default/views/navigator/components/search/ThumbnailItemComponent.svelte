@@ -35,7 +35,7 @@
 <Flex class="bg-secondary rounded-md p-2 max-w-31.5" onclick={visitRoom} pointer column >
 	<RoomThumbnail {defaultImage} roomId={roomData.roomId} customUrl={roomData.officialRoomPicRef} class="flex bg-tertiary rounded-sm flex-col items-center justify-end mb-1">
 		<Flex class="justify-center items-center rounded-sm p-0 px-2 mb-1 gap-2 font-bold" style="background-color: {occupancyColor()}">
-			<div class="bg-(image:--navigator-spritesheet) bg-position-[-50px_-58px] w-1.75 h-2 bg-no-repeat"></div>
+			<div class="bg-(image:--navigator-spritesheet) bg-position-[-69px_-58px] w-1.75 h-2 bg-no-repeat"></div>
 			<p class="text-[12px]">
 				{roomData.userCount}
 			</p>

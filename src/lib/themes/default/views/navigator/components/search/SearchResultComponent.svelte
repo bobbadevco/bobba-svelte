@@ -79,17 +79,17 @@
 		</Flex>
 		<Flex class="items-center gap-1">
 			{#if displayMode === NavigatorDisplayMode.LIST}
-				<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-26px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ toggleDisplayMode } />
+				<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-57px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ toggleDisplayMode } />
 			{/if}
 			{#if displayMode >= NavigatorDisplayMode.THUMBNAILS}
-				<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-26px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ toggleDisplayMode } />
+				<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-45px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ toggleDisplayMode } />
 			{/if}
 			{#if (searchResult.action > 0)}
 				{#if (searchResult.action === 1)}
-					<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-58px_-55px] size-2.75 cursor-pointer" onclick={ showMore } />
+					<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-33px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ showMore } />
 				{/if}
 				{#if (searchResult.action !== 1)}
-					<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-26px_-55px] size-2.75 cursor-pointer" onclick={ showMore } />
+					<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-77px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ showMore } />
 				{/if}
 			{/if}
 			<!--{ (topLevelContext.code !== 'official_view') && <LayoutSearchSavesView title={ LocalizeText('navigator.tooltip.add.saved.search') } onClick={ () => SendMessageComposer(new NavigatorSearchSaveComposer(getResultTitle(), searchResult.data)) } /> }-->
@@ -97,7 +97,7 @@
 	</Flex>
 	<div class="flex flex-col w-full">
 		{#if isExtended}
-            <div class={gridHasTwoColumns ? "grid grid-cols-3 gap-1" : "flex flex-col gap-1"}>
+            <div class={gridHasTwoColumns ? "grid grid-cols-3 gap-1 justify-center" : "flex flex-col gap-1"}>
                 {#each rooms as roomData, roomIndex}
                     {#if gridHasTwoColumns}
                         <ThumbnailItemComponent roomData={roomData} />

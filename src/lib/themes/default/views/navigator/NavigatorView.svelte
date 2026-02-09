@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LocalizeText } from '$lib/api';
+	import { CreateLinkEvent, LocalizeText, SendMessageComposer } from '$lib/api';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import LoadingImage from '../../assets/images/loading.png';
 	import BobbaWindow from "$lib/themes/default/generic/window/BobbaWindow.svelte";
@@ -8,7 +8,8 @@
 	import Flex from '$lib/components/common/Flex.svelte';
 	import SearchComponent from '$lib/themes/default/views/navigator/components/search/SearchComponent.svelte';
 	import SearchResultComponent from '$lib/themes/default/views/navigator/components/search/SearchResultComponent.svelte';
-	import { onMount, untrack } from 'svelte';
+	import { untrack } from 'svelte';
+	import { FindNewFriendsMessageComposer } from '@nitrots/nitro-renderer';
 
 	const navigator = getNavigatorListener();
     
@@ -20,8 +21,6 @@
 	let elementRef: HTMLElement | null = $state(null);
 
 	$effect(() => {
-		searchResults;
-		
 		if(elementRef) elementRef.scrollTop = 0;
 	});
 
@@ -51,14 +50,37 @@
 			</Flex>
 		{/if}
 		<Flex column grow class="overflow-hidden">
-			<Flex column fullWidth fullHeight class="py-2 relative mb-3 gap-2">
+			<Flex column fullWidth fullHeight class="py-2 relative gap-2">
 				<SearchComponent  />
-				<Flex fullWidth column class="overflow-auto gap-2" bind:element={elementRef}>
+				<Flex fullWidth column grow class="overflow-auto gap-2" bind:element={elementRef}>
 					{#if searchResults.length > 0}
 						{#each searchResults as result, index (index)}
 							<SearchResultComponent searchResult={result} />
 						{/each}
 					{/if}
+				</Flex>
+				<Flex fullWidth class="relative">
+					<Flex fullWidth>
+						<Flex class="bg-(image:--navigator-spritesheet) items-center justify-center bg-position-[0_-67px] h-15 w-52.5 float-left cursor-pointer" onclick={ undefined }>
+							<p class="text-white font-bold ms-14 text-[14px]">
+								{ LocalizeText('navigator.createroom.create') }
+							</p>
+						</Flex>
+						{#if (navigator.searchResult?.code !== 'myworld_view' && navigator.searchResult?.code !== 'roomads_view')}
+							<Flex class="bg-(image:--navigator-spritesheet) items-center justify-center bg-position-[0_-128px] h-15 w-52.5 float-left cursor-pointer" onclick={ () => SendMessageComposer(new FindNewFriendsMessageComposer()) }>
+								<p class="text-white font-bold ms-17 text-[14px]">
+									{ LocalizeText('navigator.random.room') }
+								</p>
+							</Flex>
+						{/if}
+						{#if (navigator.searchResult?.code === 'myworld_view' || navigator.searchResult?.code === 'roomads_view')}
+							<Flex class="bg-(image:--navigator-spritesheet) items-center justify-center bg-position-[0_-189px] h-15 w-52.5 float-left cursor-pointer" onclick={ () => SendMessageComposer(new FindNewFriendsMessageComposer()) }>
+								<p class="text-white font-bold ms-14 text-[14px]">
+									{ LocalizeText('navigator.promote.room') }
+								</p>
+							</Flex>
+						{/if}
+					</Flex>
 				</Flex>
 			</Flex>
 		</Flex>
