@@ -34,7 +34,7 @@
 </script>
 
 {#if navigator.visible}
-	<BobbaWindow class="min-h-135" unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
+	<BobbaWindow class="min-h-140 min-w-107" unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
 		<BobbaTabs>
 			{#if navigator.topLevelContexts && (navigator.topLevelContexts.length > 0)}
 				{#each navigator.topLevelContexts as context, i (i)}
@@ -60,7 +60,7 @@
 					{/if}
 				</Flex>
 				<Flex fullWidth class="relative">
-					<Flex fullWidth>
+					<Flex fullWidth class="justify-between">
 						<Flex class="bg-(image:--navigator-spritesheet) items-center justify-center bg-position-[0_-67px] h-15 w-52.5 float-left cursor-pointer" onclick={ undefined }>
 							<p class="text-white font-bold ms-14 text-[14px]">
 								{ LocalizeText('navigator.createroom.create') }

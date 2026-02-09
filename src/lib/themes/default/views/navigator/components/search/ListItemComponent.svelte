@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Flex from '$lib/components/common/Flex.svelte';
-	import type { RoomDataParser } from '@nitrots/nitro-renderer';
+	import { RoomData, RoomDataParser } from '@nitrots/nitro-renderer';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
 	import type { ClassValue } from 'svelte/elements';
 
@@ -42,9 +42,12 @@
 		</Flex>
 		<p class="truncate max-w-75 grow text-start text-[14px]">{roomData.roomName}</p>
 	</Flex>
-	<Flex class="flex-row-reverse gap-1 items-center">
+	<Flex reverse class="flex-row-reverse gap-1 items-center me-1.5">
 		{#if roomData.habboGroupId}
-			<i class="bg-(image:--navigator-spritesheet) bg-position-[-19px_-54px] w-3.25 h-2.75 me-2"></i>
+			<i class="bg-(image:--navigator-spritesheet) bg-position-[-19px_-54px] w-3.25 h-2.75"></i>
+		{/if}
+		{#if (roomData.doorMode !== RoomDataParser.OPEN_STATE) }
+			<i class="bg-(image:--navigator-spritesheet) w-3.25 h-4 {roomData.doorMode === RoomDataParser.DOORBELL_STATE && 'bg-position-[-38px_-24px]'} {roomData.doorMode === RoomDataParser.INVISIBLE_STATE && 'bg-position-[-52px_-24px]'} {roomData.doorMode === RoomDataParser.PASSWORD_STATE && 'bg-position-[-66px_-24px]'}"></i>
 		{/if}
 	</Flex>
 </Flex>

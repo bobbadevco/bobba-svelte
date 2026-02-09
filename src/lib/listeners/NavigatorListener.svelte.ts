@@ -197,10 +197,17 @@ class NavigatorListener implements ILinkEventTracker {
 		this.sendSearch((searchQuery || ''), this.topLevelContext.code);
 	}
 
-	public reloadCurrentSearch() {
+	public reloadCurrentSearch(value?: string) {
 		if(!this.ready)
 		{
 			this.needsSearch = true;
+
+			return;
+		}
+
+		if(value !== undefined)
+		{
+			this.sendSearch(value, this.topLevelContext?.code || '');
 
 			return;
 		}
