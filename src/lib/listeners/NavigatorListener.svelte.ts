@@ -33,7 +33,7 @@ import {
 	FollowFriendMessageComposer,
 	NitroCommunicationDemoEvent,
 	RoomSessionEvent,
-	NavigatorSearchComposer
+	NavigatorSearchComposer, CreateFlatMessageComposer
 } from '@nitrots/nitro-renderer';
 import { DoorStateType } from '$lib/api/navigator/DoorStateType';
 import {
@@ -153,6 +153,13 @@ class NavigatorListener implements ILinkEventTracker {
 			NavigatorListener.instance = new NavigatorListener();
 		}
 		return NavigatorListener.instance;
+	}
+
+	public createRoom(roomName: string, description: string, selectedModelName: string, category: number, usersCount: number, tradeSettings: number)
+	{
+		if (!roomName || (roomName.length < 3)) return;
+
+		SendMessageComposer(new CreateFlatMessageComposer(roomName, description, 'model_' + selectedModelName, Number(category), Number(usersCount), tradeSettings));
 	}
 
 	public visitRoom(roomData: RoomDataParser) {

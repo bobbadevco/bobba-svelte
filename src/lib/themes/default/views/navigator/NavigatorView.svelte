@@ -10,6 +10,7 @@
 	import { untrack } from 'svelte';
 	import { FindNewFriendsMessageComposer } from '@nitrots/nitro-renderer';
 	import { LocalizeText, SendMessageComposer } from '$lib/api';
+	import RoomCreatorView from '$lib/themes/default/views/navigator/RoomCreatorView.svelte';
 
 	const navigator = getNavigatorListener();
     
@@ -61,7 +62,7 @@
 				</Flex>
 				<Flex fullWidth class="relative">
 					<Flex fullWidth class="justify-between">
-						<Flex class="bg-(image:--navigator-spritesheet) items-center justify-center bg-position-[0_-67px] h-15 w-52.5 float-left cursor-pointer" onclick={ undefined }>
+						<Flex class="bg-(image:--navigator-spritesheet) items-center justify-center bg-position-[0_-67px] h-15 w-52.5 float-left cursor-pointer" onclick={ () => navigator.creatorOpen = true }>
 							<p class="text-white font-bold ms-14 text-[14px]">
 								{ LocalizeText('navigator.createroom.create') }
 							</p>
@@ -85,4 +86,7 @@
 			</Flex>
 		</Flex>
 	</BobbaWindow>
+{/if}
+{#if navigator.creatorOpen}
+	<RoomCreatorView />
 {/if}
