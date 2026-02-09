@@ -132,15 +132,12 @@ class MessengerListener implements ILinkEventTracker {
 
 		if(index === -1) return;
 
-		thread = CloneObject(this.messageThreads[index]);
 
 		if(ownMessage && (thread.groups.length === 1)) PlaySound(SoundNames.MESSENGER_NEW_THREAD);
 
-		thread.addMessage(((messageType === MessengerThreadChat.ROOM_INVITE) ? undefined : senderId), messageText, secondsSinceSent, extraData, messageType);
+		this.messageThreads[index].addMessage(((messageType === MessengerThreadChat.ROOM_INVITE) ? undefined : senderId), messageText, secondsSinceSent, extraData, messageType);
 
 		if(this.activeThreadId === thread.threadId) thread.setRead();
-
-		this.messageThreads[index] = thread;
 
 		if(!ownMessage && thread.unread) PlaySound(SoundNames.MESSENGER_MESSAGE_RECEIVED);
 	}

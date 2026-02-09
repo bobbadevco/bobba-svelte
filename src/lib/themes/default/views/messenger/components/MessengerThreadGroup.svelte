@@ -77,7 +77,7 @@
 				<AvatarImage style="position: absolute; margin-left: -22px; margin-top: 25px;" figure={groupChatData.figure} direction={2} />
 			{/if}
 		</div>
-		<div class={[isOwnChat ? "before:border-l-8 before:-right-2" : "before:border-r-8 before:-left-2.5", "bg-slate-700 text-white rounded mb-2  py-1 px-2 relative before:absolute before:size-0 before:border-t-8 before:border-b-8 before:top-2.5 messages-group"]}>
+		<div class={[isOwnChat ? "before:border-l-8 before:-right-2" : "before:border-r-8 before:-left-2.5", "bg-slate-700 text-white rounded mb-2  py-1 px-2 relative before:absolute before:size-0 before:border-t-8 before:border-b-8 before:top-2.5 messages-group flex flex-col"]}>
 			<p class="font-bold">
 				{#if isOwnChat}
 					{GetSessionDataManager().userName}
@@ -86,7 +86,7 @@
 				{/if}
 			</p>
 			{#each group.chats as chat, i (i)}
-				{chat.message}
+				<p>{chat.message}</p>
 			{/each}
 		</div>
 		{#if isOwnChat}

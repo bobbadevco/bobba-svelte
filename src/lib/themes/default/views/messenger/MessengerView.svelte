@@ -36,11 +36,9 @@
 					</Flex>
 				</Flex>
 				<Flex column fullWidth class="overlow-auto">
-					{#if messenger.activeThread}
-						{#each messenger.activeThread.groups as group, i (i)}
-							<MessengerThreadGroup thread={messenger.activeThread} group={group} />
-						{/each}
-					{/if}
+					{#each messenger.activeThread.groups as group, i (i)}
+						<MessengerThreadGroup thread={messenger.activeThread} group={group} />
+					{/each}
 				</Flex>
 				<Flex fullWidth>
 					<input class="p-2 w-full bg-white rounded-lg text-black" type="text" bind:value={messageText} maxlength="255" placeholder={LocalizeText('messenger.window.input.default', [ 'FRIEND_NAME' ], [ messenger.activeThread.participant.name || '' ])}
