@@ -34,7 +34,7 @@
 </script>
 
 {#if navigator.visible}
-	<BobbaWindow class="min-h-140 min-w-107" unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
+	<BobbaWindow class="min-h-140" unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
 		<BobbaTabs>
 			{#if navigator.topLevelContexts && (navigator.topLevelContexts.length > 0)}
 				{#each navigator.topLevelContexts as context, i (i)}
