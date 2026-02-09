@@ -12,7 +12,7 @@
 </script>
 
 {#if messenger.visible}
-<BobbaWindow class="min-h-fit min-w-40" headerTitle="Messenger">
+<BobbaWindow class="min-h-fit min-w-40" headerTitle="Messenger" onCloseClick={() => messenger.visible = false}>
 	<Flex fullWidth column>
 		<Flex class="gap-2">
 			{#each messenger.visibleThreads as thread (thread.threadId)}

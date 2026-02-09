@@ -34,7 +34,7 @@
 <Flex class="justify-between">
 	<Flex class="items-center gap-0">
 		{#if friend.id > 0 && friend.online}
-			<Flex center pointer class="w-7.25 h-0 mt-4 -ml-3.75 relative left-1 top-0.5">
+			<Flex center pointer class="w-7.25 h-0 -ml-3.75 relative left-1 top-0.5">
 				<AvatarImage class="absolute w-[90px!important] h-[130px!important]" figure={friend.figure} headOnly scale={0.5} direction={2} />
 			</Flex>
 		{/if}
