@@ -16,7 +16,10 @@ const userLook = $derived(getUserLook());
 				class="hover:-translate-y-0.5 hover:drop-shadow-[0px_2px_#00000080] w-13 border-[3px] outline-black outline-2 rounded-full border-solid overflow-hidden border-bright-primary bg-tertiary h-13 relative" center>
 				<AvatarImage class="absolute -bottom-4" headOnly figure={ userLook }/>
 			</Button>
-			<ChatInputWidget type="text" class="w-100 h-11 p-2 bg-white rounded-md border-black border-2 focus:outline-0 text-black mx-auto" />
+			<Flex>
+				<div class="bg-(image:--toolbar-spritesheet) w-4.5 h-11 bg-position-[-178px_0]"></div>
+				<ChatInputWidget type="text" class="w-100 h-11 p-2 bg-[#ECECECFF] shadow-[inset_0_-2px-_ border-black border-2 border-x-0 focus:outline-0 text-black mx-auto" />
+			</Flex>
 		</Flex>
 	</Flex>
 {/if}
