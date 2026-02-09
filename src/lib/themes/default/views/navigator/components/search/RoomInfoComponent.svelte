@@ -29,7 +29,7 @@ $effect(() => {
 		if (navigatorTheme.roomInfoId === instanceId && iconElement) {
 			const rect = iconElement.getBoundingClientRect();
 			const newTop = rect.top + rect.height - 55;
-			const newLeft = rect.left + 30;
+			const newLeft = rect.left + 33;
 			
 			if (portalPosition.top !== newTop || portalPosition.left !== newLeft) {
 				portalPosition = { top: newTop, left: newLeft };
@@ -94,13 +94,12 @@ const toggleInfo = (e: MouseEvent) =>
 	class="size-4.5 bg-(image:--navigator-spritesheet) bg-position-[-68px_-2px] cursor-pointer pointer-events-auto room-info-icon"
 	onclick={toggleInfo}
 	onmouseenter={onMouseEnter}
-	onmouseleave={onMouseLeave}
->
+	onmouseleave={onMouseLeave}>
 	{#if (navigatorTheme.roomInfoId === instanceId)}
 		<Portal target="body">
 			<div 
 				role="tooltip"
-				class="fixed z-999 w-60 bg-white border border-gray-300 rounded shadow-lg p-2 text-black pointer-events-auto"
+				class="fixed items-center z-999 w-60 bg-bright-primary rounded p-2 text-white pointer-events-auto"
 				style="left: {portalPosition.left}px; top: {portalPosition.top}px;"
 				onmouseenter={() => { 
 					navigatorTheme.clearCloseDelay();
@@ -111,8 +110,9 @@ const toggleInfo = (e: MouseEvent) =>
 				}}
 				onmouseleave={onPortalMouseLeave}
 			>
-				<Flex column class="gap-1">
-					<p class="font-bold border-b pb-1 truncate">{roomData.roomName}</p>
+				<div class="absolute size-5 -left-2 z-0 top-[38%] rotate-135 bg-bright-primary"></div>
+				<Flex column class="gap-1 relative z-10">
+					<p class="font-bold pb-1 truncate">{roomData.roomName}</p>
 					<p class="text-xs text-gray-600 truncate">{roomData.ownerName}</p>
 					<p class="text-sm mt-1">{roomData.description || 'Sin descripción'}</p>
 				</Flex>
