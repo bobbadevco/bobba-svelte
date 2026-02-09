@@ -71,13 +71,13 @@
 	<Flex fullWidth class={[isOwnChat ? 'justify-end' : 'justify-start', "gap-2"]}>
 		<div class="shrink-0 relative size-12.5 overflow-hidden">
 			{#if (group.type === MessengerGroupType.PRIVATE_CHAT) && !isOwnChat}
-				<AvatarImage style="position: absolute; margin-left: -22px; margin-top: 25px;" figure={thread.participant.figure} direction={2} />
+				<AvatarImage style="position: absolute; margin-left: -22px; margin-top: -35px;" figure={thread.participant.figure} direction={2} />
 			{/if}
 			{#if groupChatData && !isOwnChat}
-				<AvatarImage style="position: absolute; margin-left: -22px; margin-top: 25px;" figure={groupChatData.figure} direction={2} />
+				<AvatarImage style="position: absolute; margin-left: -22px; margin-top: -35px;" figure={groupChatData.figure} direction={2} />
 			{/if}
 		</div>
-		<div class={[isOwnChat ? "before:border-l-8 before:-right-2" : "before:border-r-8 before:-left-2.5", "bg-slate-700 text-white rounded mb-2  py-1 px-2 relative before:absolute before:size-0 before:border-t-8 before:border-b-8 before:top-2.5 messages-group flex flex-col"]}>
+		<div class={[isOwnChat ? "before:border-l-8 before:border-l-slate-700 before:-right-2" : "before:border-r-8 before:border-r-slate-700 before:-left-2", "bg-slate-700 text-white rounded mb-2  py-1 px-2 relative before:absolute before:size-0 before:border-t-8 before:border-b-8 before:border-b-transparent before:border-t-transparent before:top-2.5 messages-group flex flex-col"]}>
 			<p class="font-bold">
 				{#if isOwnChat}
 					{GetSessionDataManager().userName}
@@ -91,7 +91,7 @@
 		</div>
 		{#if isOwnChat}
 			<div class="shrink-0 relative overflow-hidden size-12.5">
-				<AvatarImage style="position: absolute; margin-left: -22px; margin-top: 25px;" figure={GetSessionDataManager().figure} direction={4} />
+				<AvatarImage style="position: absolute; margin-left: -22px; margin-top: -35px;" figure={GetSessionDataManager().figure} direction={4} />
 			</div>
 		{/if}
 	</Flex>

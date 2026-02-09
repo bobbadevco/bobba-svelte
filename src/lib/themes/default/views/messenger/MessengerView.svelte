@@ -9,7 +9,6 @@
 
 	const messenger = getMessengerListener();
 	let messageText = $state('');
-	$inspect(messenger.activeThread && messenger.activeThread.groups[0].chats);
 </script>
 
 {#if messenger.visible}
