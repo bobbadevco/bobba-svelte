@@ -4,8 +4,6 @@
 	import Flex from '$lib/components/common/Flex.svelte';
 	import defaultImage from "$lib/themes/default/assets/images/navigator/room_thumbnail.png";
 	import RoomThumbnail from '$lib/components/common/layout/RoomThumbnail.svelte';
-	import Fa from 'svelte-fa';
-	import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 	interface ThumbnailItemProps
 	{

@@ -6,7 +6,7 @@
 </script>
 
 <div class="w-fit mx-auto">
-    <Flex class={["mt-1 min-h-11 rounded-md overflow-hidden w-full gap-px border-b-3 bg-secondary border border-secondary", classes]}>
+    <Flex class={["mt-1 min-h-9 rounded-md overflow-hidden w-full gap-px border-b-3 bg-secondary border border-[#0E0E0E]", classes]}>
         {@render children?.()}
     </Flex>
 </div>

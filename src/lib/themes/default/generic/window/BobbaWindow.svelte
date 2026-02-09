@@ -21,15 +21,15 @@
 </script>
 
 <div style:width="{width}px" style:z-index={zIndex} style:height="{height}px" style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col min-w-fit min-h-fit" bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
-	<Draggable {unique} bind:x={x} {onClick} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b shadow-[inset_0_-1px_#222222] border-b-[#202020]">
-		<p class="w-full text-center font-semibold">
+	<Draggable {unique} bind:x={x} {onClick} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b shadow-[inset_0_-1px_#1D1D1E] border-b-[#242424]">
+		<p class="w-full text-center text-[15px] font-semibold">
 			{headerTitle}
 		</p>
-		<Button aria-label="close" class="absolute right-3 bg-base-primary hover:bg-bright-primary active:bg-dark-primary border border-black border-b-[3px] rounded-[5px] size-6 m-auto p-0.5" onclick={ onCloseClick }>
+		<Button aria-label="close" class="absolute right-3 bg-base-primary hover:bg-bright-primary active:bg-dark-primary border border-[#0E0E0E] border-b-[3px] rounded-[5px] size-6 m-auto p-0.5" onclick={ onCloseClick }>
 			<Fa class="size-full" icon={ faXmark } />
 		</Button>
 	</Draggable>
-	<div class={["h-[calc(100%-3rem)] relative flex flex-col", classes]}>
+	<div class={["h-[calc(100%-3rem)] pt-1 relative flex flex-col", classes]}>
 		{@render children?.()}
 	</div>
 	{#if !disableDrag}

@@ -8,14 +8,28 @@
 	import Flex from '$lib/components/common/Flex.svelte';
 	import SearchComponent from '$lib/themes/default/views/navigator/components/search/SearchComponent.svelte';
 	import SearchResultComponent from '$lib/themes/default/views/navigator/components/search/SearchResultComponent.svelte';
+	import { onMount, untrack } from 'svelte';
 
 	const navigator = getNavigatorListener();
     
-    // Forzar reactividad profunda
     let searchResults = $derived.by(() => {
         if (!navigator.searchResult) return [];
         return navigator.searchResult.results;
     });
+
+	let elementRef: HTMLElement | null = $state(null);
+
+	$effect(() => {
+		searchResults;
+		
+		if(elementRef) elementRef.scrollTop = 0;
+	});
+
+	$effect(() => {
+		if (navigator.visible) {
+			untrack(() => navigator.reloadCurrentSearch());
+		}
+	});
 
 	const navigatorClose = () => { navigator.visible = false; };
 </script>
@@ -38,8 +52,8 @@
 		{/if}
 		<Flex column grow class="overflow-hidden">
 			<Flex column fullWidth fullHeight class="py-2 relative mb-3 gap-2">
-				<SearchComponent />
-				<Flex fullWidth column class="overflow-auto">
+				<SearchComponent  />
+				<Flex fullWidth column class="overflow-auto gap-2" bind:element={elementRef}>
 					{#if searchResults.length > 0}
 						{#each searchResults as result, index (index)}
 							<SearchResultComponent searchResult={result} />

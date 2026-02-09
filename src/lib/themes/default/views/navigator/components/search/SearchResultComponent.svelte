@@ -32,8 +32,9 @@
         return ('navigator.searchcode.title.' + name);
     });
 
-	const toggleDisplayMode = () =>
+	const toggleDisplayMode = (event: MouseEvent) =>
     {
+		event.stopPropagation();
         if (displayMode === NavigatorDisplayMode.LIST) {
 			displayMode = NavigatorDisplayMode.THUMBNAILS;
 		} else {
@@ -41,8 +42,14 @@
 		}
     }
 
-	const showMore = () =>
+	const toggleExtended = () =>
+	{
+		isExtended = !isExtended;
+	}
+
+	const showMore = (event: MouseEvent) =>
     {
+		event.stopPropagation();
         if(searchResult.action == 1) SendMessageComposer(new NavigatorSearchComposer(searchResult.code, ''));
         else if(searchResult.action == 2 && navigator.topLevelContext) SendMessageComposer(new NavigatorSearchComposer(navigator.topLevelContext.code,''));
     }
@@ -60,8 +67,8 @@
 
 </script>
 
-<div class="flex flex-col text-white w-full">
-	<Flex fullWidth class="py-1 cursor-pointer" onclick={() => isExtended = !isExtended}>
+<div class="flex flex-col text-white bg-primary {gridHasTwoColumns && displayMode === NavigatorDisplayMode.THUMBNAILS && 'p-2 pt-0'} rounded-sm w-full">
+	<Flex fullWidth class="py-1 {!gridHasTwoColumns && 'px-2'} cursor-pointer justify-between" onclick={toggleExtended}>
 		<Flex class="items-center gap-1">
 			{#if isExtended}
 				<Fa icon={ faMinus } />
@@ -70,35 +77,33 @@
 			{/if}
 			<span class="text-[14px]">{LocalizeText(itemTitle)}</span>
 		</Flex>
-		<Flex class="items-center gap-2">
+		<Flex class="items-center gap-1">
 			{#if displayMode === NavigatorDisplayMode.LIST}
-				<Flex class="icon icon-thumbnail-view cursor-pointer" onclick={ toggleDisplayMode } />
+				<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-26px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ toggleDisplayMode } />
 			{/if}
 			{#if displayMode >= NavigatorDisplayMode.THUMBNAILS}
-				<Flex class="icon icon-inline-view cursor-pointer" onclick={ toggleDisplayMode } />
+				<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-26px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ toggleDisplayMode } />
 			{/if}
 			{#if (searchResult.action > 0)}
 				{#if (searchResult.action === 1)}
-					<Flex class="icon icon-show-more cursor-pointer" onclick={ showMore } />
+					<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-58px_-55px] size-2.75 cursor-pointer" onclick={ showMore } />
 				{/if}
 				{#if (searchResult.action !== 1)}
-					<Flex class="icon icon-show-more active cursor-pointer" onclick={ showMore } />
+					<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-26px_-55px] size-2.75 cursor-pointer" onclick={ showMore } />
 				{/if}
 			{/if}
 			<!--{ (topLevelContext.code !== 'official_view') && <LayoutSearchSavesView title={ LocalizeText('navigator.tooltip.add.saved.search') } onClick={ () => SendMessageComposer(new NavigatorSearchSaveComposer(getResultTitle(), searchResult.data)) } /> }-->
 		</Flex>
 	</Flex>
-	<div class="flex flex-col w-full min-h-5">
+	<div class="flex flex-col w-full">
 		{#if isExtended}
             <div class={gridHasTwoColumns ? "grid grid-cols-3 gap-1" : "flex flex-col gap-1"}>
                 {#each rooms as roomData, roomIndex}
                     {#if gridHasTwoColumns}
                         <ThumbnailItemComponent roomData={roomData} />
                     {:else}
-                        <ListItemComponent class={roomIndex % 2 === 0 ? 'bg-secondary' : ''} roomData={roomData} />
+                        <ListItemComponent class={roomIndex % 2 === 0 ? 'bg-tertiary' : ''} roomData={roomData} />
                     {/if}
-				{:else}
-					<div class="p-1 text-xs">No rooms found.</div>
                 {/each}
             </div>
 		{/if}

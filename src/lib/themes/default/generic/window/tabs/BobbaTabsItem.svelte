@@ -12,7 +12,7 @@
 
 <Flex 
     pointer={pointer} 
-    class={["px-3 font-bold py-1 cursor-pointer select-none", active ? "bg-bright-primary hover:bg-bright-primary" : "bg-base-primary hover:bg-quaternary active:bg-dark-primary", classes]} 
+    class={["px-6.5 text-[13px] font-bold cursor-pointer select-none", active ? "bg-bright-primary shadow-[inset_0_1px_#505050] hover:bg-bright-primary" : "bg-base-primary shadow-[inset_0_1px_#404040] hover:bg-quaternary active:bg-dark-primary", classes]} 
     {... rest}>
     {@render children?.()}
 </Flex>
