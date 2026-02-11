@@ -68,7 +68,7 @@
 			left: anchorRect ? anchorRect.left - 8 + extraLeft : 0,
 			zIndex: (typeof dropdownStyleObj.zIndex === 'number') ? dropdownStyleObj.zIndex : 2000,
 			minWidth: 'max-content',
-			width: fullWidth ? '100%' : (anchorRect ? anchorRect.width : 'auto'),
+			width: anchorRect ? anchorRect.width : 'auto',
 		};
 
 		const toKebab = (s: string) => s.replace(/[A-Z]/g, m => '-' + m.toLowerCase());
@@ -182,10 +182,9 @@
 <Flex 
 	class={[`relative items-center ps-2 bg-white rounded-md ${fullWidth && 'w-full'}`, classes]} 
 	style="z-index: 2000;"
-	onkeydown={onKeyDown}
->
+	onkeydown={onKeyDown}>
 	<Flex 
-		class="min-w-25 h-5.75 focus:outline-none focus:ring-1 focus:ring-black/20 rounded-md" 
+		class="min-w-25 h-5.75 focus:outline-none focus:ring-1 relative focus:ring-black/20 rounded-md"
 		pointer 
 		onclick={toggleOpen} 
 		bind:element={element}
@@ -194,10 +193,10 @@
 		aria-expanded={isOpen}
 		aria-haspopup="listbox"
 		tabindex={disabled ? -1 : 0}
-	>
+		fullWidth={fullWidth}>
 		<Flex class="items-center justify-between" fullWidth>
 			<Flex class="items-center">
-				<p class="max-w-25 text-tertiary truncate">{getOptionLabel(value)}</p>
+				<p class="text-tertiary truncate">{getOptionLabel(value)}</p>
 			</Flex>
 			{#if children}
 				{@render children()}
@@ -215,26 +214,23 @@
 	</Flex>
 	{#if isOpen && anchorRect}
 		<Portal target="body">
-			<ul 
-				bind:this={listElement} 
-				class="{dropdownClass} bg-white rounded-sm overflow-auto min-w-25 focus:outline-none" 
+			<ul
+				bind:this={listElement}
+				class="{dropdownClass} bg-white rounded-sm overflow-auto min-w-25 focus:outline-none"
 				style={dropdownStyles}
 				role="listbox"
 				id="select-dropdown"
 				tabindex="-1"
-				onkeydown={onKeyDown}
-			>
+				onkeydown={onKeyDown}>
 				{#each safeOptions as option, i (option.value)}
-					<li 
+					<li
 						class={`relative dropdown-item px-2 hover:bg-blue-300 cursor-pointer ${value === option.value ? 'bg-blue-100' : ''} ${focusedIndex === i ? 'bg-blue-200' : ''}`}
 						role="option"
-						aria-selected={value === option.value}
-					>
-						<button 
-							class="cursor-pointer w-full text-start focus:outline-none" 
+						aria-selected={value === option.value}>
+						<button
+							class="cursor-pointer w-full text-start focus:outline-none"
 							onclick={() => handleSelect(option.value)}
-							tabindex="-1"
-						>
+							tabindex="-1">
 							{option.label}
 							{#if option.colorA}
 								<Flex class="overflow-hidden w-5.25 h-3.5 right-7.5 absolute border">

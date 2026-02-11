@@ -40,7 +40,7 @@
 	onclick={visitRoom}
 >
 	<Flex fullWidth class="overflow-hidden gap-2 items-center">
-		<Flex class="justify-center items-center rounded-sm p-0 px-2 gap-2 font-bold" style="background-color: {occupancyColor()}">
+		<Flex class="justify-center items-center rounded-sm p-0 ms-1 px-2 gap-2 font-bold" style="background-color: {occupancyColor()}">
 			<div class="bg-(image:--navigator-spritesheet) bg-position-[-69px_-58px] w-1.75 h-2 bg-no-repeat"></div>
 			<p class="text-[12px]">
 				{roomData.userCount}

@@ -68,7 +68,7 @@
 
 </script>
 
-<div class="flex flex-col text-white bg-primary {gridHasTwoColumns && displayMode === NavigatorDisplayMode.THUMBNAILS && 'p-2 pt-0'} rounded-sm w-full">
+<div class="flex flex-col text-white bg-primary {gridHasTwoColumns && isExtended && displayMode === NavigatorDisplayMode.THUMBNAILS ? 'p-2 pt-0' : gridHasTwoColumns && 'ps-2'} rounded-sm w-full">
 	<Flex fullWidth class="py-1 {!gridHasTwoColumns && 'px-2'} cursor-pointer justify-between" onclick={toggleExtended}>
 		<Flex class="items-center gap-1">
 			{#if isExtended}
@@ -78,7 +78,7 @@
 			{/if}
 			<span class="text-[14px]">{LocalizeText(itemTitle)}</span>
 		</Flex>
-		<Flex class="items-center gap-1">
+		<Flex class="items-center gap-1 p-1">
 			{#if displayMode === NavigatorDisplayMode.LIST}
 				<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-57px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ toggleDisplayMode } />
 			{/if}
@@ -98,7 +98,7 @@
 	</Flex>
 	<div class="flex flex-col w-full">
 		{#if isExtended}
-			<div class={gridHasTwoColumns ? "grid grid-cols-3 gap-1 justify-center" : "flex flex-col gap-1"}>
+			<div class='gap-1 {gridHasTwoColumns ? "grid grid-cols-3 justify-center" : "flex flex-col"}'>
 					{#each rooms as roomData, roomIndex (roomData.roomId)}
 							{#if gridHasTwoColumns}
 									<ThumbnailItemComponent roomData={roomData} />

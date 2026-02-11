@@ -35,7 +35,7 @@
 </script>
 
 <Flex 
-	class="bg-secondary rounded-md p-2 max-w-31.5 relative" 
+	class="bg-secondary rounded-md p-2 max-w-31.5 relative"
 	data-room-id={roomData.roomId}
 	onclick={visitRoom} 
 	pointer 
@@ -51,7 +51,7 @@
 	</RoomThumbnail>
 	<Flex fullWidth class="items-center justify-between gap-1">
 		<p class="grow truncate">{roomData.roomName}</p>
-		<div onmouseleave={(e) => e.stopPropagation()}>
+		<div role="presentation" onmouseleave={(e) => e.stopPropagation()}>
 			<RoomInfoComponent {roomData} />
 		</div>
 	</Flex>

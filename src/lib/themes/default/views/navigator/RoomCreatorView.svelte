@@ -6,6 +6,8 @@
     import { type IRoomModel } from '$lib/api';
     import { onMount } from 'svelte';
     import Flex from '$lib/components/common/Flex.svelte';
+    import Select from '$lib/components/common/Select.svelte';
+    import Button from '$lib/components/common/Button.svelte';
 
     const navigator = getNavigatorListener();
 
@@ -68,63 +70,89 @@
     });
 </script>
 
-<BobbaWindow class="min-h-120 min-w-170" unique="room-creator" headerTitle={ LocalizeText('navigator.createroom.title') } onCloseClick={ closeCreator }>
+<style>
+    @keyframes MoveUpDown {
+        0%, 100% {
+            top: 1px;
+        }
+        50% {
+            top: 10px;
+        }
+    }
+
+    .active-arrow {
+        animation: MoveUpDown 1.7s linear infinite;
+    }
+</style>
+
+<BobbaWindow class="min-h-97" unique="room-creator" headerTitle={ LocalizeText('navigator.createroom.title') } onCloseClick={ closeCreator }>
     <Flex class="gap-3 p-2 overflow-hidden">
         <Flex column class="gap-3 w-80 overflow-hidden">
-            <Flex column class="gap-2">
-                <p class="ms-1 font-bold">{ LocalizeText('navigator.createroom.roomnameinfo') }</p>
+            <Flex column class="gap-2 relative">
+                <p class="ms-0.5 text-[14px] font-bold">{ LocalizeText('navigator.createroom.roomnameinfo') }</p>
                 <input
                     type="text"
-                    class="room-creator-form border-2 border-black p-1"
+                    class="text-[14px] max-h-6 focus:border-0 focus:outline-0 border-none bg-white rounded-sm text-black p-1"
                     maxlength={60}
                     placeholder={ LocalizeText('navigator.createroom.roomnameinfo') }
                     bind:value={roomName} />
                 {#if (!roomName || (roomName.length < 3))}
-                    <span class="text-red-500 text-xs">{ LocalizeText('navigator.createroom.nameerr') }</span>
+                    <span class="ms-0.5 right-0 mt-0.5 absolute text-red-500 text-xs">{ LocalizeText('navigator.createroom.nameerr') }</span>
                 {/if}
             </Flex>
             <Flex column class="gap-2">
-                <p class="ms-1 font-bold">{ LocalizeText('navigator.createroom.roomdescinfo') }</p>
+                <p class="ms-0.5 text-[14px] font-bold">{ LocalizeText('navigator.createroom.roomdescinfo') }</p>
                 <textarea
-                    class="room-creator-form border-2 border-black p-1 h-20"
+                    class="text-[14px] room-creator-form focus:border-0 focus:outline-0 border-none bg-white rounded-sm text-black p-1"
                     maxlength={255}
                     placeholder={ LocalizeText('navigator.createroom.roomdescinfo') }
                     bind:value={description}></textarea>
             </Flex>
             <Flex column class="gap-3">
                 <Flex column class="gap-1">
-                    <p class="ms-1 font-bold">{ LocalizeText('navigator.category') }</p>
-                    <select class="border-2 border-black p-1"
-                            bind:value={category}>
-                        {#each (navigator.categories || []) as cat (cat.id)}
-                            <option value={cat.id}>{ LocalizeText(cat.name) }</option>
-                        {/each}
-                    </select>
+                    <p class="ms-0.5 text-[14px] font-bold">{ LocalizeText('navigator.category') }</p>
+                    <Select
+                      class="max-h-6 text-[14px] focus:border-0 focus:outline-0 border-none bg-white rounded-sm text-black p-1"
+                      value={category ?? ''}
+                      fullWidth
+                      setValue={(v) => (category = (v === '' ? null : Number(v)))}
+                      options={(navigator.categories ?? []).map((cat) => ({
+                            value: cat.id,
+                            label: LocalizeText(cat.name)
+                        }))}
+                    />
                 </Flex>
                 <Flex column class="gap-1">
-                    <p class="ms-1 font-bold">{ LocalizeText('navigator.maxvisitors') }</p>
-                    <select class="border-2 border-black p-1"
-                            bind:value={usersCount}>
-                        {#each maxVisitorsList as v (v)}
-                            <option value={v}>{ v }</option>
-                        {/each}
-                    </select>
+                    <p class="ms-0.5 text-[14px] font-bold">{ LocalizeText('navigator.maxvisitors') }</p>
+                    <Select
+                      class="max-h-6 text-[14px] room-creator-form focus:border-0 focus:outline-0 border-none bg-white rounded-sm text-black p-1"
+                      value={usersCount ?? maxVisitorsList[0] ?? 0}
+                      fullWidth
+                      setValue={(v) => (usersCount = Number(v))}
+                      options={maxVisitorsList.map((n) => ({ value: n, label: String(n) }))}
+                    />
                 </Flex>
                 <Flex column class="gap-1">
-                    <p class="ms-1 font-bold">{ LocalizeText('navigator.tradesettings') }</p>
-                    <select class="border-2 border-black p-1" bind:value={tradeSettings}>
-                        <option value={0}>{ LocalizeText('navigator.roomsettings.trade_not_allowed') }</option>
-                        <option value={1}>{ LocalizeText('navigator.roomsettings.trade_not_with_Controller') }</option>
-                        <option value={2}>{ LocalizeText('navigator.roomsettings.trade_allowed') }</option>
-                    </select>
+                    <p class="ms-0.5 text-[14px] font-bold">{ LocalizeText('navigator.tradesettings') }</p>
+                    <Select
+                      class="max-h-6 text-[14px] room-creator-form focus:border-0 focus:outline-0 border-none bg-white rounded-sm text-black p-1"
+                      value={tradeSettings}
+                      fullWidth
+                      setValue={(v) => (tradeSettings = Number(v))}
+                      options={[
+                        { value: 0, label: LocalizeText('navigator.roomsettings.trade_not_allowed') },
+                        { value: 1, label: LocalizeText('navigator.roomsettings.trade_not_with_Controller') },
+                        { value: 2, label: LocalizeText('navigator.roomsettings.trade_allowed') }
+                      ]}
+                    />
                 </Flex>
-                <Flex class="gap-3 mt-1">
-                    <button class="volter-bold-button px-3 py-1 border-2 border-black bg-primary text-white" onclick={createRoom}>
+                <Flex class="gap-1 mt-1">
+                    <Button class="max-h-6 items-center px-3 text-[14px] rounded-sm border border-success bg-success shadow-[inset_0_-11px_#2e9906] text-white" onclick={createRoom}>
                         { LocalizeText('navigator.createroom.create') }
-                    </button>
-                    <button class="volter-button px-3 py-1 border-2 border-black bg-[#ddd]" onclick={closeCreator}>
+                    </Button>
+                    <Button class="max-h-6 items-center px-3 text-[14px] rounded-sm border border-button-primary bg-button-primary shadow-[inset_0_-11px_#444444] text-white" onclick={closeCreator}>
                         { LocalizeText('cancel') }
-                    </button>
+                    </Button>
                 </Flex>
             </Flex>
         </Flex>
@@ -132,9 +160,9 @@
             <div class="grid grid-cols-2 gap-2">
                 {#each roomModels as model, index (model.name)}
                     <Flex
-                        class={`relative border-2 border-black p-2 cursor-pointer bg-white ${selectedModelName === model.name ? 'selected' : ''}`}
+                        class={`relative items-center justify-center min-h-25 rounded-md p-2 cursor-pointer ${selectedModelName === model.name ? 'bg-primary' : 'bg-secondary'}`}
                         onclick={() => selectModel(model, index)}>
-                        <Flex fullHeight class="justify-center items-start overflow-hidden h-32">
+                        <Flex fullHeight class="justify-center items-center overflow-hidden h-32">
                             <img src={ getRoomModelImage(model.name) } alt={model.name} />
                         </Flex>
                         <Flex class="absolute bottom-1 left-1 items-center gap-1 text-xs">
@@ -145,7 +173,7 @@
                             <span class="icon-hc_mini absolute top-1 right-1"></span>
                         {/if}
                         {#if selectedModelName === model.name}
-                            <i class="active-arrow"></i>
+                            <i class="bg-(image:--navigator-spritesheet) bg-position-[-86px_-2px] w-4.5 h-5 absolute top-1 active-arrow"></i>
                         {/if}
                     </Flex>
                 {/each}

@@ -17,7 +17,7 @@
 </script>
 
 <button {onclick} onmousedown={(e) => e.stopPropagation()} 
-class={[ "flex", 
+class={[ "flex hover:brightness-125 active:brightness-75",
 	pointer && "cursor-pointer",
 	wrap && "flex-wrap", 
 	center && "justify-center items-center", 
