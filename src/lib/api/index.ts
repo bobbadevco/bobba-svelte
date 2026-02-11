@@ -6,3 +6,5 @@ export * from './client';
 export * from './GetClientVersions';
 export * from './navigator';
 export * from './friends';
+export * from './catalog';
+export * from './inventory';

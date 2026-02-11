@@ -6,3 +6,4 @@ export * from './RoomChatFormatter';
 export * from './DoChatsOverlap';
 export * from './PlaySound';
 export * from './SoundNames';
+export * from './LocalStorageKeys';
