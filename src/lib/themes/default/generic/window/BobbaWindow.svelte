@@ -23,37 +23,37 @@
 </script>
 
 <style>
-    :global(.bobba-window-scroll) {
+    :global(.bobba-window) {
         scrollbar-color: var(--color-primary) transparent;
     }
 
-    :global(.bobba-window-scroll:hover) {
+    :global(.bobba-window:hover) {
         scrollbar-color: var(--color-secondary) transparent;
     }
 
-    :global(.bobba-window-scroll::-webkit-scrollbar) {
+    :global(.bobba-window::-webkit-scrollbar) {
         width: 8px;
         height: 8px;
         background: transparent;
     }
 
-    :global(.bobba-window-scroll::-webkit-scrollbar-track) {
+    :global(.bobba-window::-webkit-scrollbar-track) {
         background: transparent;
     }
 
-    :global(.bobba-window-scroll::-webkit-scrollbar-thumb) {
+    :global(.bobba-window::-webkit-scrollbar-thumb) {
         background-color: var(--color-primary);
         border-radius: 9999px;
         border: 2px solid transparent;
         background-clip: content-box;
     }
 
-    :global(.bobba-window-scroll::-webkit-scrollbar-thumb:hover) {
+    :global(.bobba-window::-webkit-scrollbar-thumb:hover) {
         background-color: var(--color-secondary);
     }
 </style>
 
-<div style:width="{width}px" style:z-index={zIndex} style:height="{height}px" style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col min-w-fit min-h-fit" bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
+<div style:width="{width}px" style:z-index={zIndex} style:height="{height}px" style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute shadow-[0_2px_15px_#000000c9] rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col min-w-fit min-h-fit" bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
 	<Draggable {unique} bind:x={x} {onClick} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b shadow-[inset_0_-1px_#1D1D1E] border-b-[#242424]">
 		<p class="w-full text-center text-[15px] font-semibold">
 			{headerTitle}
@@ -62,7 +62,7 @@
 			<Fa class="size-full" icon={ faXmark } />
 		</Button>
 	</Draggable>
-	<div class={["h-[calc(100%-3rem)] pt-1 relative flex flex-col bobba-window-scroll", classes]}>
+	<div class={["h-[calc(100%-3rem)] pt-1 relative flex flex-col bobba-window", classes]}>
 		{@render children?.()}
 	</div>
 	{#if !disableDrag}

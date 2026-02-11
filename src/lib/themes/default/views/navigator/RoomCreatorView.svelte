@@ -165,12 +165,12 @@
                         <Flex fullHeight class="justify-center items-center overflow-hidden h-32">
                             <img src={ getRoomModelImage(model.name) } alt={model.name} />
                         </Flex>
-                        <Flex class="absolute bottom-1 left-1 items-center gap-1 text-xs">
+                        <Flex class="absolute bg-secondary w-full bottom-1 left-1 items-center gap-1 text-xs">
                             <span class={ selectedModelName === model.name ? 'icon-tiles_room_selected' : 'icon-tiles' }></span>
                             { model.tileSize } { LocalizeText('navigator.createroom.tilesize') }
                         </Flex>
                         {#if (!hcDisabled && model.clubLevel > 0)}
-                            <span class="icon-hc_mini absolute top-1 right-1"></span>
+                            <span class="w-3.75 h-2.5 bg-(image:--navigator-spritesheet) bg-position-[-104px_-2px] absolute top-1 right-1"></span>
                         {/if}
                         {#if selectedModelName === model.name}
                             <i class="bg-(image:--navigator-spritesheet) bg-position-[-86px_-2px] w-4.5 h-5 absolute top-1 active-arrow"></i>

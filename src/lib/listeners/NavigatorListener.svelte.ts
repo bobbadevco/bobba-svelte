@@ -188,13 +188,12 @@ class NavigatorListener implements ILinkEventTracker {
 	}
 
 	public sendSearch(value: string, code: string) {
-		this.creatorOpen = false;
-
 		SendMessageComposer(new NavigatorSearchComposer(code, value));
 
 		this.loading = true;
 	}
-		public processSearch() {
+
+	public processSearch() {
 		if(!this.topLevelContext) return;
 
 		let searchFilter = SearchOptions[this.searchIndex];
