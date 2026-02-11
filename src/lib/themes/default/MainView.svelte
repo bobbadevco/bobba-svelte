@@ -4,6 +4,7 @@
 	import ToolbarView from './views/toolbar/ToolbarView.svelte';
 	import FriendsView from '$lib/themes/default/views/friends/FriendsView.svelte';
 	import MessengerView from '$lib/themes/default/views/messenger/MessengerView.svelte';
+	import CatalogView from '$lib/themes/default/views/catalog/CatalogView.svelte';
 </script>
 
 <AlertView />
@@ -11,3 +12,4 @@
 <ToolbarView />
 <FriendsView />
 <MessengerView />
+<CatalogView />

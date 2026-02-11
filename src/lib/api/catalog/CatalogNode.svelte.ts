@@ -3,17 +3,17 @@ import type { NodeData } from '@nitrots/nitro-renderer';
 
 export class CatalogNode implements ICatalogNode
 {
-	private _depth: number = 0;
-	private _localization: string = '';
-	private _pageId: number = -1;
-	private _pageName: string = '';
-	private _iconId: number = 0;
-	private _children: ICatalogNode[];
-	private _offerIds: number[];
-	private _parent: ICatalogNode;
-	private _isVisible: boolean;
-	private _isActive: boolean;
-	private _isOpen: boolean;
+	private readonly _depth: number = 0;
+	private readonly _localization: string = '';
+	private readonly _pageId: number = -1;
+	private readonly _pageName: string = '';
+	private readonly _iconId: number = 0;
+	private _children: ICatalogNode[] = $state([]);
+	private readonly _offerIds: number[];
+	private readonly _parent: ICatalogNode = $state<ICatalogNode>({} as ICatalogNode);
+	private readonly _isVisible: boolean = $state(false);
+	private _isActive: boolean = $state(false);
+	private _isOpen: boolean = $state(false);
 
 	constructor(node: NodeData, depth: number, parent: ICatalogNode)
 	{
@@ -23,7 +23,6 @@ export class CatalogNode implements ICatalogNode
 		this._pageId = node.pageId;
 		this._pageName = node.pageName;
 		this._iconId = node.icon;
-		this._children = [];
 		this._offerIds = node.offerIds;
 		this._isVisible = node.visible;
 		this._isActive = false;

@@ -18,4 +18,4 @@ export * from './Offer';
 export * from './CatalogPage';
 export * from './Product';
 export * from './PageLocalization';
-export * from './CatalogNode';
+export * from './CatalogNode.svelte';

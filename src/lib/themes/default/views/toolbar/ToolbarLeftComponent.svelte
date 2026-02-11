@@ -33,7 +33,9 @@
 				onclick={() => CreateLinkEvent("navigator/toggle")}/>
 			<Button 
 				id="catalog-button" 
-				class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-9.25 h-9.25 bg-position-[-2px_-38px]" />
+				class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-9.25 h-9.25 bg-position-[-2px_-38px]"
+				onclick={() => CreateLinkEvent("catalog/toggle")}
+			/>
 			<Button 
 				id="inventory-button" 
 				class="bg-(image:--toolbar-spritesheet) hover:-translate-0.5 w-11 h-10.25 bg-position-[-63px_-85px]" />
