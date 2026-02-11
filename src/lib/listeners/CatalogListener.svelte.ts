@@ -24,6 +24,7 @@ import {
 	ProductOfferEvent,
 	PurchaseErrorMessageEvent, PurchaseOKMessageEvent,
 	RoomControllerLevel,
+	RoomEngineEvent,
 	RoomEngineObjectPlacedEvent, RoomObjectCategory, RoomObjectPlacementSource, RoomObjectType, RoomObjectVariable, RoomPreviewer,
 	SellablePetPalettesMessageEvent,
 	Vector3d
@@ -31,7 +32,8 @@ import {
 import {
 	AddEventLinkTracker,
 	BuilderFurniPlaceableStatus, CatalogNode, CatalogPage, CatalogPetPalette,
-	CatalogType, CreateLinkEvent, FurniCategory, GetFurnitureData, GetProductDataForLocalization, GetRoomEngine,
+	CatalogType, CreateLinkEvent, FurniCategory,
+	GetFurnitureData, GetProductDataForLocalization, GetRoomEngine,
 	GetRoomSession, GiftWrappingConfiguration, type ICatalogNode, type ICatalogOptions, type ICatalogPage,
 	type IPageLocalization, type IProduct, type IPurchasableOffer, type IPurchaseOptions, LocalizeText,
 	LocalStorageKeys, Offer, PageLocalization, PlacedObjectPurchaseData, PlaySound,
@@ -82,6 +84,8 @@ class CatalogListener implements ILinkEventTracker {
 
 	public constructor() {
 		registerMainEvent(NitroCommunicationDemoEvent.CONNECTION_AUTHENTICATED, this.init.bind(this));
+		registerRoomEngineEvent(RoomEngineEvent.ENGINE_INITIALIZED,
+			() => this.roomPreviewer = new RoomPreviewer(GetRoomEngine(), ++RoomPreviewer.PREVIEW_COUNTER));
 	}
 
 	public static getInstance() {
@@ -678,7 +682,7 @@ class CatalogListener implements ILinkEventTracker {
 
 		if(!parser) return;
 
-		let title = '';
+		let title: string;
 		if(parser.result === 1)
 		{
 			title = LocalizeText('inventory.marketplace.result.title.success');
@@ -736,7 +740,7 @@ class CatalogListener implements ILinkEventTracker {
 			return;
 		}
 
-		let placed = false;
+		let placed: boolean;
 
 		const product = this.purchasableOffer.product;
 
