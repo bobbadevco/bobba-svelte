@@ -1,6 +1,5 @@
 <script lang="ts">
 	import {
-		ColorConverter,
 		GetTicker,
 		type IRoomRenderingCanvas,
 		type RoomPreviewer,
@@ -18,7 +17,6 @@
 
 	let renderingCanvas = $state<IRoomRenderingCanvas>();
 	let backgroundImage = $state('');
-	let element = $state<HTMLDivElement>();
 	let width = $state(0);
 
 	function update(_time: number)	 {
@@ -32,16 +30,11 @@
 	}
 
 	$effect(() => {
-		if (!roomPreviewer || !element) return;
+		if (!roomPreviewer) return;
 		if (!renderingCanvas) {
-			const computed = window.getComputedStyle(element, null);
-
-			let backgroundColor = computed.backgroundColor;
-
-			backgroundColor = ColorConverter.rgbStringToHex(backgroundColor);
-			backgroundColor = backgroundColor.replace('#', '0x');
-
-			roomPreviewer.backgroundColor = parseInt(backgroundColor, 16);
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			//@ts-expect-error
+			roomPreviewer["backgroundColor"] = null;
 			roomPreviewer.getRoomCanvas(width, height);
 
 			const canvas = roomPreviewer.getRenderingCanvas();
@@ -65,6 +58,6 @@
 </script>
 
 <div class="relative w-full">
-	<div bind:this={element} bind:clientWidth={width} style:background-image={backgroundImage} style:height="{height}px" class="relative top-0 left-0 w-full h-full bg-black bg-no-repeat overflow-hidden"></div>
+	<div bind:clientWidth={width} style:background-image={backgroundImage} style:height="{height}px" class="relative top-0 left-0 w-full h-full bg-no-repeat overflow-hidden"></div>
 	{@render children?.()}
 </div>
