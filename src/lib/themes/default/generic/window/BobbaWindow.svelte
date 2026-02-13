@@ -14,10 +14,18 @@
 	let y = $state(0);
 	let width = $state(0);
 	let height = $state(0);
+	let resizing = $state(false);
+
 
 	const id = $state(getWindowListener().getId());
 	const zIndex = $derived(getWindowListener().windows.indexOf(id) + 500);
 	const onClick = () => getWindowListener().pushToTop(id);
+
+	let manualResized = $state(false);
+
+	$effect(() => {
+		if (resizing) manualResized = true;
+	});
 
 
 </script>
@@ -53,8 +61,8 @@
     }
 </style>
 
-<div style:width="{width}px" style:z-index={zIndex} style:height="{height}px" style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute shadow-[0_2px_15px_#000000c9] rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col min-w-fit min-h-fit" bind:clientWidth={null, (w) => w && w >= width ? width = w : null} bind:clientHeight={null, (h) =>h && h >= height ? height = h : null}>
-	<Draggable {unique} bind:x={x} {onClick} bind:y={y} class="h-12 w-full flex flex-row justify-between items-center border-b shadow-[inset_0_-1px_#1D1D1E] border-b-[#242424]">
+<div style:width={manualResized ? `${width}px` : undefined} style:z-index={zIndex} style:height={manualResized ? `${height}px` : undefined} style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute shadow-[0_2px_15px_#000000c9] rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col {classes}" bind:clientWidth={width} bind:clientHeight={height}>
+	<Draggable {unique} bind:x={x} {onClick} bind:y={y} class="h-12 w-full flex shrink-0 justify-between items-center border-b shadow-[inset_0_-1px_#1D1D1E] border-b-[#242424]">
 		<p class="w-full text-center text-[15px] font-semibold">
 			{headerTitle}
 		</p>
@@ -62,11 +70,11 @@
 			<Fa class="size-full" icon={ faXmark } />
 		</Button>
 	</Draggable>
-	<div class={["h-[calc(100%-3rem)] pt-1 relative flex flex-col bobba-window", classes]}>
+	<div class="grow pt-1 relative flex flex-col bobba-window overflow-hidden">
 		{@render children?.()}
 	</div>
 	{#if !disableDrag}
-		<Draggable {unique} bind:x={width} bind:y={height} class="absolute bottom-0 right-0 cursor-se-resize size-4.75">
+		<Draggable {unique} bind:x={width} bind:y={height} bind:moving={resizing} class="absolute bottom-0 right-0 cursor-se-resize size-4.75">
 			<img src={draggableImg} alt="draggable resize icon " class="pointer-events-none relative right-0.75 bottom-0.75 size-full"/>
 		</Draggable>
 	{/if}

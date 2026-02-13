@@ -14,8 +14,8 @@
 	let { search = [] }: SearchSavesResultComponentProps = $props();
 </script>
 
-<Flex column class="w-full bg-secondary p-2 h-full rounded-md">
-	<Flex class="bg-[#FAA700] gap-2 px-1 py-0.5 rounded-sm items-center">
+<Flex column class="w-full bg-primary p-2 h-full rounded-md">
+	<Flex class="bg-[#FAA700] gap-2 px-2 py-0.5 rounded-sm items-center justify-between">
 		<p>{LocalizeText('navigator.quick.links.title')}</p>
 		<Fa class="text-white" icon={ faBolt }/>
 	</Flex>

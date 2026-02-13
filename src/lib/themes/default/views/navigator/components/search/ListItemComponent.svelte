@@ -3,7 +3,7 @@
 	import { RoomDataParser } from '@nitrots/nitro-renderer';
 	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte.js';
 	import type { ClassValue } from 'svelte/elements';
-	import RoomInfoComponent from '$lib/themes/default/views/navigator/components/search/search/RoomInfoComponent.svelte';
+	import RoomInfoComponent from '$lib/themes/default/views/navigator/components/search/RoomInfoComponent.svelte';
 
 	interface ListItemProps
 	{

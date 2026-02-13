@@ -107,7 +107,7 @@
 				{/if}
 			{/if}
 			{#if navigator.topLevelContext?.code !== 'official_view'}
-				<Flex pointer class="bg-(image:--navigator-spritesheet) bg-position-[-95px_-48px] size-[18px] pointer-events-auto" onclick={ () => SendMessageComposer(new NavigatorSearchSaveComposer(getResultTitle(), searchResult.data)) } />
+				<Flex pointer class="bg-(image:--navigator-spritesheet) bg-position-[-95px_-48px] size-4.5 pointer-events-auto" onclick={ (event) => { event.stopPropagation(); SendMessageComposer(new NavigatorSearchSaveComposer(getResultTitle(), searchResult.data)) } } />
 			{/if}
 	</Flex>
 	</Flex>

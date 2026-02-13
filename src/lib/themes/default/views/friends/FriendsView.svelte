@@ -18,7 +18,7 @@
 </script>
 
 {#if friends.visible}
-	<BobbaWindow unique="friends" headerTitle="Friends" class="min-h-70" onCloseClick={() => friends.visible = false}>
+	<BobbaWindow unique="friends" headerTitle="Friends" class="min-h-70 h-70 min-w-60" onCloseClick={() => friends.visible = false}>
 		<Flex fullWidth column fullHeight class="justify-between">
 			<AccordionItem class="max-h-full overflow-y-auto" headerText={LocalizeText('friendlist.friends.all')} name="friends" bind:current={current}>
 				<AccordionItem class="max-h-fit flex-1" headerText="{LocalizeText('friendlist.friends')} ({friends.onlineFriends.length})" name="friends_online" current="friends_online">

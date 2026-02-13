@@ -85,7 +85,7 @@
     }
 </style>
 
-<BobbaWindow class="min-h-93" unique="room-creator" headerTitle={ LocalizeText('navigator.createroom.title') } onCloseClick={ closeCreator }>
+<BobbaWindow class="h-107 min-h-107 min-w-175" unique="room-creator" headerTitle={ LocalizeText('navigator.createroom.title') } onCloseClick={ closeCreator }>
     <Flex class="gap-3 p-2 overflow-hidden">
         <Flex column class="gap-1 w-80 overflow-hidden">
             <Flex column class="gap-2 relative">

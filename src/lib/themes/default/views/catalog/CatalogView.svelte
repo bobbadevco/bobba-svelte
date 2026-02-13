@@ -9,7 +9,7 @@
 </script>
 
 {#if catalog.visible}
-	<BobbaWindow headerTitle="Catalog" unique="catalog" class="min-w-80 min-h-120 pb-1" onCloseClick={() => catalog.visible = false}>
+	<BobbaWindow headerTitle="Catalog" unique="catalog" class="min-w-80 h-120 pb-1" onCloseClick={() => catalog.visible = false}>
 		<CatalogTabs />
 		<CatalogHeader />
 		<div class="grid grid-cols-12 h-[calc(100%-10rem)]">

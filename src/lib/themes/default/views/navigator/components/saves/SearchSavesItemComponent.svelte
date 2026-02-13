@@ -36,9 +36,9 @@ const getResultTitle = () =>
 }
 </script>
 
-<Flex grow pointer class="items-center gap-2" onmouseenter={() => onmouseenter} onmouseleave={() => onmouseleave}>
-	{#if isHover && currentIndex === search.id}
-		<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-104px_-2px] size-[16px]" title={ LocalizeText('navigator.tooltip.remove.saved.search') } onclick={ () => SendMessageComposer(new NavigatorDeleteSavedSearchComposer(search.id)) } ></Flex>
-	{/if}
+<Flex grow pointer class="items-center justify-between gap-2" onmouseenter={() => onmouseenter(search.id)} onmouseleave={() => onmouseleave()}>
 	<Flex class="text-[12px] cursor-pointer text-white" title={ LocalizeText('navigator.tooltip.open.saved.search') } onclick={ () => SendMessageComposer(new NavigatorSearchComposer(search.code.split('.').reverse()[0], search.filter)) }>{ LocalizeText(getResultTitle()) }</Flex>
+	{#if (isHover && currentIndex === search.id)}
+		<Flex pointer class="bg-(image:--navigator-spritesheet) bg-position-[-111px_-16px] hover:bg-position-[-128px_-16px] active:bg-position-[-145px_-16px] size-4" title={ LocalizeText('navigator.tooltip.remove.saved.search') } onclick={ () => SendMessageComposer(new NavigatorDeleteSavedSearchComposer(search.id)) } ></Flex>
+	{/if}
 </Flex>

@@ -12,9 +12,9 @@
 </script>
 
 {#if messenger.visible}
-<BobbaWindow unique="messenger" class="min-h-fit min-w-40" headerTitle="Messenger" onCloseClick={() => messenger.visible = false}>
-	<Flex fullWidth column>
-		<Flex class="gap-2">
+<BobbaWindow unique="messenger" class="min-w-70 min-h-100 h-100" headerTitle="Messenger" onCloseClick={() => messenger.visible = false}>
+	<Flex fullWidth fullHeight column>
+		<Flex class="gap-2 shrink-0">
 			{#each messenger.visibleThreads as thread (thread.threadId)}
 				<button onclick={() => messenger.activeThreadId = thread.threadId} class={[thread === messenger.activeThread && "bg-secondary rounded-t-md size-12 pb-1", messenger.activeThread !== thread && "bg-tertiary rounded-md mb-1 w-12 h-11", "cursor-pointer flex relative"]}>
 					<Flex fullWidth class="items-center gap-1">
@@ -25,21 +25,20 @@
 				</button>
 			{/each}
 		</Flex>
-
 		{#if messenger.activeThread}
-			<Flex fullWidth column fit class={[(messenger.activeThread && messenger.activeThread.threadId === messenger.visibleThreads[0].threadId) && "rounded-tl-none!", "bg-secondary p-2 rounded overflow-y-auto"]}>
-				<Flex fullWidth class="justify-between gap-2">
+			<Flex grow fullWidth column class={[(messenger.activeThread && messenger.activeThread.threadId === messenger.visibleThreads[0].threadId) && "rounded-tl-none!", "bg-secondary p-2 rounded overflow-hidden"]}>
+				<Flex fullWidth class="shrink-0 justify-between gap-2">
 					<Flex fullWidth class="gap-2 justify-center items-center bg-primary px-2 py-1 italic rounded-sm">
 						<p class="text-sm">You're talking with {messenger.activeThread.participant.name}</p>
 						<ProfileButton class="cursor-pointer" />
 					</Flex>
 				</Flex>
-				<Flex column fullWidth class="overlow-auto">
+				<Flex grow column fullWidth class="overflow-auto">
 					{#each messenger.activeThread.groups as group, i (i)}
 						<MessengerThreadGroup thread={messenger.activeThread} group={group} />
 					{/each}
 				</Flex>
-				<Flex fullWidth>
+				<Flex fullWidth shrink-0 class="pt-2">
 					<input class="p-2 w-full bg-white rounded-lg text-black" type="text" bind:value={messageText} maxlength="255" placeholder={LocalizeText('messenger.window.input.default', [ 'FRIEND_NAME' ], [ messenger.activeThread.participant.name || '' ])}
 								 onkeydown={(event) => {
 								 if (event.key === 'Enter' && messenger.activeThread) {

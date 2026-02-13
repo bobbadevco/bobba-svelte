@@ -7,11 +7,11 @@
 	import Flex from '$lib/components/common/Flex.svelte';
 	import SearchResultComponent from '$lib/themes/default/views/navigator/components/SearchResultComponent.svelte';
 	import { untrack } from 'svelte';
-	import { FindNewFriendsMessageComposer, NavigatorSearchSaveComposer } from '@nitrots/nitro-renderer';
+	import { FindNewFriendsMessageComposer } from '@nitrots/nitro-renderer';
 	import { LocalizeText, SendMessageComposer } from '$lib/api';
 	import RoomCreatorView from '$lib/themes/default/views/navigator/RoomCreatorView.svelte';
-	import SearchComponent from './components/search/SearchComponent.svelte';
 	import SearchSavesResultComponent from '$lib/themes/default/views/navigator/components/SearchSavesResultComponent.svelte';
+	import SearchComponent from '$lib/themes/default/views/navigator/components/search/SearchComponent.svelte';
 
 	const navigator = getNavigatorListener();
 	const navigatorClose = () => { navigator.visible = false; };
@@ -36,9 +36,9 @@
 </script>
 
 {#if navigator.visible}
-	<BobbaWindow class="min-h-140 gap-1" unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
+	<BobbaWindow class="min-h-140 h-150 {openSavesSearch ? 'max-w-170 min-w-170' : 'max-w-120 min-w-120'}" unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
 		<Flex class="gap-1 items-center">
-			<Flex onclick={() => openSavesSearch = !openSavesSearch} pointer class="mt-1 bg-(image:--navigator-spritesheet) bg-position-[-95px_-48px] size-[18px] pointer-events-auto" />
+			<Flex onclick={() => openSavesSearch = !openSavesSearch} pointer class="mt-1 bg-(image:--navigator-spritesheet) bg-position-[-95px_-48px] size-4.5 pointer-events-auto" />
 			<BobbaTabs>
 				{#if navigator.topLevelContexts && (navigator.topLevelContexts.length > 0)}
 					{#each navigator.topLevelContexts as context, i (i)}
@@ -55,12 +55,12 @@
 			</Flex>
 		{/if}
 		<Flex column grow class="overflow-hidden">
-			<Flex class="gap-2" fullWidth fullHeight>
-				{#if openSavesSearch}
-					<Flex column class="overflow-hidden min-w-[170px]">
-						<SearchSavesResultComponent search={navigator?.navigatorSearches} />
-					</Flex>
-				{/if}
+			<Flex fullWidth fullHeight>
+				<Flex column class="overflow-hidden {openSavesSearch ? 'min-w-42.5 me-2 mt-1.5' : 'min-w-0' }">
+					{#if openSavesSearch}
+							<SearchSavesResultComponent search={navigator?.navigatorSearches} />
+					{/if}
+				</Flex>
 				<Flex column fullWidth fullHeight class="py-2 relative gap-2">
 					<SearchComponent  />
 					<Flex fullWidth column grow class="overflow-auto gap-2" bind:element={elementRef}>
