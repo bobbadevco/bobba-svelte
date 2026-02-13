@@ -87,6 +87,7 @@
 		</Flex>
 	</BobbaWindow>
 {/if}
+
 {#if navigator.creatorOpen}
 	<RoomCreatorView />
 {/if}

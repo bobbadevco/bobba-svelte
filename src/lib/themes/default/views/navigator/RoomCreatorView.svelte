@@ -85,9 +85,9 @@
     }
 </style>
 
-<BobbaWindow class="min-h-97" unique="room-creator" headerTitle={ LocalizeText('navigator.createroom.title') } onCloseClick={ closeCreator }>
+<BobbaWindow class="min-h-93" unique="room-creator" headerTitle={ LocalizeText('navigator.createroom.title') } onCloseClick={ closeCreator }>
     <Flex class="gap-3 p-2 overflow-hidden">
-        <Flex column class="gap-3 w-80 overflow-hidden">
+        <Flex column class="gap-1 w-80 overflow-hidden">
             <Flex column class="gap-2 relative">
                 <p class="ms-0.5 text-[14px] font-bold">{ LocalizeText('navigator.createroom.roomnameinfo') }</p>
                 <input
@@ -103,10 +103,10 @@
             <Flex column class="gap-2">
                 <p class="ms-0.5 text-[14px] font-bold">{ LocalizeText('navigator.createroom.roomdescinfo') }</p>
                 <textarea
-                    class="text-[14px] room-creator-form focus:border-0 focus:outline-0 border-none bg-white rounded-sm text-black p-1"
-                    maxlength={255}
-                    placeholder={ LocalizeText('navigator.createroom.roomdescinfo') }
-                    bind:value={description}></textarea>
+                  class="text-[14px] room-creator-form focus:border-0 focus:outline-0 border-none bg-white rounded-sm text-black p-1 resize-none"
+                  maxlength={255}
+                  placeholder={LocalizeText('navigator.createroom.roomdescinfo')}
+                  bind:value={description}></textarea>
             </Flex>
             <Flex column class="gap-3">
                 <Flex column class="gap-1">
@@ -160,14 +160,14 @@
             <div class="grid grid-cols-2 gap-2">
                 {#each roomModels as model, index (model.name)}
                     <Flex
-                        class={`relative items-center justify-center min-h-25 rounded-md p-2 cursor-pointer ${selectedModelName === model.name ? 'bg-primary' : 'bg-secondary'}`}
-                        onclick={() => selectModel(model, index)}>
+                      class={`relative items-center justify-center min-h-25 rounded-md p-2 cursor-pointer ${selectedModelName === model.name ? 'bg-primary' : 'bg-secondary'}`}
+                      onclick={() => selectModel(model, index)}>
                         <Flex fullHeight class="justify-center items-center overflow-hidden h-32">
-                            <img src={ getRoomModelImage(model.name) } alt={model.name} />
+                            <img src={getRoomModelImage(model.name)} alt={model.name} />
                         </Flex>
-                        <Flex class="absolute bg-secondary w-full bottom-1 left-1 items-center gap-1 text-xs">
-                            <span class={ selectedModelName === model.name ? 'icon-tiles_room_selected' : 'icon-tiles' }></span>
-                            { model.tileSize } { LocalizeText('navigator.createroom.tilesize') }
+                        <Flex class={`absolute ${selectedModelName === model.name ? 'bg-primary' : 'bg-secondary'} w-[95%] bottom-1 left-1 items-center gap-1 text-xs`}>
+                            <span class={selectedModelName === model.name ? 'icon-tiles_room_selected' : 'icon-tiles'}></span>
+                            {model.tileSize} {LocalizeText('navigator.createroom.tilesize')}
                         </Flex>
                         {#if (!hcDisabled && model.clubLevel > 0)}
                             <span class="w-3.75 h-2.5 bg-(image:--navigator-spritesheet) bg-position-[-104px_-2px] absolute top-1 right-1"></span>

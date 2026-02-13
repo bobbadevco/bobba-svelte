@@ -6,7 +6,7 @@
 
 {#each getAlertListener().alerts as alert (alert.id)}
     {@const headerTitle = alert.title || 'Alert'}
-    <BobbaWindow {headerTitle} onCloseClick={() => getAlertListener().closeAlert(alert)}>
+    <BobbaWindow unique={alert.alertType} {headerTitle} onCloseClick={() => getAlertListener().closeAlert(alert)}>
         <Flex column class="min-h-40 min-w-100">
             {#each alert.messages as message, i (i)}
                 <p>{message}</p>

@@ -3,7 +3,7 @@
 	import BobbaWindow from '$lib/themes/default/generic/window/BobbaWindow.svelte';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import AvatarImage from '$lib/components/common/layout/AvatarImage.svelte';
-	import ProfileButton from '$lib/themes/default/views/friends/components/ProfileButton.svelte';
+	import ProfileButton from '$lib/components/common/layout/ProfileButton.svelte';
 	import { GetSessionDataManager, LocalizeText } from '$lib/api';
 	import MessengerThreadGroup from '$lib/themes/default/views/messenger/components/MessengerThreadGroup.svelte';
 
@@ -12,7 +12,7 @@
 </script>
 
 {#if messenger.visible}
-<BobbaWindow class="min-h-fit min-w-40" headerTitle="Messenger" onCloseClick={() => messenger.visible = false}>
+<BobbaWindow unique="messenger" class="min-h-fit min-w-40" headerTitle="Messenger" onCloseClick={() => messenger.visible = false}>
 	<Flex fullWidth column>
 		<Flex class="gap-2">
 			{#each messenger.visibleThreads as thread (thread.threadId)}

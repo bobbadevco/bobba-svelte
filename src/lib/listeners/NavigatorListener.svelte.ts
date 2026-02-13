@@ -202,6 +202,7 @@ class NavigatorListener implements ILinkEventTracker {
 
 		const searchQuery = ((searchFilter.query ? (searchFilter.query + ':') : '') + this.searchValue);
 
+		this.searched = true;
 		this.sendSearch((searchQuery || ''), this.topLevelContext.code);
 	}
 

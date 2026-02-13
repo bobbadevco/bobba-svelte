@@ -8,7 +8,7 @@
 	import { faXmark } from '@fortawesome/free-solid-svg-icons';
 	import { getWindowListener } from '$lib/listeners/WindowListener.svelte';
 
-	let {onCloseClick = () => {}, unique = '', disableDrag = false, headerTitle='', class: classes = '', children = undefined}: { onCloseClick?: () => void, unique?: string, disableDrag?: boolean, class?: ClassValue, children?: Snippet, headerTitle: string } = $props();
+	let {onCloseClick = () => {}, unique, disableDrag = false, headerTitle='', class: classes = '', children = undefined}: { onCloseClick?: () => void, unique: string, disableDrag?: boolean, class?: ClassValue, children?: Snippet, headerTitle: string } = $props();
 
 	let x = $state(0);
 	let y = $state(0);

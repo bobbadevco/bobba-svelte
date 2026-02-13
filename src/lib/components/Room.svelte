@@ -19,7 +19,7 @@
 	}
 </script>
 
-<div class={["max-w-screen max-h-screen", !getRoomSession() && "hidden"]} use:attachView></div>
+<div class={["max-w-screen max-h-screen pointer-events-auto", !getRoomSession() && "hidden"]} use:attachView></div>
 {#if getRoomSession()}
 	<Widgets />
 {/if}

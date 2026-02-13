@@ -2,7 +2,7 @@
 	import { MessengerFriend, OpenMessengerChat } from '$lib/api';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import AvatarImage from '$lib/components/common/layout/AvatarImage.svelte';
-	import ProfileButton from '$lib/themes/default/views/friends/components/ProfileButton.svelte';
+	import ProfileButton from '$lib/components/common/layout/ProfileButton.svelte';
 	import { getFriendListener } from '$lib/listeners/FriendListener.svelte';
 
 	interface FriendListItemProps {
@@ -13,23 +13,6 @@
 
 	const friends = getFriendListener();
 </script>
-
-<style>
-    .icon-friend_message {
-        background-image: url('$lib/themes/default/assets/images/friends/friend_message.png');
-        width: 16px;
-        height: 14px;
-    }
-    .nitro-friends-spritesheet {
-        background: url('$lib/themes/default/assets/images/friends/friends-spritesheet.png') transparent no-repeat;
-
-        &.icon-follow {
-            width: 16px;
-            height: 14px;
-            background-position: -96px -29px;
-        }
-    }
-</style>
 
 <Flex class="justify-between">
 	<Flex class="items-center gap-0">
@@ -45,12 +28,12 @@
 		{/if}
 		<p>{friend.name}</p>
 	</Flex>
-	<Flex>
+	<Flex class="gap-1">
 		{#if friend.followingAllowed}
-			<button title="follow" class="nitro-friends-spritesheet icon-follow cursor-pointer" onclick={() => friends.followFriend(friend)}>
+			<button title="follow" class="size-4 bg-(image:--friends-spritesheet) bg-position-[-96px_-29px] cursor-pointer" onclick={() => friends.followFriend(friend)}>
 			</button>
 		{/if}
-		<button title="message" class="icon icon-friend_message cursor-pointer" onclick={(event) => {
+		<button title="message" class="size-4 bg-(image:--friends-spritesheet) bg-position-[-77px_-53px] cursor-pointer" onclick={(event) => {
 			event.stopPropagation();
 			OpenMessengerChat(friend.id);
 		}}>

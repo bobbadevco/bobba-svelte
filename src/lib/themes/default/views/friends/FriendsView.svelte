@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { getFriendListener } from '$lib/listeners/FriendListener.svelte';
 	import BobbaWindow from '$lib/themes/default/generic/window/BobbaWindow.svelte';
-	import friend_all from '$lib/themes/default/assets/images/friends/friend_all.png';
 	import { CreateLinkEvent, LocalizeText } from '$lib/api';
 	import AccordionItem from '$lib/themes/default/generic/accordion/AccordionItem.svelte';
 	import Flex from '$lib/components/common/Flex.svelte';
@@ -19,7 +18,7 @@
 </script>
 
 {#if friends.visible}
-	<BobbaWindow headerTitle="Friends" class="min-h-70" onCloseClick={() => friends.visible = false}>
+	<BobbaWindow unique="friends" headerTitle="Friends" class="min-h-70" onCloseClick={() => friends.visible = false}>
 		<Flex fullWidth column fullHeight class="justify-between">
 			<AccordionItem class="max-h-full overflow-y-auto" headerText={LocalizeText('friendlist.friends.all')} name="friends" bind:current={current}>
 				<AccordionItem class="max-h-fit flex-1" headerText="{LocalizeText('friendlist.friends')} ({friends.onlineFriends.length})" name="friends_online" current="friends_online">
@@ -44,5 +43,5 @@
 {/if}
 
 <button class="absolute bottom-0 right-0 size-10" onclick={() => CreateLinkEvent('friends/toggle')}>
-	<img src={friend_all} alt="Friends All" />
+	<Flex pointer class="size-8.25 bg-position-[33px_0] bg-(image:--friends-spritesheet)" />
 </button>
