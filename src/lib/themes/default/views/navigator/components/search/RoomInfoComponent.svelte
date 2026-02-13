@@ -2,7 +2,7 @@
 import Flex from '$lib/components/common/Flex.svelte';
 import Portal from 'svelte-portal';
 import type { RoomDataParser } from '@nitrots/nitro-renderer';
-import { getRoomInfoState } from '$lib/api/navigator/RoomInfoState.svelte';
+import { getRoomInfoState } from '$lib/api/navigator/RoomInfoState.svelte.js';
 import ProfileButton from '$lib/components/common/layout/ProfileButton.svelte';
 
 interface RoomInfoComponentProps
@@ -108,9 +108,7 @@ const toggleInfo = (e: MouseEvent) =>
 						navigatorTheme.roomInfoData = roomData;
 						navigatorTheme.roomInfoId = instanceId;
 					}
-				}}
-				onmouseleave={onPortalMouseLeave}
-			>
+				}} onmouseleave={onPortalMouseLeave}>
 				<div class="absolute size-5 -left-2 z-0 top-[38%] rotate-135 bg-bright-primary"></div>
 				<Flex column class="gap-1 relative z-10">
 					<p class="font-bold pb-1 truncate">{roomData.roomName}</p>

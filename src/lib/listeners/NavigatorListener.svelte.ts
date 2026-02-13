@@ -6,6 +6,7 @@ import {
 	RoomDataParser,
 	UserInfoEvent,
 	type NitroEvent,
+	NavigatorSearchesEvent,
 	HabboWebTools,
 	type ILinkEventTracker,
 	RoomScoreEvent,
@@ -33,7 +34,7 @@ import {
 	FollowFriendMessageComposer,
 	NitroCommunicationDemoEvent,
 	RoomSessionEvent,
-	NavigatorSearchComposer, CreateFlatMessageComposer
+	NavigatorSearchComposer, CreateFlatMessageComposer, type NavigatorSavedSearch
 } from '@nitrots/nitro-renderer';
 import { DoorStateType } from '$lib/api/navigator/DoorStateType';
 import {
@@ -74,9 +75,8 @@ class NavigatorListener implements ILinkEventTracker {
 	currentRoomOwner = $state(false);
 	roomId = $state(-1);
 	loading: boolean = $state(false);
-	roomInfoData = $state<RoomDataParser | null>(null);
-	roomInfoId = $state<number | null>(null);
 	topLevelContext = $state<NavigatorTopLevelContext>();
+	navigatorSearches = $state<NavigatorSavedSearch[]>();
 	topLevelContexts = $state<NavigatorTopLevelContext[]>();
 	searchResult = $state<NavigatorSearchResultSet>();
 	categories = $state<NavigatorCategoryDataParser[]>()	;
@@ -145,6 +145,7 @@ class NavigatorListener implements ILinkEventTracker {
 		registerMessageEvent(UserFlatCatsEvent, this.onUserFlatCategories.bind(this));
 		registerMessageEvent(UserEventCatsEvent, this.onUserEventCategories.bind(this));
 		registerMessageEvent(FlatCreatedEvent, this.onFlatCreated.bind(this));
+		registerMessageEvent(NavigatorSearchesEvent, this.onSavedSearches.bind(this));
 		registerRoomSessionManagerEvent(RoomSessionEvent.CREATED, this.onRoomCreated.bind(this));
 	}
 
@@ -426,8 +427,17 @@ class NavigatorListener implements ILinkEventTracker {
 		}
 	}
 
+	private onSavedSearches(event: NavigatorSearchesEvent) {
+		const parser = event.getParser();
+
+		if (!parser) return;
+
+		this.navigatorSearches = parser.searches;
+	}
+
 	private onGuestResult(event: GetGuestRoomResultEvent) {
 		const parser = event.getParser();
+
 		if (parser.roomEnter) {
 			this.doorData = { roomInfo: undefined, state: DoorStateType.NONE };
 			this.enteredGuestRoom = parser.data;

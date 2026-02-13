@@ -1,47 +1,46 @@
 <script lang="ts">
-	import { SvelteSet } from 'svelte/reactivity';
-	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
+	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte.js';
 	import Flex from '$lib/components/common/Flex.svelte';
-	import ListItemComponent from '$lib/themes/default/views/navigator/components/search/ListItemComponent.svelte';
-	import ThumbnailItemComponent from '$lib/themes/default/views/navigator/components/search/ThumbnailItemComponent.svelte';
 	import { NavigatorDisplayMode } from '$lib/api/navigator/NavigatorDisplayMode';
 	import { LocalizeText, SendMessageComposer } from '$lib/api';
-	import { type NavigatorSearchResultList, NavigatorSearchComposer } from '@nitrots/nitro-renderer';
+	import {
+		type NavigatorSearchResultList,
+		NavigatorSearchComposer,
+		NavigatorSearchSaveComposer
+	} from '@nitrots/nitro-renderer';
 	import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 	import { Fa } from 'svelte-fa';
+	import ThumbnailItemComponent
+		from '$lib/themes/default/views/navigator/components/search/ThumbnailItemComponent.svelte';
+	import ListItemComponent from '$lib/themes/default/views/navigator/components/search/ListItemComponent.svelte';
 
 	interface SearchResultComponentProps {
 		searchResult: NavigatorSearchResultList;
 	}
 
 	const { searchResult }: SearchResultComponentProps = $props();
-
-	let isExtended = $derived(!searchResult.closed);
-	let displayMode = $derived(searchResult.mode);
-	let rooms = $derived(searchResult.rooms);
-
 	const navigator = getNavigatorListener();
 
-	let itemTitle = $derived.by(() =>
-    {
-        let name = searchResult.code;
+	const getResultTitle = () =>
+	{
+		let name = searchResult.code;
 
-        if(!name || !name.length || LocalizeText('navigator.searchcode.title.' + name) == ('navigator.searchcode.title.' + name)) return searchResult.data;
+		if(!name || !name.length || LocalizeText('navigator.searchcode.title.' + name) == ('navigator.searchcode.title.' + name)) return searchResult.data;
 
-        if(name.startsWith('${')) return name.slice(2, (name.length - 1));
+		if(name.startsWith('${')) return name.slice(2, (name.length - 1));
 
-        return ('navigator.searchcode.title.' + name);
-    });
+		return ('navigator.searchcode.title.' + name);
+	}
 
 	const toggleDisplayMode = (event: MouseEvent) =>
-    {
+	{
 		event.stopPropagation();
         if (displayMode === NavigatorDisplayMode.LIST) {
 			displayMode = NavigatorDisplayMode.THUMBNAILS;
 		} else {
 			displayMode = NavigatorDisplayMode.LIST;
 		}
-    }
+	}
 
 	const toggleExtended = () =>
 	{
@@ -49,13 +48,27 @@
 	}
 
 	const showMore = (event: MouseEvent) =>
-    {
-		event.stopPropagation();
-        if(searchResult.action == 1) SendMessageComposer(new NavigatorSearchComposer(searchResult.code, ''));
-        else if(searchResult.action == 2 && navigator.topLevelContext) SendMessageComposer(new NavigatorSearchComposer(navigator.topLevelContext.code,''));
-    }
+	{
+	event.stopPropagation();
+			if(searchResult.action == 1) SendMessageComposer(new NavigatorSearchComposer(searchResult.code, ''));
+			else if(searchResult.action == 2 && navigator.topLevelContext) SendMessageComposer(new NavigatorSearchComposer(navigator.topLevelContext.code,''));
+	}
 
+	let isExtended = $derived(!searchResult.closed);
+	let displayMode = $derived(searchResult.mode);
+	let rooms = $derived(searchResult.rooms);
 	let gridHasTwoColumns = $derived(displayMode >= NavigatorDisplayMode.THUMBNAILS);
+
+	let itemTitle = $derived.by(() =>
+	{
+		let name = searchResult.code;
+
+		if(!name || !name.length || LocalizeText('navigator.searchcode.title.' + name) == ('navigator.searchcode.title.' + name)) return searchResult.data;
+
+		if(name.startsWith('${')) return name.slice(2, (name.length - 1));
+
+		return ('navigator.searchcode.title.' + name);
+	});
 	
 	$effect(() =>
     {
@@ -68,7 +81,7 @@
 
 </script>
 
-<div class="flex flex-col text-white bg-primary {gridHasTwoColumns && isExtended && displayMode === NavigatorDisplayMode.THUMBNAILS ? 'p-2 pt-0' : gridHasTwoColumns && 'ps-2'} rounded-sm w-full">
+<div class="flex flex-col text-white bg-primary {gridHasTwoColumns && isExtended && displayMode === NavigatorDisplayMode.THUMBNAILS ? 'p-2 pt-0' : gridHasTwoColumns && 'px-2'} rounded-sm w-full">
 	<Flex fullWidth class="py-1 {!gridHasTwoColumns && 'px-2'} cursor-pointer justify-between" onclick={toggleExtended}>
 		<Flex class="items-center gap-1">
 			{#if isExtended}
@@ -85,16 +98,18 @@
 			{#if displayMode >= NavigatorDisplayMode.THUMBNAILS}
 				<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-45px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ toggleDisplayMode } />
 			{/if}
-			{#if (searchResult.action > 0)}
-				{#if (searchResult.action === 1)}
+			{#if searchResult.action > 0}
+				{#if searchResult.action === 1}
 					<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-33px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ showMore } />
 				{/if}
-				{#if (searchResult.action !== 1)}
+				{#if searchResult.action !== 1}
 					<Flex class="bg-(image:--navigator-spritesheet) bg-position-[-77px_-55px] pointer-events-auto size-2.75 cursor-pointer" onclick={ showMore } />
 				{/if}
 			{/if}
-			<!--{ (topLevelContext.code !== 'official_view') && <LayoutSearchSavesView title={ LocalizeText('navigator.tooltip.add.saved.search') } onClick={ () => SendMessageComposer(new NavigatorSearchSaveComposer(getResultTitle(), searchResult.data)) } /> }-->
-		</Flex>
+			{#if navigator.topLevelContext?.code !== 'official_view'}
+				<Flex pointer class="bg-(image:--navigator-spritesheet) bg-position-[-95px_-48px] size-[18px] pointer-events-auto" onclick={ () => SendMessageComposer(new NavigatorSearchSaveComposer(getResultTitle(), searchResult.data)) } />
+			{/if}
+	</Flex>
 	</Flex>
 	<div class="flex flex-col w-full">
 		{#if isExtended}

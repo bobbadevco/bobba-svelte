@@ -46,7 +46,7 @@
 		<Flex class="w-full bg-tertiary shadow-[1px_0px_black,0px_1px_black] border-b-2 border-r-2 border-solid border-bright-primary rounded-br-full h-7.5" />
 	</Flex>
 	<Button 
-		class="shadow-[1px_0px_black,0px_-1px_black,0px_1px_black] px-1.5 right-0.5 rounded-r-md border-2 border-l-0 border-solid border-bright-primary relative bg-tertiary h-15"
+		class="shadow-[1px_0px_black,0px_-1px_black,0px_1px_black] px-1.5 rounded-r-md border-2 border-l-0 border-solid border-bright-primary relative bg-tertiary h-15"
 		onclick={() => isVisible = !isVisible} center>
 		<Fa color="white" class="size-full {isVisible ? 'rotate-0 transition-transform duration-300' : 'rotate-180 transition-transform duration-300'}" icon={ faAngleRight } />
 	</Button>

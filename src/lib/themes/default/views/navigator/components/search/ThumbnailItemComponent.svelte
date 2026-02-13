@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { RoomDataParser } from '@nitrots/nitro-renderer';
-	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
+	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte.js';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import defaultImage from "$lib/themes/default/assets/images/navigator/room_thumbnail.png";
 	import RoomThumbnail from '$lib/components/common/layout/RoomThumbnail.svelte';
 
- import RoomInfoComponent from '$lib/themes/default/views/navigator/components/search/RoomInfoComponent.svelte';
+ import RoomInfoComponent from '$lib/themes/default/views/navigator/components/search/search/RoomInfoComponent.svelte';
 
  	interface ThumbnailItemProps
 	{
