@@ -8,12 +8,14 @@
 	import { faXmark } from '@fortawesome/free-solid-svg-icons';
 	import { getWindowListener } from '$lib/listeners/WindowListener.svelte';
 
-	let {onCloseClick = () => {}, unique, disableDrag = false, headerTitle='', class: classes = '', children = undefined}: { onCloseClick?: () => void, unique: string, disableDrag?: boolean, class?: ClassValue, children?: Snippet, headerTitle: string } = $props();
+	let {onCloseClick = () => {}, manualResized = $bindable(false), unique, disableDrag = false, headerTitle='', class: classes = '', children = undefined}: { onCloseClick?: () => void, manualResized?: boolean, unique: string, disableDrag?: boolean, class?: ClassValue, children?: Snippet, headerTitle: string } = $props();
 
 	let x = $state(0);
 	let y = $state(0);
 	let width = $state(0);
 	let height = $state(0);
+	let clientWidth = $state(0);
+	let clientHeight = $state(0);
 	let resizing = $state(false);
 
 
@@ -21,10 +23,13 @@
 	const zIndex = $derived(getWindowListener().windows.indexOf(id) + 500);
 	const onClick = () => getWindowListener().pushToTop(id);
 
-	let manualResized = $state(false);
 
 	$effect(() => {
-		if (resizing) manualResized = true;
+		if (resizing) {
+			manualResized = true;
+			width = clientWidth;
+			height = clientHeight;
+		}
 	});
 
 
@@ -61,7 +66,7 @@
     }
 </style>
 
-<div style:width={manualResized ? `${width}px` : undefined} style:z-index={zIndex} style:height={manualResized ? `${height}px` : undefined} style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute shadow-[0_2px_15px_#000000c9] rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col {classes}" bind:clientWidth={width} bind:clientHeight={height}>
+<div style:width={manualResized ? `${width}px` : undefined} style:z-index={zIndex} style:height={manualResized ? `${height}px` : undefined} style:left="calc({x}px + 45%)" style:top="calc({y}px + 30%)" class="absolute shadow-[0_2px_15px_#000000c9] rounded-lg cursor-auto px-3 py-1 text-white bg-tertiary flex flex-col {classes}" bind:clientWidth={clientWidth} bind:clientHeight={clientHeight}>
 	<Draggable {unique} bind:x={x} {onClick} bind:y={y} class="h-12 w-full flex shrink-0 justify-between items-center border-b shadow-[inset_0_-1px_#1D1D1E] border-b-[#242424]">
 		<p class="w-full text-center text-[15px] font-semibold">
 			{headerTitle}

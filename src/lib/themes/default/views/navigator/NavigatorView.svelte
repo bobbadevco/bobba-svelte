@@ -18,6 +18,7 @@
 
 	let elementRef: HTMLElement | null = $state(null);
 	let openSavesSearch = $state(false);
+	let manualResized = $state(false);
     
 	let searchResults = $derived.by(() => {
 			if (!navigator.searchResult) return [];
@@ -36,7 +37,7 @@
 </script>
 
 {#if navigator.visible}
-	<BobbaWindow class="min-h-140 h-150 {openSavesSearch ? 'max-w-170 min-w-170' : 'max-w-120 min-w-120'}" unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
+	<BobbaWindow class="min-h-140 h-150 {manualResized ? '' : (openSavesSearch ? 'min-w-170' : 'min-w-120')}" bind:manualResized unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
 		<Flex class="gap-1 items-center">
 			<Flex onclick={() => openSavesSearch = !openSavesSearch} pointer class="mt-1 bg-(image:--navigator-spritesheet) bg-position-[-95px_-48px] size-4.5 pointer-events-auto" />
 			<BobbaTabs>

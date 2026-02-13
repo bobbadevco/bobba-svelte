@@ -81,8 +81,8 @@
 
 </script>
 
-<div class="flex flex-col text-white bg-primary {gridHasTwoColumns && isExtended && displayMode === NavigatorDisplayMode.THUMBNAILS ? 'p-2 pt-0' : gridHasTwoColumns && 'px-2'} rounded-sm w-full">
-	<Flex fullWidth class="py-1 {!gridHasTwoColumns && 'px-2'} cursor-pointer justify-between" onclick={toggleExtended}>
+<div class="flex flex-col text-white bg-primary {gridHasTwoColumns && isExtended && displayMode === NavigatorDisplayMode.THUMBNAILS ? 'p-2 pt-0' : gridHasTwoColumns && 'px-2 pe-0.5'} rounded-sm w-full">
+	<Flex fullWidth class="py-1 {!gridHasTwoColumns && 'px-2 pe-0.5'} cursor-pointer justify-between" onclick={toggleExtended}>
 		<Flex class="items-center gap-1">
 			{#if isExtended}
 				<Fa icon={ faMinus } />
