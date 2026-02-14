@@ -2,7 +2,7 @@
     import { CreateFlatMessageComposer } from '@nitrots/nitro-renderer';
     import { GetConfiguration, LocalizeText, SendMessageComposer } from '$lib/api';
     import BobbaWindow from '$lib/themes/default/generic/window/BobbaWindow.svelte';
-    import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
+    import { getNavigatorListener } from '$lib/listeners';
     import { type IRoomModel } from '$lib/api';
     import { onMount } from 'svelte';
     import Flex from '$lib/components/common/Flex.svelte';

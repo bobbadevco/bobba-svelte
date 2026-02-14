@@ -3,7 +3,7 @@
 	import { GetConfiguration, type ICatalogNode } from '$lib/api';
 	import CatalogNavigationSet
 		from '$lib/themes/default/views/catalog/components/layout/navigation/CatalogNavigationSet.svelte';
-	import { getCatalogListener } from '$lib/listeners/CatalogListener.svelte';
+	import { getCatalogListener } from '$lib/listeners';
 
 	interface CatalogNavigationItemProps {
 		node: ICatalogNode;

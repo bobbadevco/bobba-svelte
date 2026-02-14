@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {getAlertListener} from "$lib/listeners/AlertListener.svelte";
+    import {getAlertListener} from "$lib/listeners";
 	import BobbaWindow from "$lib/themes/default/generic/window/BobbaWindow.svelte";
     import Flex from '$lib/components/common/Flex.svelte';
 </script>

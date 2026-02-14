@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getCatalogListener } from '$lib/listeners/CatalogListener.svelte';
+	import { getCatalogListener } from '$lib/listeners';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import CatalogNavigationItem
 		from '$lib/themes/default/views/catalog/components/layout/navigation/CatalogNavigationItem.svelte';

@@ -3,7 +3,7 @@
 	import Flex from '$lib/components/common/Flex.svelte';
 	import AvatarImage from '$lib/components/common/layout/AvatarImage.svelte';
 	import ProfileButton from '$lib/components/common/layout/ProfileButton.svelte';
-	import { getFriendListener } from '$lib/listeners/FriendListener.svelte';
+	import { getFriendListener } from '$lib/listeners';
 
 	interface FriendListItemProps {
 		friend: MessengerFriend;

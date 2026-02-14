@@ -6,11 +6,10 @@ import {
 import {
 	AddEventLinkTracker, GetSessionDataManager, LocalizeText,
 	MessengerIconState, MessengerThreadSvelte, MessengerThreadChat, PlaySound, SendMessageComposer } from '$lib/api';
-import { getFriendListener } from '$lib/listeners/FriendListener.svelte';
-import { CloneObject } from '$lib/api/utils/CloneObject';
+import { getFriendListener } from '$lib/listeners';
 import { SoundNames } from '$lib/api/utils/SoundNames';
 import { NotificationAlertType } from '$lib/api/notification/NotificationAlertType';
-import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
+import { getAlertListener } from '$lib/listeners';
 import { MessengerFollowFriendFailedType } from '$lib/api/friends/MessengerFollowFriendFailedType';
 
 class MessengerListener implements ILinkEventTracker {

@@ -5,6 +5,7 @@
 	import FriendsView from '$lib/themes/default/views/friends/FriendsView.svelte';
 	import MessengerView from '$lib/themes/default/views/messenger/MessengerView.svelte';
 	import CatalogView from '$lib/themes/default/views/catalog/CatalogView.svelte';
+	import UserProfileView from '$lib/themes/default/views/profile/UserProfileView.svelte';
 </script>
 
 <AlertView />
@@ -13,3 +14,4 @@
 <FriendsView />
 <MessengerView />
 <CatalogView />
+<UserProfileView />

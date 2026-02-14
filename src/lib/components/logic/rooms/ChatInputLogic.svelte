@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, untrack } from 'svelte';
-	import { getChatInputListener } from '$lib/listeners/rooms/ChatInputListener.svelte';
+	import { getChatInputListener } from '$lib/listeners';
 	import { getRoomSession } from '$lib/events';
 
 	$effect(() => {

@@ -1,6 +1,6 @@
 <script lang="ts">
 
-	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte.js';
+	import { getNavigatorListener } from '$lib/listeners';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import Select from '$lib/components/common/Select.svelte';
 	import { LocalizeText } from '$lib/api';

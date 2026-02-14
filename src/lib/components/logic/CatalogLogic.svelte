@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, untrack } from 'svelte';
-	import { getCatalogListener } from '$lib/listeners/CatalogListener.svelte';
+	import { getCatalogListener } from '$lib/listeners';
 	import { RemoveLinkEventTracker, RequestedPage, SendMessageComposer } from '$lib/api';
 	import {
 		BuildersClubQueryFurniCountMessageComposer,

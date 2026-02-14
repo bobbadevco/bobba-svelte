@@ -10,6 +10,7 @@
 	import FriendsLogic from '$lib/components/logic/FriendsLogic.svelte';
 	import MessengerLogic from '$lib/components/logic/MessengerLogic.svelte';
 	import CatalogLogic from '$lib/components/logic/CatalogLogic.svelte';
+	import ProfileLogic from '$lib/components/logic/ProfileLogic.svelte';
 
 	onMount(
 		() => {
@@ -25,3 +26,4 @@
 <FriendsLogic />
 <MessengerLogic />
 <CatalogLogic />
+<ProfileLogic />

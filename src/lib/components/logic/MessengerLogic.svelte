@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, untrack } from 'svelte';
-	import { getMessengerListener } from '$lib/listeners/MessengerListener.svelte';
+	import { getMessengerListener } from '$lib/listeners';
 	import { CloneObject } from '$lib/api/utils/CloneObject';
 	import { RemoveLinkEventTracker } from '$lib/api';
 

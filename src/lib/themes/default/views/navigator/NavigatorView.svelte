@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
+	import { getNavigatorListener } from '$lib/listeners';
 	import LoadingImage from '../../assets/images/loading.png';
 	import BobbaWindow from "$lib/themes/default/generic/window/BobbaWindow.svelte";
 	import BobbaTabs from '../../generic/window/tabs/BobbaTabs.svelte';
 	import BobbaTabsItem from '../../generic/window/tabs/BobbaTabsItem.svelte';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import SearchResultComponent from '$lib/themes/default/views/navigator/components/SearchResultComponent.svelte';
-	import { untrack } from 'svelte';
 	import { FindNewFriendsMessageComposer } from '@nitrots/nitro-renderer';
 	import { LocalizeText, SendMessageComposer } from '$lib/api';
 	import RoomCreatorView from '$lib/themes/default/views/navigator/RoomCreatorView.svelte';
@@ -14,7 +13,7 @@
 	import SearchComponent from '$lib/themes/default/views/navigator/components/search/SearchComponent.svelte';
 
 	const navigator = getNavigatorListener();
-	const navigatorClose = () => { navigator.visible = false; };
+	const onCloseClick = () => { navigator.visible = false; };
 
 	let elementRef: HTMLElement | null = $state(null);
 	let openSavesSearch = $state(false);
@@ -28,18 +27,12 @@
 	$effect(() => {
 		if(elementRef) elementRef.scrollTop = 0;
 	});
-
-	$effect(() => {
-		if (navigator.visible) {
-			untrack(() => navigator.reloadCurrentSearch());
-		}
-	});
 </script>
 
 {#if navigator.visible}
-	<BobbaWindow class="min-h-140 h-150 {manualResized ? '' : (openSavesSearch ? 'min-w-170' : 'min-w-120')}" bind:manualResized unique="navigator" headerTitle={ LocalizeText('navigator.title') } onCloseClick={ navigatorClose }>
+	<BobbaWindow class="min-h-140 h-150 {manualResized ? '' : (openSavesSearch ? 'min-w-170' : 'min-w-120')}" bind:manualResized unique="navigator" headerTitle={ LocalizeText('navigator.title') } {onCloseClick}>
 		<Flex class="gap-1 items-center">
-			<Flex onclick={() => openSavesSearch = !openSavesSearch} pointer class="mt-1 bg-(image:--navigator-spritesheet) bg-position-[-95px_-48px] size-4.5 pointer-events-auto" />
+			<Flex onclick={() => openSavesSearch = !openSavesSearch} pointer class="mt-1 bg-(image:--navigator-spritesheet) hover:brightness-110 active:brightness-75 bg-position-[-95px_-48px] size-4.5 pointer-events-auto" />
 			<BobbaTabs>
 				{#if navigator.topLevelContexts && (navigator.topLevelContexts.length > 0)}
 					{#each navigator.topLevelContexts as context, i (i)}

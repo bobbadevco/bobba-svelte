@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getChatListener } from '$lib/listeners/rooms/ChatListener.svelte';
+	import { getChatListener } from '$lib/listeners';
 
 	onMount(
 		() => {

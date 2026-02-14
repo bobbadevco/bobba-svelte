@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getFriendListener } from '$lib/listeners/FriendListener.svelte';
+	import { getFriendListener } from '$lib/listeners';
 	import BobbaWindow from '$lib/themes/default/generic/window/BobbaWindow.svelte';
 	import { CreateLinkEvent, LocalizeText } from '$lib/api';
 	import AccordionItem from '$lib/themes/default/generic/accordion/AccordionItem.svelte';

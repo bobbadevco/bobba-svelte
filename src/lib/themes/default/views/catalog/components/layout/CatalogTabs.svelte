@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BobbaTabsItem from '$lib/themes/default/generic/window/tabs/BobbaTabsItem.svelte';
-	import { getCatalogListener } from '$lib/listeners/CatalogListener.svelte';
+	import { getCatalogListener } from '$lib/listeners';
 	import { GetConfiguration } from '$lib/api';
 	import BobbaTabs from '$lib/themes/default/generic/window/tabs/BobbaTabs.svelte';
 	import Flex from '$lib/components/common/Flex.svelte';

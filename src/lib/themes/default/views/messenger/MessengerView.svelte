@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getMessengerListener } from '$lib/listeners/MessengerListener.svelte';
+	import { getMessengerListener } from '$lib/listeners';
 	import BobbaWindow from '$lib/themes/default/generic/window/BobbaWindow.svelte';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import AvatarImage from '$lib/components/common/layout/AvatarImage.svelte';
@@ -30,7 +30,7 @@
 				<Flex fullWidth class="shrink-0 justify-between gap-2">
 					<Flex fullWidth class="gap-2 justify-center items-center bg-primary px-2 py-1 italic rounded-sm">
 						<p class="text-sm">You're talking with {messenger.activeThread.participant.name}</p>
-						<ProfileButton class="cursor-pointer" />
+						<ProfileButton class="cursor-pointer" userId={messenger.activeThread.participant.id} />
 					</Flex>
 				</Flex>
 				<Flex grow column fullWidth class="overflow-auto">

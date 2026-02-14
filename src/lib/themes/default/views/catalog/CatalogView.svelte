@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getCatalogListener } from '$lib/listeners/CatalogListener.svelte';
+	import { getCatalogListener } from '$lib/listeners';
 	import BobbaWindow from '$lib/themes/default/generic/window/BobbaWindow.svelte';
 	import CatalogTabs from '$lib/themes/default/views/catalog/components/layout/CatalogTabs.svelte';
 	import CatalogHeader from '$lib/themes/default/views/catalog/components/layout/CatalogHeader.svelte';

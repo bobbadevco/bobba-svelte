@@ -40,7 +40,7 @@ import {
 	Product, ProductTypeEnum, RequestedPage, SearchResult, SendMessageComposer, SoundNames
 } from '$lib/api';
 import { SvelteMap } from 'svelte/reactivity';
-import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
+import { getAlertListener } from '$lib/listeners';
 import { NotificationAlertType } from '$lib/api/notification/NotificationAlertType';
 import { CatalogPurchaseConfirmationEvent } from '$lib/events/catalog/CatalogPurchaseConfirmationEvent';
 

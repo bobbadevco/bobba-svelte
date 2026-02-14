@@ -16,7 +16,7 @@ import { AddEventLinkTracker, GetSessionDataManager, LocalizeText, SendMessageCo
 import { MessengerSettings } from '$lib/api/friends/MessengerSettings';
 import { MessengerRequest } from '$lib/api/friends/MessengerRequest';
 import { CloneObject } from '$lib/api/utils/CloneObject';
-import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
+import { getAlertListener } from '$lib/listeners';
 
 class FriendListener implements ILinkEventTracker {
 	friends = $state<MessengerFriend[]>([]);

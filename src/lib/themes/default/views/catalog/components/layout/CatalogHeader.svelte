@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Flex from '$lib/components/common/Flex.svelte';
-	import { getCatalogListener } from '$lib/listeners/CatalogListener.svelte';
+	import { getCatalogListener } from '$lib/listeners';
 	import { GetConfiguration, LocalizeText } from '$lib/api';
 	const catalog = getCatalogListener();
 

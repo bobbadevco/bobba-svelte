@@ -1,7 +1,7 @@
 <script lang="ts">
-	import {onMount} from 'svelte';
+	import { onMount, untrack } from 'svelte';
 	import { type INavigatorSearchFilter, RemoveLinkEventTracker, SendMessageComposer } from '$lib/api';
-	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte';
+	import { getNavigatorListener } from '$lib/listeners';
 	import { NavigatorInitComposer } from '@nitrots/nitro-renderer';
 	import { SearchOptions } from '$lib/api/navigator/SearchOptions';
 
@@ -39,6 +39,12 @@
 
 		navigator.searchIndex = SearchOptions.findIndex(option => (option === filter));
 		navigator.searchValue = value;
+	});
+
+	$effect(() => {
+		if (navigator.visible) {
+			untrack(() => navigator.reloadCurrentSearch());
+		}
 	});
 
 	$effect(() =>

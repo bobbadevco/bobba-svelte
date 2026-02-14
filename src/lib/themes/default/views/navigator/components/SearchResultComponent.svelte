@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getNavigatorListener } from '$lib/listeners/NavigatorListener.svelte.js';
+	import { getNavigatorListener } from '$lib/listeners';
 	import Flex from '$lib/components/common/Flex.svelte';
 	import { NavigatorDisplayMode } from '$lib/api/navigator/NavigatorDisplayMode';
 	import { LocalizeText, SendMessageComposer } from '$lib/api';
@@ -107,7 +107,7 @@
 				{/if}
 			{/if}
 			{#if navigator.topLevelContext?.code !== 'official_view'}
-				<Flex pointer class="bg-(image:--navigator-spritesheet) bg-position-[-95px_-48px] size-4.5 pointer-events-auto" onclick={ (event) => { event.stopPropagation(); SendMessageComposer(new NavigatorSearchSaveComposer(getResultTitle(), searchResult.data)) } } />
+				<Flex pointer class="bg-(image:--navigator-spritesheet) hover:brightness-110 active:brightness-75 bg-position-[-95px_-48px] size-4.5 pointer-events-auto" onclick={ (event) => { event.stopPropagation(); SendMessageComposer(new NavigatorSearchSaveComposer(getResultTitle(), searchResult.data)) } } />
 			{/if}
 	</Flex>
 	</Flex>

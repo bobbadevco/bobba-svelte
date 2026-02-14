@@ -46,44 +46,51 @@ import {
 	SendMessageComposer,
 	TryVisitRoom
 } from '$lib/api';
-import { getAlertListener } from '$lib/listeners/AlertListener.svelte';
+import { getAlertListener } from '$lib/listeners';
 import { NotificationAlertType } from '$lib/api/notification/NotificationAlertType';
 import { SearchOptions } from '$lib/api/navigator/SearchOptions';
 
 class NavigatorListener implements ILinkEventTracker {
-	homeRoomId = $state(0);
+	eventUrlPrefix = 'navigator/';
+
 	visible: boolean = $state(false);
 	creatorOpen: boolean = $state(false);
 	needsInit: boolean = $state(true);
 	needsSearch: boolean = $state(false);
+
+	topLevelContext = $state<NavigatorTopLevelContext>();
+	topLevelContexts = $state<NavigatorTopLevelContext[]>();
+
 	searchValue: string = $state('');
 	searched: boolean = $state(false);
 	searchIndex: number = $state(0);
+	navigatorSearches = $state<NavigatorSavedSearch[]>();
+	searchResult = $state<NavigatorSearchResultSet>();
+	pendingSearch = $state<{ current: { value: string; code: string } | null }>({ current: null });
+
 	ready: boolean = $state(false);
+	loading: boolean = $state(false);
+
 	doorData = $state<{ roomInfo: RoomDataParser | undefined; state: number }>({
 		roomInfo: undefined,
 		state: DoorStateType.NONE
 	});
-	pendingSearch = $state<{ current: { value: string; code: string } | null }>({ current: null });
+
+	roomId = $state(-1);
+	homeRoomId = $state(0);
+	createdFlatId = $state(-1);
+	canRate = $state(false);
+	currentRoomOwner = $state(false);
+	roomPicker = $state(false);
+
 	enteredGuestRoom = $state<RoomDataParser>();
 	currentRoomIsStaffPick = $state(false);
-	createdFlatId = $state(-1);
 	currentRoomRating = $state(0);
-	canRate = $state(false);
 	eventMod = $state(false);
-	roomPicker = $state(false);
-	currentRoomOwner = $state(false);
-	roomId = $state(-1);
-	loading: boolean = $state(false);
-	topLevelContext = $state<NavigatorTopLevelContext>();
-	navigatorSearches = $state<NavigatorSavedSearch[]>();
-	topLevelContexts = $state<NavigatorTopLevelContext[]>();
-	searchResult = $state<NavigatorSearchResultSet>();
+
 	categories = $state<NavigatorCategoryDataParser[]>()	;
 	eventCategories = $state<NavigatorEventCategoryDataParser[]>();
 	settingsReceived = $state(false);
-
-	eventUrlPrefix = 'navigator/';
 
 	private static instance: NavigatorListener;
 

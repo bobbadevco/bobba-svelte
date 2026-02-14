@@ -6,7 +6,7 @@
 	import draggableImg from '../../assets/images/draggable.png';
 	import Button from '$lib/components/common/Button.svelte';
 	import { faXmark } from '@fortawesome/free-solid-svg-icons';
-	import { getWindowListener } from '$lib/listeners/WindowListener.svelte';
+	import { getWindowListener } from '$lib/listeners';
 
 	let {onCloseClick = () => {}, manualResized = $bindable(false), unique, disableDrag = false, headerTitle='', class: classes = '', children = undefined}: { onCloseClick?: () => void, manualResized?: boolean, unique: string, disableDrag?: boolean, class?: ClassValue, children?: Snippet, headerTitle: string } = $props();
 

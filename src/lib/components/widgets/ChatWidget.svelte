@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChatListener } from '$lib/listeners/rooms/ChatListener.svelte';
+	import { getChatListener } from '$lib/listeners';
 	import { DoChatsOverlap, GetConfiguration } from '$lib/api';
 	import ChatWidgetMessage from '$lib/components/widgets/chat/ChatWidgetMessage.svelte';
 	import { RoomChatSettings } from '@nitrots/nitro-renderer';

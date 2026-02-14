@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChatInputListener } from '$lib/listeners/rooms/ChatInputListener.svelte';
+	import { getChatInputListener } from '$lib/listeners';
 	import { ChatMessageTypeEnum, GetConfiguration, LocalizeText } from '$lib/api';
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
@@ -76,9 +76,7 @@
 
 		if(element && (element === activeElement)) return false;
 
-		if(!(activeElement instanceof HTMLInputElement) && !(activeElement instanceof HTMLTextAreaElement)) return false;
-
-		return true;
+		return !(!(activeElement instanceof HTMLInputElement) && !(activeElement instanceof HTMLTextAreaElement));
 	};
 
 	const checkSpecialKeywordForInput = () =>
