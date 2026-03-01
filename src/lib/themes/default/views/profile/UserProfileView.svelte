@@ -3,6 +3,9 @@
 	import { getProfileListener } from '$lib/listeners';
 	import { GetSessionDataManager, GetUserProfile, LocalizeText } from '$lib/api';
 	import BobbaWindow from '$lib/themes/default/generic/window/BobbaWindow.svelte';
+	import Flex from '$lib/components/common/Flex.svelte';
+	import UserDataComponent from '$lib/themes/default/views/profile/components/UserDataComponent.svelte';
+	import RelationshipComponent from './components/RelationshipComponent.svelte';
 
 	let profile = getProfileListener();
 
@@ -24,7 +27,12 @@
 </script>
 
 {#if profile.userProfile}
-	<BobbaWindow disableDrag class="min-w-154.25 min-h-138.75" bind:manualResized unique="user-profile" headerTitle={ LocalizeText('extendedprofile.caption') } {onCloseClick}>
-		asd
+	<BobbaWindow disableDrag class="min-w-154 min-h-138" bind:manualResized unique="user-profile" headerTitle={ LocalizeText('extendedprofile.caption') } {onCloseClick}>
+		<Flex fullWidth fullHeight class="gap-2 pt-2 justify-around">
+			<UserDataComponent userProfile={profile.userProfile} />
+			<div class="w-px bg-bright-primary"></div>
+			<RelationshipComponent friendsCount={profile.userProfile.friendsCount} relationships={profile.userRelationships} />
+		</Flex>
+
 	</BobbaWindow>
 {/if}

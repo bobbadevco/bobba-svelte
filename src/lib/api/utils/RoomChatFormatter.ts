@@ -45,7 +45,7 @@ export const RoomChatFormatter = (content: string) => {
 
 		while ((match = /@[a-zA-Z]+@/g.exec(content)) !== null) {
 			const colorTag = match[0].toString();
-			const colorName = colorTag.substr(1, colorTag.length - 2);
+			const colorName = colorTag.substring(1, colorTag.length - 2);
 			const text = content.replace(colorTag, '');
 
 			if (!allowedColours.has(colorName)) {

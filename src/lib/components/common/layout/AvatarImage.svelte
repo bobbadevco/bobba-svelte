@@ -61,4 +61,4 @@
 
 </script>
 
-<div class={['w-22.5 ' + (headOnly ? 'h-22.5' : 'h-32.5'), classes]} style:background-image="url('{avatarUrl}')" style:image-rendering={scale % 1 ? 'pixelated' : ''} style:transform="scale({scale})" {style} {...rest}></div>
+<div class={['w-22.5 ' + (headOnly ? 'h-17.5' : 'h-32.5'), classes]} style:background-image="url('{avatarUrl}')" style:image-rendering={scale % 1 ? 'pixelated' : ''} style:transform="scale({scale})" {style} {...rest}></div>
