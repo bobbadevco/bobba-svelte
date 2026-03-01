@@ -58,7 +58,7 @@ function handleKeyDown(e: KeyboardEvent)
 			<Button
 				id="avatar-image-button"
 				class="hover:-translate-y-0.5 hover:drop-shadow-[0px_2px_#00000080] w-13 border-[3px] outline-black outline-2 rounded-full border-solid overflow-hidden border-bright-primary bg-tertiary h-13 relative" center>
-				<AvatarImage class="absolute -bottom-4" headOnly figure={ userLook }/>
+				<AvatarImage class="absolute bottom-1.5" headOnly figure={ userLook }/>
 			</Button>
 			<Flex>
 					<div class="bg-(image:--toolbar-spritesheet) w-4.5 h-11 bg-position-[-178px_0]"></div>
@@ -67,7 +67,7 @@ function handleKeyDown(e: KeyboardEvent)
 							size={inputSize}
 							oninput={handleInput}
 							onkeydown={handleKeyDown}
-							class="w-auto min-w-78.75 max-w-100 h-11 p-2 bg-[#ECECECFF] shadow-[inset_0_-5px_#c6c6c6,inset_0_9px_white] border-black border-2 border-x-0 focus:outline-0 text-black mx-auto" />
+							class="w-auto text-[14px] min-w-78.75 max-w-100 h-11 p-2 bg-[#ECECECFF] shadow-[inset_0_-5px_#c6c6c6,inset_0_9px_white] border-black border-2 border-x-0 focus:outline-0 text-black mx-auto" />
 					<div class="bg-(image:--toolbar-spritesheet) w-4.5 h-11 bg-position-[-185px_-45px]"></div>
 			</Flex>
 		</Flex>
