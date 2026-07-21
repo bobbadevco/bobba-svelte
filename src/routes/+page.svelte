@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { GetConfiguration, GetNitroInstance } from '$lib/api';
+	import { GetNitroInstance } from '$lib/api';
 	import { Nitro } from '@nitrots/nitro-renderer';
 	import { initialize, initializeTruffle, getIsReady } from "$lib";
 	import { type Snippet, onMount } from "svelte";
@@ -16,9 +16,10 @@
 			Nitro.bootstrap();
 			bootstrapped = true;
 			GetNitroInstance().core.configuration.init();
-			const theme = GetConfiguration<string>('theme', 'default');
-			LoadingView = (await import(`../lib/themes/${theme}/LoadingView.svelte`)).default;
 			initialize();
+			const uiConfig = await fetch('/ui-config.json').then(r => r.json());
+			const theme = uiConfig.theme || 'default';
+			LoadingView = (await import(`../lib/themes/${theme}/LoadingView.svelte`)).default;
 			MainView = (await import(`../lib/themes/${theme}/MainView.svelte`)).default;
 		}
 	);
