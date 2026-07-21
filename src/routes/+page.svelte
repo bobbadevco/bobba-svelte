@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { GetConfiguration, GetNitroInstance } from '$lib/api';
 	import { Nitro } from '@nitrots/nitro-renderer';
-	import { initialize, getIsReady } from "$lib";
+	import { initialize, initializeTruffle, getIsReady } from "$lib";
 	import { type Snippet, onMount } from "svelte";
 	import RoomView from "$lib/components/Room.svelte";
 	import LandingView from '$lib/components/Landing.svelte';
@@ -12,6 +12,7 @@
 	let bootstrapped = $state(false);
 	onMount(
 		async () => {
+			initializeTruffle();
 			Nitro.bootstrap();
 			bootstrapped = true;
 			GetNitroInstance().core.configuration.init();

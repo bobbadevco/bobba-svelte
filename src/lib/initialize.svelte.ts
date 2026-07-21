@@ -10,6 +10,8 @@ import {
 	NitroLocalizationEvent,
 	RoomEngineEvent
 } from '@nitrots/nitro-renderer';
+import { loadPackedTruffle } from 'truffle-text/packed';
+import type { PackedTruffleText } from 'truffle-text/packed';
 import { GetNitroInstance, GetConfiguration, GetCommunication } from './api';
 import {
 	registerMainEvent,
@@ -23,10 +25,22 @@ let message = $state('');
 let isError = $state(false);
 let isReady = $state(false);
 
+let truffle = $state<PackedTruffleText | null>(null);
+let truffleReadyCallbacks: Array<(t: PackedTruffleText) => void> = [];
+
 export const getPercent = () => percent;
 export const getMessage = () => message;
 export const getIsError = () => isError;
 export const getIsReady = () => isReady;
+export const getTruffle = () => truffle;
+
+export const onTruffleReady = (cb: (t: PackedTruffleText) => void) => {
+	if (truffle) {
+		cb(truffle);
+	} else {
+		truffleReadyCallbacks.push(cb);
+	}
+};
 
 const handler = async (event: NitroEvent) => {
 	switch (event.type) {
@@ -114,4 +128,25 @@ export const initialize = () => {
 	registerLocalizationEvent(NitroLocalizationEvent.LOADED, handler);
 	registerConfigurationEvent(ConfigurationEvent.LOADED, handler);
 	registerConfigurationEvent(ConfigurationEvent.FAILED, handler);
+};
+
+export const initializeTruffle = async () => {
+	try {
+		console.log('[truffle] Loading packed truffle from /assets/truffle...');
+		const t = await loadPackedTruffle({
+			base: '/assets/truffle',
+			styles: [
+				'u_regular', 'u_italic',
+				'u_chat_speak', 'u_chat_name',
+				'u_chat_whisper', 'u_chat_name_whisper', 'u_chat_shout'
+			]
+		});
+		console.log('[truffle] Loaded successfully, notifying', truffleReadyCallbacks.length, 'waiting callbacks');
+		truffle = t;
+		const cbs = truffleReadyCallbacks;
+		truffleReadyCallbacks = [];
+		cbs.forEach(cb => cb(t));
+	} catch (e) {
+		console.error('Truffle text renderer failed to load', e);
+	}
 };

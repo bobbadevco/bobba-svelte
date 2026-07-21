@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Flex from '$lib/components/common/Flex.svelte';
+	import Text from '$lib/components/common/Text.svelte';
 	import type { RelationshipStatusInfoMessageParser } from '@nitrots/nitro-renderer';
 	import { RelationshipStatusEnum } from '@nitrots/nitro-renderer';
 	import { GetUserProfile, LocalizeText } from '$lib/api';
@@ -35,7 +36,7 @@
 			{#if (relationshipInfo && (relationshipInfo.friendCount >= 1))}
 				<Flex onclick={ () => GetUserProfile(relationshipInfo?.randomFriendId) } class="cursor-pointer text-[12px] font-bold underline">{ relationshipInfo.randomFriendName }</Flex>
 			{:else}
-				<Flex class="text-[12px] underline font-bold">{ LocalizeText(`extendedprofile.add.friends`) }</Flex>
+				<Text text={LocalizeText('extendedprofile.add.friends')} fontSize={12} bold underline pointer />
 			{/if}
 			<Flex class="relative">
 				<AvatarImage class="absolute h-4 w-12.5 -top-15 -right-5" headOnly direction={ 4 } figure={ relationshipInfo?.randomFriendFigure } />

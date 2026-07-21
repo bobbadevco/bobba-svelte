@@ -1,55 +1,55 @@
 <script lang="ts">
-import ChatInputWidget from '$lib/components/widgets/ChatInputWidget.svelte';
-import { getRoomSession, getUserLook } from '$lib/events';
-import Button from '$lib/components/common/Button.svelte';
-import AvatarImage from '$lib/components/common/layout/AvatarImage.svelte';
-import Flex from '$lib/components/common/Flex.svelte';
+    import ChatInputWidget from '$lib/components/widgets/ChatInputWidget.svelte';
+    import { getRoomSession, getUserLook } from '$lib/events';
+    import Button from '$lib/components/common/Button.svelte';
+    import AvatarImage from '$lib/components/common/layout/AvatarImage.svelte';
+    import Flex from '$lib/components/common/Flex.svelte';
 
-const userLook = $derived(getUserLook());
+    const userLook = $derived(getUserLook());
 
-let inputSize = $state(20);
-let lastKnownLength = 0;
-let blankTimeoutId: ReturnType<typeof setTimeout> | undefined;
+    let inputSize = $state(20);
+    let lastKnownLength = 0;
+    let blankTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
-function resetSize()
-{
-    inputSize = 1;
-}
-
-function scheduleBlankReset(currentLen: number)
-{
-    if(currentLen === 0)
+    function resetSize()
     {
-        if(blankTimeoutId) clearTimeout(blankTimeoutId);
-        blankTimeoutId = setTimeout(() =>
+        inputSize = 1;
+    }
+
+    function scheduleBlankReset(currentLen: number)
+    {
+        if(currentLen === 0)
         {
-            if(lastKnownLength === 0) resetSize();
-        }, 300);
+            if(blankTimeoutId) clearTimeout(blankTimeoutId);
+            blankTimeoutId = setTimeout(() =>
+            {
+                if(lastKnownLength === 0) resetSize();
+            }, 300);
+        }
+        else if(blankTimeoutId)
+        {
+            clearTimeout(blankTimeoutId);
+            blankTimeoutId = undefined;
+        }
     }
-    else if(blankTimeoutId)
-    {
-        clearTimeout(blankTimeoutId);
-        blankTimeoutId = undefined;
-    }
-}
 
-function handleInput(e: Event)
-{
-    const el = (e.target as HTMLInputElement);
-    const valueLen = el?.value?.length ?? 0;
-    const MAX_SIZE_CH = 40;
-    lastKnownLength = valueLen;
-    inputSize = Math.min(Math.max(valueLen + 1, 1), MAX_SIZE_CH);
-    scheduleBlankReset(valueLen);
-}
-
-function handleKeyDown(e: KeyboardEvent)
-{
-    if(e.key === 'Enter' || e.key === 'NumpadEnter')
+    function handleInput(e: Event)
     {
-        resetSize();
+        const el = (e.target as HTMLInputElement);
+        const valueLen = el?.value?.length ?? 0;
+        const MAX_SIZE_CH = 40;
+        lastKnownLength = valueLen;
+        inputSize = Math.min(Math.max(valueLen + 1, 1), MAX_SIZE_CH);
+        scheduleBlankReset(valueLen);
     }
-}
+
+    function handleKeyDown(e: KeyboardEvent)
+    {
+        if(e.key === 'Enter' || e.key === 'NumpadEnter')
+        {
+            resetSize();
+        }
+    }
 </script>
 
 {#if getRoomSession()}

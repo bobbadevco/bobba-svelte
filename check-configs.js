@@ -24,6 +24,7 @@ requiredFiles.forEach(file => {
 
 // Check for theme MainView
 let userTheme = 'default';
+
 try {
     const uiConfigPath = path.join(staticDir, 'ui-config.json');
     if (fs.existsSync(uiConfigPath)) {

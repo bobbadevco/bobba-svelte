@@ -10,3 +10,4 @@ export * from './RoomChatFormatter';
 export * from './PlaySound';
 export * from './SoundNames';
 export * from './LocalizeBadgeDescription';
+export * from './MeasureHabboText';
